@@ -1,0 +1,166 @@
+@startuml ERD_KDPlanning
+
+skinparam backgroundColor #FAFAFA
+skinparam entity {
+  BackgroundColor #E8F4FD
+  BorderColor #1464A0
+  FontColor #0D2B4E
+  FontSize 12
+  AttributeFontSize 11
+}
+skinparam arrow {
+  Color #2196C4
+  FontColor #0D2B4E
+  FontSize 11
+}
+skinparam title {
+  FontSize 18
+  FontColor #0D2B4E
+}
+
+title Online House Plan Browsing and Inquiry Platform\nEntity Relationship Diagram — KD Planning & Design
+
+' ── Entities ────────────────────────────────────────────
+
+entity "house_plans" as HousePlan {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(255)
+  * description : TEXT
+  * price : DECIMAL(10,2)
+  * floors : TINYINT
+  * bedrooms : TINYINT
+  * bathrooms : TINYINT
+  * floor_area : DECIMAL(8,2)
+  * style : VARCHAR(100)
+  * view_count : INT DEFAULT 0
+  * is_featured : BOOLEAN DEFAULT 0
+  * is_active : BOOLEAN DEFAULT 1
+  * created_at : TIMESTAMP
+  * updated_at : TIMESTAMP
+}
+
+entity "categories" as Category {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(100)
+  * slug : VARCHAR(100)
+  description : TEXT
+  * created_at : TIMESTAMP
+  * updated_at : TIMESTAMP
+}
+
+entity "plan_category" as PlanCategory {
+  * house_plan_id : INT <<FK>>
+  * category_id : INT <<FK>>
+  --
+  <<pivot table>>
+}
+
+entity "plan_images" as PlanImage {
+  * id : INT <<PK>>
+  --
+  * house_plan_id : INT <<FK>>
+  * image_path : VARCHAR(500)
+  * is_primary : BOOLEAN DEFAULT 0
+  * sort_order : INT DEFAULT 0
+  * created_at : TIMESTAMP
+}
+
+entity "inquiries" as Inquiry {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(255)
+  * email : VARCHAR(255)
+  * phone : VARCHAR(20)
+  house_plan_id : INT <<FK>> NULL
+  * message : TEXT
+  * status : ENUM(new, read, responded)
+  * created_at : TIMESTAMP
+  * updated_at : TIMESTAMP
+}
+
+entity "blog_posts" as BlogPost {
+  * id : INT <<PK>>
+  --
+  * title : VARCHAR(255)
+  * slug : VARCHAR(255)
+  cover_image : VARCHAR(500)
+  * content : LONGTEXT
+  * status : ENUM(draft, published)
+  published_at : TIMESTAMP NULL
+  * created_at : TIMESTAMP
+  * updated_at : TIMESTAMP
+}
+
+entity "testimonials" as Testimonial {
+  * id : INT <<PK>>
+  --
+  * client_name : VARCHAR(255)
+  location : VARCHAR(255)
+  rating : TINYINT
+  * content : TEXT
+  * is_active : BOOLEAN DEFAULT 1
+  * created_at : TIMESTAMP
+  * updated_at : TIMESTAMP
+}
+
+entity "completed_projects" as CompletedProject {
+  * id : INT <<PK>>
+  --
+  * title : VARCHAR(255)
+  description : TEXT
+  location : VARCHAR(255)
+  * is_active : BOOLEAN DEFAULT 1
+  * created_at : TIMESTAMP
+  * updated_at : TIMESTAMP
+}
+
+entity "project_images" as ProjectImage {
+  * id : INT <<PK>>
+  --
+  * completed_project_id : INT <<FK>>
+  * image_path : VARCHAR(500)
+  * is_primary : BOOLEAN DEFAULT 0
+  * sort_order : INT DEFAULT 0
+  * created_at : TIMESTAMP
+}
+
+entity "admin_users" as AdminUser {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(255)
+  * email : VARCHAR(255)
+  * password : VARCHAR(255)
+  * role : ENUM(primary, secondary)
+  last_login_at : TIMESTAMP NULL
+  * created_at : TIMESTAMP
+  * updated_at : TIMESTAMP
+}
+
+entity "system_settings" as Settings {
+  * id : INT <<PK>>
+  --
+  * key : VARCHAR(100)
+  * value : TEXT
+  * updated_at : TIMESTAMP
+  <<e.g. whatsapp_number,>>
+  <<notification_email>>
+}
+
+' ── Relationships ────────────────────────────────────────
+
+' house_plans <-> categories (many-to-many via pivot)
+HousePlan ||--o{ PlanCategory : "belongs to"
+Category  ||--o{ PlanCategory : "has"
+
+' house_plans -> plan_images (one-to-many)
+HousePlan ||--o{ PlanImage : "has many"
+
+' house_plans -> inquiries (one-to-many, nullable)
+HousePlan |o--o{ Inquiry : "referenced in"
+
+' completed_projects -> project_images (one-to-many)
+CompletedProject ||--o{ ProjectImage : "has many"
+
+@enduml

@@ -1,0 +1,141 @@
+@startuml UseCase_KDPlanning
+
+skinparam backgroundColor #FAFAFA
+skinparam actor {
+  BackgroundColor #1464A0
+  BorderColor #0D2B4E
+  FontColor white
+  FontSize 13
+}
+skinparam usecase {
+  BackgroundColor #E8F4FD
+  BorderColor #1464A0
+  FontSize 12
+  ArrowColor #2196C4
+}
+skinparam rectangle {
+  BorderColor #0D2B4E
+  FontColor #0D2B4E
+  FontSize 14
+  FontStyle bold
+}
+skinparam title {
+  FontSize 18
+  FontColor #0D2B4E
+}
+
+title Online House Plan Browsing and Inquiry Platform\nUse Case Diagram — KD Planning & Design
+
+' ── Actors ─────────────────────────────────────────────
+actor "Guest /\nVisitor" as Guest
+actor "Primary\nAdmin" as PAdmin
+actor "Secondary\nAdmin" as SAdmin
+actor "System" as Sys
+
+' ── System boundary ─────────────────────────────────────
+rectangle "KD Planning & Design — Web Platform" {
+
+  ' Public Use Cases
+  package "Public Website" {
+    usecase "Browse Plan Catalogue" as UC_Browse
+    usecase "Search & Filter Plans" as UC_Filter
+    usecase "View Plan Detail Page" as UC_ViewDetail
+    usecase "View Plan Image Gallery" as UC_Gallery
+    usecase "Submit Inquiry / Quote Request" as UC_Inquiry
+    usecase "Read Blog Posts" as UC_Blog
+    usecase "View Testimonials" as UC_Testimonials
+    usecase "View Completed Projects" as UC_Projects
+    usecase "Use WhatsApp Chat Button" as UC_WhatsApp
+  }
+
+  ' Admin Use Cases
+  package "Admin Dashboard" {
+    usecase "Login to Admin Dashboard" as UC_Login
+    usecase "Manage House Plan Listings\n(Add / Edit / Delete)" as UC_Plans
+    usecase "Manage Plan Images &\nGallery" as UC_Images
+    usecase "Manage Plan Categories" as UC_Categories
+    usecase "Set Featured / Popular Plans" as UC_Featured
+    usecase "View & Manage Inquiries" as UC_ManageInquiry
+    usecase "Manage Blog Posts" as UC_ManageBlog
+    usecase "Manage Testimonials" as UC_ManageTest
+    usecase "Manage Completed Projects" as UC_ManageProjects
+    usecase "View Analytics & Reports" as UC_Analytics
+    usecase "Manage Admin User Accounts" as UC_Users
+    usecase "Configure System Settings\n(Email, WhatsApp No.)" as UC_Settings
+  }
+
+  ' Automated Use Cases
+  package "Automated System Actions" {
+    usecase "Send Email Notification\nfor New Inquiry" as UC_Email
+    usecase "Track Plan View Count" as UC_ViewCount
+    usecase "Generate Analytics Data" as UC_GenAnalytics
+  }
+}
+
+' ── Guest associations ──────────────────────────────────
+Guest --> UC_Browse
+Guest --> UC_Filter
+Guest --> UC_ViewDetail
+Guest --> UC_Gallery
+Guest --> UC_Inquiry
+Guest --> UC_Blog
+Guest --> UC_Testimonials
+Guest --> UC_Projects
+Guest --> UC_WhatsApp
+
+' ── Include relationships ───────────────────────────────
+UC_Browse ..> UC_Filter : <<include>>
+UC_ViewDetail ..> UC_Gallery : <<include>>
+UC_ViewDetail ..> UC_ViewCount : <<include>>
+UC_Inquiry ..> UC_Email : <<include>>
+
+' ── Primary Admin associations ──────────────────────────
+PAdmin --> UC_Login
+PAdmin --> UC_Plans
+PAdmin --> UC_Images
+PAdmin --> UC_Categories
+PAdmin --> UC_Featured
+PAdmin --> UC_ManageInquiry
+PAdmin --> UC_ManageBlog
+PAdmin --> UC_ManageTest
+PAdmin --> UC_ManageProjects
+PAdmin --> UC_Analytics
+PAdmin --> UC_Users
+PAdmin --> UC_Settings
+
+' ── Secondary Admin associations ────────────────────────
+SAdmin --> UC_Login
+SAdmin --> UC_Plans
+SAdmin --> UC_Images
+SAdmin --> UC_ManageBlog
+SAdmin --> UC_ManageTest
+SAdmin --> UC_ManageProjects
+SAdmin --> UC_ManageInquiry
+
+' ── System associations ─────────────────────────────────
+Sys --> UC_Email
+Sys --> UC_ViewCount
+Sys --> UC_GenAnalytics
+UC_Analytics ..> UC_GenAnalytics : <<include>>
+
+' ── Extend ──────────────────────────────────────────────
+UC_ManageInquiry ..> UC_Email : <<extend>>
+
+note right of UC_Users
+  Only Primary Admin
+  can manage admin
+  user accounts
+end note
+
+note right of UC_Settings
+  Configure: notification
+  email address &
+  WhatsApp number
+end note
+
+note bottom of SAdmin
+  Access level configurable
+  by Primary Admin
+end note
+
+@enduml
