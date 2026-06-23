@@ -28,8 +28,11 @@ class PlanImage extends Model
     }
 
     // Convenience accessor: $image->url
+    // Handles both full external URLs (e.g. seeded placeholders) and local storage paths
     public function getUrlAttribute(): string
     {
-        return Storage::url($this->image_path);
+        return str_starts_with($this->image_path, 'http')
+            ? $this->image_path
+            : Storage::url($this->image_path);
     }
 }

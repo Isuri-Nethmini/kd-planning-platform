@@ -27,8 +27,11 @@ class ProjectImage extends Model
         return $this->belongsTo(CompletedProject::class);
     }
 
+    // Handles both full external URLs (e.g. seeded placeholders) and local storage paths
     public function getUrlAttribute(): string
     {
-        return Storage::url($this->image_path);
+        return str_starts_with($this->image_path, 'http')
+            ? $this->image_path
+            : Storage::url($this->image_path);
     }
 }
