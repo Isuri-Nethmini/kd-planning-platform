@@ -1,11 +1,33 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* Explicitly include Blade files in case auto content-detection misses any */
+@source "../views/**/*.blade.php";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  --color-ink:      #1C2733; /* blueprint-dark navy — headers, hero, footer */
+  --color-draft:    #4A90C4; /* technical drafting blue — links, accents */
+  --color-clay:     #BE5A34; /* terracotta roof-tile — price, secondary accent */
+  --color-paper:    #F3EFE6; /* drafting paper — page background */
+  --color-charcoal: #2A2A27; /* body text */
+  --color-moss:     #5C7A5C; /* tropical accent — testimonials section */
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body:    "Work Sans", sans-serif;
+  --font-mono:    "Space Mono", monospace;
+}
+
+@layer base {
+  body {
+    @apply font-body text-charcoal bg-paper antialiased;
+  }
+}
+
+@layer components {
+  /* Signature texture for dark hero/CTA sections — a faint blueprint grid */
+  .bp-grid {
+    background-image:
+      linear-gradient(rgba(74, 144, 196, 0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74, 144, 196, 0.16) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
 }
