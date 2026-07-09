@@ -21,6 +21,7 @@
             </a>
 
             <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-ink/80">
+                <a href="/" class="hover:text-draft transition-colors">Home</a>
                 <a href="/plans" class="hover:text-draft transition-colors">House Plans</a>
                 <a href="/completed-projects" class="hover:text-draft transition-colors">Completed Work</a>
                 <a href="/blog" class="hover:text-draft transition-colors">Blog</a>
