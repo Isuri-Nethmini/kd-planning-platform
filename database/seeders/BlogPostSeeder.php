@@ -33,7 +33,7 @@ class BlogPostSeeder extends Seeder
             BlogPost::create([
                 'title' => $post['title'],
                 'slug' => Str::slug($post['title']),
-                'cover_image' => "https://picsum.photos/seed/blog{$index}/900/500",
+                'cover_image' => null, // uploaded via Admin -> Blog
                 'content' => $post['content'],
                 'status' => 'published',
                 'published_at' => now()->subDays(($index + 1) * 5),

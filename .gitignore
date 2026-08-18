@@ -18,3 +18,8 @@ yarn-error.log
 *.njsproj
 *.sln
 *.sw?
+/public/build
+/storage/*.sqlite
+/database/*.sqlite
+.env.production
+.DS_Store

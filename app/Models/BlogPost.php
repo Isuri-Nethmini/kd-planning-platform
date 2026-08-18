@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BlogPost extends Model
 {
@@ -21,6 +23,27 @@ class BlogPost extends Model
     protected $casts = [
         'published_at' => 'datetime',
     ];
+
+    /**
+     * Resolve the stored cover image path to a usable URL.
+     * Returns null when no cover has been uploaded yet, which lets
+     * <x-image-frame> fall back to the blueprint placeholder.
+     */
+    public function getCoverUrlAttribute(): ?string
+    {
+        if (blank($this->cover_image)) {
+            return null;
+        }
+
+        return str_starts_with($this->cover_image, 'http')
+            ? $this->cover_image
+            : Storage::disk('public')->url($this->cover_image);
+    }
+
+    public function getExcerptAttribute(): string
+    {
+        return Str::limit(strip_tags($this->content), 160);
+    }
 
     public function scopePublished($query)
     {

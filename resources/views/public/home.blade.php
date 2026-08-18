@@ -5,7 +5,26 @@
 @section('content')
 
 {{-- ───────────────────────── HERO ───────────────────────── --}}
+@php
+    // Hero background video slot.
+    //
+    // Drop the client's file in at public/media/hero.mp4 and it renders
+    // automatically — no code change needed. Until then the blueprint grid
+    // stands in on its own, which is the intended fallback.
+    $heroVideo = file_exists(public_path('media/hero.mp4')) ? asset('media/hero.mp4') : null;
+@endphp
+
 <section class="bp-grid bg-ink text-paper relative overflow-hidden">
+    @if($heroVideo)
+        <video
+            class="absolute inset-0 w-full h-full object-cover opacity-30"
+            src="{{ $heroVideo }}"
+            autoplay muted loop playsinline
+            aria-hidden="true"
+        ></video>
+        <div class="absolute inset-0 bg-ink/60" aria-hidden="true"></div>
+    @endif
+
     <div class="max-w-6xl mx-auto px-5 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center relative z-10">
         <div>
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-4">KD Planning &amp; Design — Minuwangoda</p>
@@ -13,7 +32,7 @@
                 Find the house plan<br>you'll actually build.
             </h1>
             <p class="text-paper/70 text-lg leading-relaxed mb-8 max-w-md">
-                Browse {{ $totalPlans }}+ ready-made designs with full specs and pricing — no login, no waiting on a phone call.
+                Browse {{ $totalPlans }}+ ready-made designs with full specifications — no login, no waiting on a phone call.
             </p>
             <div class="flex flex-wrap gap-4">
                 <a href="/plans" class="inline-flex items-center rounded-sm bg-draft text-ink font-medium px-6 py-3 hover:bg-draft/90 transition-colors">
@@ -25,7 +44,6 @@
             </div>
         </div>
 
-        {{-- Hero floor-plan illustration — drawn, not stocked --}}
         <div class="relative hidden sm:block">
             <svg viewBox="0 0 320 240" class="w-full max-w-md mx-auto text-draft" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="40" y="30" width="200" height="140" />
@@ -78,7 +96,11 @@
         @foreach ($featuredPlans as $plan)
             <article class="group bg-white border border-ink/10 rounded-sm overflow-hidden hover:shadow-lg hover:shadow-ink/5 transition-shadow">
                 <div class="relative aspect-[4/3] overflow-hidden bg-ink/5">
-                    <img src="{{ $plan->primaryImage?->url }}" alt="{{ $plan->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <x-image-frame
+                        :src="$plan->primaryImage?->url"
+                        :alt="$plan->name"
+                        :label="'PLAN NO. '.str_pad($plan->id, 4, '0', STR_PAD_LEFT)"
+                    />
                     <span class="absolute top-3 left-3 font-mono text-[11px] bg-ink/80 text-paper px-2 py-1 rounded-sm">
                         PLAN NO. {{ str_pad($plan->id, 4, '0', STR_PAD_LEFT) }}
                     </span>
@@ -86,8 +108,7 @@
                 <div class="p-5">
                     <h3 class="font-display font-semibold text-lg text-ink mb-2">{{ $plan->name }}</h3>
                     <x-spec-readout :items="[$plan->bedrooms.' BR', $plan->bathrooms.' BA', number_format($plan->floor_area).' SQFT']" class="mb-3" />
-                    <div class="flex items-center justify-between">
-                        <span class="font-mono font-semibold text-clay">Rs. {{ number_format($plan->price) }}</span>
+                    <div class="flex items-center justify-end">
                         <a href="/plans/{{ $plan->id }}" class="text-sm font-medium text-draft hover:underline">View Plan →</a>
                     </div>
                 </div>
@@ -127,7 +148,7 @@
         @foreach ($blogPosts as $post)
             <a href="/blog/{{ $post->slug }}" class="group block">
                 <div class="aspect-[16/10] overflow-hidden rounded-sm bg-ink/5 mb-4">
-                    <img src="{{ $post->cover_image }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <x-image-frame :src="$post->coverUrl" :alt="$post->title" note="Cover image pending" />
                 </div>
                 <h3 class="font-display font-semibold text-ink group-hover:text-draft transition-colors">{{ $post->title }}</h3>
             </a>
