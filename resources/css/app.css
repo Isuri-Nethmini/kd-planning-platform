@@ -30,4 +30,32 @@
       linear-gradient(90deg, rgba(74, 144, 196, 0.16) 1px, transparent 1px);
     background-size: 36px 36px;
   }
+
+  /*
+    Empty image slot.
+
+    Uses background-color (not the `background` shorthand) so that when this
+    class is combined with .bp-grid the grid lines still render on top of the
+    gradient — the shorthand used to wipe them out.
+  */
+  .plan-placeholder {
+    background-color: #1C2733;
+    background-image: linear-gradient(135deg, #1C2733 0%, #2A4A6A 100%);
+  }
+
+  .plan-placeholder.bp-grid {
+    background-image:
+      linear-gradient(rgba(74, 144, 196, 0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74, 144, 196, 0.18) 1px, transparent 1px),
+      linear-gradient(135deg, #1C2733 0%, #2A4A6A 100%);
+    background-size: 28px 28px, 28px 28px, 100% 100%;
+  }
+
+  /* Long-form article body for blog posts */
+  .article-body p {
+    @apply mb-5 leading-relaxed text-ink/80;
+  }
+  .article-body h2 {
+    @apply font-display text-xl font-semibold text-ink mt-8 mb-3;
+  }
 }

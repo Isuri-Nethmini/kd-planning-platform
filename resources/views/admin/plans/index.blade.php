@@ -28,7 +28,7 @@
                     <td class="px-4 py-4">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-10 rounded-sm overflow-hidden bg-ink/5 shrink-0">
-                                <img src="{{ $plan->primaryImage?->url ?? 'https://picsum.photos/seed/thumb'.$plan->id.'/100/80' }}" alt="" class="w-full h-full object-cover">
+                                <x-image-frame :src="$plan->primaryImage?->url" :alt="$plan->name" :zoom="false" note="" />
                             </div>
                             <div>
                                 <p class="font-medium text-ink">{{ $plan->name }}</p>

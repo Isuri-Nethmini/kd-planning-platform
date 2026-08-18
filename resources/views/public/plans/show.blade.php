@@ -22,14 +22,22 @@
 
             {{-- Main image --}}
             <div class="aspect-[4/3] overflow-hidden rounded-sm bg-ink/5 mb-3">
-                @foreach($housePlan->images as $i => $img)
-                    <img
-                        src="{{ $img->url }}"
-                        alt="{{ $housePlan->name }}"
-                        class="w-full h-full object-cover"
-                        x-show="active === {{ $i }}"
-                    >
-                @endforeach
+                @if($housePlan->images->isEmpty())
+                    <x-image-frame
+                        :src="null"
+                        :label="'PLAN NO. '.str_pad($housePlan->id, 4, '0', STR_PAD_LEFT)"
+                        note="Drawings & renders to be uploaded"
+                    />
+                @else
+                    @foreach($housePlan->images as $i => $img)
+                        <img
+                            src="{{ $img->url }}"
+                            alt="{{ $housePlan->name }}"
+                            class="w-full h-full object-cover"
+                            x-show="active === {{ $i }}"
+                        >
+                    @endforeach
+                @endif
             </div>
 
             {{-- Thumbnails --}}
@@ -57,19 +65,16 @@
         {{-- ── RIGHT: Info + CTA ── --}}
         <div class="space-y-5">
 
-            {{-- Plan ID tag --}}
             <p class="font-mono text-xs text-ink/40 uppercase tracking-widest">
                 PLAN NO. {{ str_pad($housePlan->id, 4, '0', STR_PAD_LEFT) }}
                 &nbsp;·&nbsp;
                 {{ $housePlan->view_count }} views
             </p>
 
-            {{-- Name --}}
             <h1 class="font-display text-2xl font-semibold text-ink leading-snug">
                 {{ $housePlan->name }}
             </h1>
 
-            {{-- Categories --}}
             <div class="flex flex-wrap gap-1">
                 @foreach($housePlan->categories as $cat)
                     <a href="/plans?category={{ $cat->slug }}" class="font-mono text-[11px] uppercase tracking-wider bg-draft/10 text-draft px-2 py-1 rounded-sm hover:bg-draft/20 transition-colors">
@@ -78,15 +83,14 @@
                 @endforeach
             </div>
 
-            {{-- Specs grid --}}
             <div class="grid grid-cols-2 gap-3">
                 @foreach([
-                    ['Bedrooms',    $housePlan->bedrooms],
-                    ['Bathrooms',   $housePlan->bathrooms],
-                    ['Floors',      $housePlan->floors],
-                    ['Floor Area',  number_format($housePlan->floor_area).' sqft'],
-                    ['Style',       $housePlan->style ?? '—'],
-                    ['Price',       'Rs. '.number_format($housePlan->price)],
+                    ['Bedrooms',   $housePlan->bedrooms],
+                    ['Bathrooms',  $housePlan->bathrooms],
+                    ['Floors',     $housePlan->floors],
+                    ['Floor Area', number_format($housePlan->floor_area).' sqft'],
+                    ['Style',      $housePlan->style ?? '—'],
+                    ['Price',      'Rs. '.number_format($housePlan->price)],
                 ] as [$label, $value])
                     <div class="bg-white border border-ink/10 rounded-sm p-3">
                         <p class="font-mono text-[10px] uppercase tracking-wider text-ink/40 mb-1">{{ $label }}</p>
@@ -95,7 +99,6 @@
                 @endforeach
             </div>
 
-            {{-- CTA buttons --}}
             <div class="space-y-3 pt-2">
                 <a
                     href="/inquire?plan={{ $housePlan->id }}&name={{ urlencode($housePlan->name) }}"
@@ -122,7 +125,7 @@
                 @foreach($related as $plan)
                     <a href="/plans/{{ $plan->id }}" class="group block bg-white border border-ink/10 rounded-sm overflow-hidden hover:shadow-md transition-shadow">
                         <div class="aspect-[4/3] overflow-hidden">
-                            <img src="{{ $plan->primaryImage?->url ?? 'https://picsum.photos/seed/rel'.$plan->id.'/400/300' }}" alt="{{ $plan->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <x-image-frame :src="$plan->primaryImage?->url" :alt="$plan->name" />
                         </div>
                         <div class="p-4">
                             <p class="font-display font-semibold text-ink text-sm">{{ $plan->name }}</p>

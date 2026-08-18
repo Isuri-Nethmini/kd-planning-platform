@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\CompletedProject;
-use App\Models\ProjectImage;
 use Illuminate\Database\Seeder;
 
 class CompletedProjectSeeder extends Seeder
@@ -33,17 +32,10 @@ class CompletedProjectSeeder extends Seeder
             ],
         ];
 
-        foreach ($projects as $index => $data) {
+        foreach ($projects as $data) {
             $project = CompletedProject::create([...$data, 'is_active' => true]);
 
-            for ($i = 1; $i <= 3; $i++) {
-                ProjectImage::create([
-                    'completed_project_id' => $project->id,
-                    'image_path' => "https://picsum.photos/seed/project{$project->id}-{$i}/800/600",
-                    'is_primary' => $i === 1,
-                    'sort_order' => $i,
-                ]);
-            }
+            // Project photos are uploaded by the client via the admin panel.
         }
     }
 }

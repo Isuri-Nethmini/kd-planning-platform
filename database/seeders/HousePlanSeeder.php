@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\HousePlan;
-use App\Models\PlanImage;
 use Illuminate\Database\Seeder;
 
 class HousePlanSeeder extends Seeder
@@ -112,15 +111,12 @@ class HousePlanSeeder extends Seeder
             $categoryIds = Category::whereIn('slug', $categorySlugs)->pluck('id');
             $plan->categories()->attach($categoryIds);
 
-            // Attach 3 placeholder images per plan (replace with real uploads later)
-            for ($i = 1; $i <= 3; $i++) {
-                PlanImage::create([
-                    'house_plan_id' => $plan->id,
-                    'image_path' => "https://picsum.photos/seed/plan{$plan->id}-{$i}/800/600",
-                    'is_primary' => $i === 1,
-                    'sort_order' => $i,
-                ]);
-            }
+            // No images are seeded on purpose.
+            //
+            // Real drawings and renders come from the client and are uploaded
+            // through Admin -> House Plans -> Edit -> Images. Until then every
+            // plan renders the <x-image-frame> blueprint placeholder, so the
+            // catalogue never shows borrowed stock photography.
         }
     }
 }

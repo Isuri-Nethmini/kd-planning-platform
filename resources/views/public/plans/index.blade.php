@@ -104,11 +104,11 @@
                     @foreach ($plans as $plan)
                         <article class="group bg-white border border-ink/10 rounded-sm overflow-hidden hover:shadow-lg hover:shadow-ink/5 transition-shadow">
                             <div class="relative aspect-[4/3] overflow-hidden bg-ink/5">
-                                <img
-                                    src="{{ $plan->primaryImage?->url ?? 'https://picsum.photos/seed/fallback/800/600' }}"
-                                    alt="{{ $plan->name }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                >
+                                <x-image-frame
+                                    :src="$plan->primaryImage?->url"
+                                    :alt="$plan->name"
+                                    :label="'PLAN NO. '.str_pad($plan->id, 4, '0', STR_PAD_LEFT)"
+                                />
                                 <span class="absolute top-3 left-3 font-mono text-[11px] bg-ink/80 text-paper px-2 py-1 rounded-sm">
                                     PLAN NO. {{ str_pad($plan->id, 4, '0', STR_PAD_LEFT) }}
                                 </span>

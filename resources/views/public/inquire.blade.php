@@ -16,7 +16,7 @@
     @if($plan)
         <div class="bg-draft/10 border border-draft/30 rounded-sm p-4 mb-8 flex items-center gap-4">
             <div class="w-16 h-14 rounded-sm overflow-hidden shrink-0">
-                <img src="{{ $plan->primaryImage?->url ?? 'https://picsum.photos/seed/plan'.$plan->id.'/200/150' }}" alt="{{ $plan->name }}" class="w-full h-full object-cover">
+                <x-image-frame :src="$plan->primaryImage?->url" :alt="$plan->name" :zoom="false" note="" />
             </div>
             <div>
                 <p class="font-mono text-xs text-draft uppercase tracking-wider">Inquiring about</p>

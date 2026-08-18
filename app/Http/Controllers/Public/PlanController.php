@@ -15,9 +15,17 @@ class PlanController extends Controller
         $query = HousePlan::active()->with(['primaryImage', 'categories']);
 
         // Search
+        //
+        // The name/description conditions MUST be wrapped in their own closure.
+        // Without the wrapper the trailing orWhere() escapes the active() scope,
+        // so searching would surface plans the admin had deliberately hidden.
         if ($request->filled('q')) {
-            $query->where('name', 'like', '%' . $request->q . '%')
-                  ->orWhere('description', 'like', '%' . $request->q . '%');
+            $term = $request->q;
+            $query->where(function ($q) use ($term) {
+                $q->where('name', 'like', '%' . $term . '%')
+                  ->orWhere('description', 'like', '%' . $term . '%')
+                  ->orWhere('style', 'like', '%' . $term . '%');
+            });
         }
 
         // Category filter
@@ -59,12 +67,12 @@ class PlanController extends Controller
 
         $housePlan->load(['images', 'categories']);
 
+        $categoryIds = $housePlan->categories->pluck('id');
+
         $related = HousePlan::active()
             ->where('id', '!=', $housePlan->id)
-            ->whereHas('categories', fn($q) =>
-                $q->whereIn('category_id',
-                    $housePlan->categories->pluck('id')
-                )
+            ->when($categoryIds->isNotEmpty(), fn($q) =>
+                $q->whereHas('categories', fn($c) => $c->whereIn('category_id', $categoryIds))
             )
             ->with('primaryImage')
             ->take(3)

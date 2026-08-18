@@ -28,6 +28,13 @@
             </a>
             <a href="/admin/inquiries" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/inquiries*') ? 'bg-paper/10' : '' }}">
                 <span>📬</span> Inquiries
+                @php $newInquiries = \App\Models\Inquiry::where('status', 'new')->count(); @endphp
+                @if($newInquiries > 0)
+                    <span class="ml-auto font-mono text-[10px] bg-clay text-white px-1.5 py-0.5 rounded-sm">{{ $newInquiries }}</span>
+                @endif
+            </a>
+            <a href="/admin/projects" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/projects*') ? 'bg-paper/10' : '' }}">
+                <span>🏗️</span> Completed Work
             </a>
             <a href="/admin/blog" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/blog*') ? 'bg-paper/10' : '' }}">
                 <span>📝</span> Blog
@@ -35,6 +42,15 @@
             <a href="/admin/testimonials" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/testimonials*') ? 'bg-paper/10' : '' }}">
                 <span>⭐</span> Testimonials
             </a>
+
+            <div class="pt-3 mt-3 border-t border-paper/10 space-y-1">
+                <a href="/admin/analytics" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/analytics*') ? 'bg-paper/10' : '' }}">
+                    <span>📈</span> Analytics
+                </a>
+                <a href="/admin/settings" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/settings*') ? 'bg-paper/10' : '' }}">
+                    <span>⚙️</span> Settings
+                </a>
+            </div>
         </nav>
 
         <div class="p-4 border-t border-paper/10 space-y-2">

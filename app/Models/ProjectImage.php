@@ -27,11 +27,25 @@ class ProjectImage extends Model
         return $this->belongsTo(CompletedProject::class);
     }
 
-    // Handles both full external URLs (e.g. seeded placeholders) and local storage paths
-    public function getUrlAttribute(): string
+    /**
+     * Convenience accessor: $image->url
+     *
+     * Resolves against the "public" disk explicitly. Using the default disk
+     * here was a bug: the default is "local", whose root is storage/app/private,
+     * so uploaded images produced URLs that pointed at a path where the file
+     * did not exist. Swapping the disk name here (or the disk's driver in
+     * config/filesystems.php) is the single change needed to move to S3 later.
+     *
+     * Absolute URLs are passed through untouched so a CDN can be mixed in.
+     */
+    public function getUrlAttribute(): ?string
     {
+        if (blank($this->image_path)) {
+            return null;
+        }
+
         return str_starts_with($this->image_path, 'http')
             ? $this->image_path
-            : Storage::url($this->image_path);
+            : Storage::disk('public')->url($this->image_path);
     }
 }

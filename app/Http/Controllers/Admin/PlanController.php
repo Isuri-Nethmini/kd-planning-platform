@@ -25,7 +25,7 @@ class PlanController extends Controller
     public function create(): View
     {
         $categories = Category::all();
-        return view('admin.plans.create', compact('categories'));
+        return view('admin.plans.form', compact('categories'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -47,7 +47,7 @@ class PlanController extends Controller
         ]);
 
         $plan = HousePlan::create([
-            ...$validated,
+            ...collect($validated)->except(['categories', 'images'])->all(),
             'is_featured' => $request->boolean('is_featured'),
             'is_active'   => $request->boolean('is_active', true),
         ]);
@@ -61,7 +61,7 @@ class PlanController extends Controller
                 $path = $file->store("plans/{$plan->id}", 'public');
                 PlanImage::create([
                     'house_plan_id' => $plan->id,
-                    'image_path'    => Storage::url($path),
+                    'image_path'    => $path,
                     'is_primary'    => $i === 0,
                     'sort_order'    => $i + 1,
                 ]);
@@ -75,7 +75,7 @@ class PlanController extends Controller
     {
         $categories = Category::all();
         $plan->load(['images', 'categories']);
-        return view('admin.plans.edit', compact('plan', 'categories'));
+        return view('admin.plans.form', compact('plan', 'categories'));
     }
 
     public function update(Request $request, HousePlan $plan): RedirectResponse
@@ -97,7 +97,7 @@ class PlanController extends Controller
         ]);
 
         $plan->update([
-            ...$validated,
+            ...collect($validated)->except(['categories', 'images'])->all(),
             'is_featured' => $request->boolean('is_featured'),
             'is_active'   => $request->boolean('is_active'),
         ]);
@@ -109,7 +109,7 @@ class PlanController extends Controller
                 $path = $file->store("plans/{$plan->id}", 'public');
                 PlanImage::create([
                     'house_plan_id' => $plan->id,
-                    'image_path'    => Storage::url($path),
+                    'image_path'    => $path,
                     'is_primary'    => false,
                     'sort_order'    => $plan->images()->count() + $i + 1,
                 ]);
@@ -121,6 +121,12 @@ class PlanController extends Controller
 
     public function destroy(HousePlan $plan): RedirectResponse
     {
+        // Remove the plan's uploaded images from disk before dropping the rows,
+        // otherwise deleted plans leave orphaned files in storage forever.
+        Storage::disk('public')->deleteDirectory("plans/{$plan->id}");
+
+        $plan->images()->delete();
+        $plan->categories()->detach();
         $plan->delete();
         return redirect('/admin/plans')->with('success', 'Plan deleted.');
     }

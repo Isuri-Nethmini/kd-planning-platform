@@ -21,6 +21,17 @@
     @csrf
     @if(isset($plan)) @method('PUT') @endif
 
+    @if($errors->any())
+        <div class="bg-clay/10 border border-clay/30 text-clay text-sm px-4 py-4 rounded-sm">
+            <p class="font-semibold mb-2">Please fix the following errors:</p>
+            <ul class="list-disc list-inside space-y-1">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="grid lg:grid-cols-3 gap-8">
 
         {{-- Left: Main fields --}}
@@ -48,28 +59,32 @@
                     <div>
                         <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Price (Rs.) *</label>
                         <input type="number" name="price" value="{{ old('price', $plan->price ?? '') }}"
-                            class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
+                            class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('price') border-clay @enderror">
+                        @error('price')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Floor Area (sqft) *</label>
                         <input type="number" name="floor_area" value="{{ old('floor_area', $plan->floor_area ?? '') }}"
-                            class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
+                            class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('floor_area') border-clay @enderror">
+                        @error('floor_area')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Bedrooms *</label>
                         <input type="number" name="bedrooms" min="1" value="{{ old('bedrooms', $plan->bedrooms ?? '') }}"
-                            class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
+                            class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('bedrooms') border-clay @enderror">
+                        @error('bedrooms')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Bathrooms *</label>
                         <input type="number" name="bathrooms" min="1" value="{{ old('bathrooms', $plan->bathrooms ?? '') }}"
-                            class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
+                            class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('bathrooms') border-clay @enderror">
+                        @error('bathrooms')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Floors *</label>
                         <select name="floors" class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
                             @foreach([1,2,3] as $f)
-                                <option value="{{ $f }}" {{ old('floors', $plan->floors ?? '') == $f ? 'selected' : '' }}>{{ $f }}</option>
+                                <option value="{{ $f }}" {{ old('floors', $plan->floors ?? 1) == $f ? 'selected' : '' }}>{{ $f }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -111,12 +126,16 @@
                 <h2 class="font-display font-semibold text-ink">Settings</h2>
 
                 <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" name="is_active" value="1" {{ old('is_active', $plan->is_active ?? true) ? 'checked' : '' }} class="accent-draft w-4 h-4">
+                    <input type="checkbox" name="is_active" value="1"
+                        {{ old('is_active', $plan->is_active ?? true) ? 'checked' : '' }}
+                        class="accent-draft w-4 h-4">
                     <span class="text-sm">Active (visible to public)</span>
                 </label>
 
                 <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" name="is_featured" value="1" {{ old('is_featured', $plan->is_featured ?? false) ? 'checked' : '' }} class="accent-clay w-4 h-4">
+                    <input type="checkbox" name="is_featured" value="1"
+                        {{ old('is_featured', $plan->is_featured ?? false) ? 'checked' : '' }}
+                        class="accent-clay w-4 h-4">
                     <span class="text-sm">Featured on homepage ⭐</span>
                 </label>
             </div>
