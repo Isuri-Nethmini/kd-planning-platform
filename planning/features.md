@@ -11,7 +11,10 @@ Status legend: ✅ done · 🟡 partial · ⬜ not started
 - ✅ FR-04: Advanced Search & Filters (bedrooms, floors, category, sort; searches name/description/style)
 - ✅ FR-06: Guest Inquiry System (no login required)
 - 🟡 FR-07: Email Notifications — code complete, currently `MAIL_MAILER=log`; **needs Gmail SMTP credentials**
-- ✅ FR-08: Multi-Admin Dashboard (2 admin users, session-based `AdminAuth` middleware)
+- ✅ FR-08: Multi-Admin Dashboard — session-based `AdminAuth` middleware, plus full
+  admin account management (add/edit/remove admins, primary vs staff roles,
+  `PrimaryAdmin` middleware gating). Safeguards: cannot delete own account,
+  cannot delete or demote the last primary admin.
 - ✅ FR-09: Plan Image Gallery Management (upload, primary image, delete-with-cleanup)
 - ✅ FR-13: WhatsApp Chat Button (floating, all pages, official logo, number editable in Settings)
 - ✅ FR-16: Responsive Design (mobile-first)
@@ -26,6 +29,7 @@ Status legend: ✅ done · 🟡 partial · ⬜ not started
 
 ### Added beyond the original list
 - ✅ Admin Settings page — WhatsApp number and notification email editable without touching code
+- ✅ Admin Users page — create, edit and remove admin accounts with role-based permissions
 - ✅ Hero background video slot — auto-detects `public/media/hero.mp4` when the client supplies it
 
 ## Outstanding — blocked on client
@@ -38,6 +42,11 @@ Status legend: ✅ done · 🟡 partial · ⬜ not started
 1. FR-03: 3D plan visualisation (client request — scope and library still to be decided)
 2. FR-07: Gmail SMTP credentials + switch `MAIL_MAILER` to `smtp`
 3. Remove price from Featured Plans cards on homepage — **done**, cards now show specs only
+4. Price vs. quote contradiction raised at the last panel review — **resolved**.
+   The figure on a plan is now labelled **Plan Price** (the drawings), and the
+   call to action is **Request a Construction Estimate**. An explainer panel on
+   the plan detail page states that construction is quoted separately because it
+   depends on land, materials and finishes. Copy aligned sitewide.
 
 ## Client Requirements Summary
 - Total existing plans: ~40

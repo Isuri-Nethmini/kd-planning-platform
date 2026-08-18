@@ -4,6 +4,7 @@ use App\Http\Controllers\Public\ContentController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\PlanController;
 use App\Http\Controllers\Public\InquiryController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BlogController;
@@ -83,5 +84,15 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->group(function () {
     Route::get('/admin/analytics', [AnalyticsController::class, 'index'])->name('admin.analytics');
     Route::get('/admin/settings', [SettingController::class, 'edit'])->name('admin.settings');
     Route::put('/admin/settings', [SettingController::class, 'update'])->name('admin.settings.update');
+
+    // Admin account management — primary admins only
+    Route::middleware(\App\Http\Middleware\PrimaryAdmin::class)->group(function () {
+        Route::get('/admin/admins', [AdminUserController::class, 'index'])->name('admin.admins.index');
+        Route::get('/admin/admins/create', [AdminUserController::class, 'create'])->name('admin.admins.create');
+        Route::post('/admin/admins', [AdminUserController::class, 'store'])->name('admin.admins.store');
+        Route::get('/admin/admins/{admin}/edit', [AdminUserController::class, 'edit'])->name('admin.admins.edit');
+        Route::put('/admin/admins/{admin}', [AdminUserController::class, 'update'])->name('admin.admins.update');
+        Route::delete('/admin/admins/{admin}', [AdminUserController::class, 'destroy'])->name('admin.admins.destroy');
+    });
 
 });

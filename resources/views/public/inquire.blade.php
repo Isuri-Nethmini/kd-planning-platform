@@ -7,7 +7,10 @@
 <div class="bg-ink text-paper py-12">
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-2">Get in Touch</p>
-        <h1 class="font-display text-3xl md:text-4xl font-semibold">Request a Quote</h1>
+        <h1 class="font-display text-3xl md:text-4xl font-semibold">Request a Construction Estimate</h1>
+        <p class="text-paper/60 mt-3 max-w-xl leading-relaxed text-sm">
+            Plan prices cover the drawings. Tell us about your land and finishes and we'll estimate the build cost.
+        </p>
     </div>
 </div>
 

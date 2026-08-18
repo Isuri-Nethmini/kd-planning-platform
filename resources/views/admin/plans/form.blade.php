@@ -57,10 +57,11 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Price (Rs.) *</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Plan Price (Rs.) *</label>
                         <input type="number" name="price" value="{{ old('price', $plan->price ?? '') }}"
                             class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('price') border-clay @enderror">
                         @error('price')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
+                        <p class="text-xs text-ink/40 mt-1">Cost of the drawings — not the construction cost.</p>
                     </div>
                     <div>
                         <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Floor Area (sqft) *</label>

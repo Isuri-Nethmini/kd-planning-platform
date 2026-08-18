@@ -17,6 +17,9 @@
         <div class="p-5 border-b border-paper/10">
             <p class="font-display font-bold text-paper">KD <span class="text-clay">Admin</span></p>
             <p class="font-mono text-xs text-paper/40 mt-0.5">{{ session('admin_name') }}</p>
+            <p class="font-mono text-[10px] text-draft/70 uppercase tracking-wider mt-0.5">
+                {{ session('admin_role') === 'primary' ? 'Primary Admin' : 'Staff Admin' }}
+            </p>
         </div>
 
         <nav class="flex-1 p-4 space-y-1 text-sm">
@@ -50,6 +53,11 @@
                 <a href="/admin/settings" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/settings*') ? 'bg-paper/10' : '' }}">
                     <span>⚙️</span> Settings
                 </a>
+                @if(session('admin_role') === 'primary')
+                    <a href="/admin/admins" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/admins*') ? 'bg-paper/10' : '' }}">
+                        <span>👥</span> Admin Users
+                    </a>
+                @endif
             </div>
         </nav>
 

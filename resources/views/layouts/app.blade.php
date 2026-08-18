@@ -29,7 +29,7 @@
             </nav>
 
             <a href="/inquire" class="inline-flex items-center rounded-sm bg-ink text-paper text-sm font-medium px-4 py-2 hover:bg-ink/90 transition-colors">
-                Request a Quote
+                Get an Estimate
             </a>
         </div>
     </header>
