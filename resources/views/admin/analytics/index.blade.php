@@ -12,17 +12,31 @@
 {{-- Summary --}}
 <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
     @foreach([
-        ['Total Plans',      number_format($summary['total_plans'])],
-        ['Active Plans',     number_format($summary['active_plans'])],
         ['Total Plan Views', number_format($summary['total_views'])],
         ['Total Inquiries',  number_format($summary['total_inquiries'])],
-        ['View → Inquiry',   $summary['conversion'].'%'],
+        ['View → Inquiry',   $summary['view_to_inquiry'].'%'],
+        ['Converted Sales',  number_format($summary['won'])],
+        ['Inquiry → Sale',   $summary['inquiry_to_sale'].'%'],
     ] as [$label, $value])
         <div class="bg-white border border-ink/10 rounded-sm p-5">
             <p class="font-mono text-xs uppercase tracking-wider text-ink/40 mb-2">{{ $label }}</p>
             <p class="font-display text-2xl font-bold text-ink">{{ $value }}</p>
         </div>
     @endforeach
+</div>
+
+{{-- Pipeline value --}}
+<div class="grid sm:grid-cols-2 gap-4 mb-10">
+    <div class="bg-white border border-ink/10 rounded-sm p-5">
+        <p class="font-mono text-xs uppercase tracking-wider text-ink/40 mb-2">Total Quoted Value</p>
+        <p class="font-display text-2xl font-bold text-draft">Rs. {{ number_format($summary['quoted_value']) }}</p>
+        <p class="text-xs text-ink/40 mt-1">Across every inquiry with an estimate recorded.</p>
+    </div>
+    <div class="bg-white border border-ink/10 rounded-sm p-5">
+        <p class="font-mono text-xs uppercase tracking-wider text-ink/40 mb-2">Converted Value</p>
+        <p class="font-display text-2xl font-bold text-moss">Rs. {{ number_format($summary['won_value']) }}</p>
+        <p class="text-xs text-ink/40 mt-1">Estimates on inquiries marked as converted.</p>
+    </div>
 </div>
 
 {{-- Inquiries over time --}}
@@ -104,10 +118,12 @@
         <h2 class="font-display font-semibold text-ink mb-4">Inquiry Status</h2>
         <div class="bg-white border border-ink/10 rounded-sm p-5 space-y-3">
             @php $totalStatus = max(1, array_sum($statusBreakdown)); @endphp
-            @foreach(['new' => 'clay', 'read' => 'draft', 'responded' => 'moss'] as $status => $color)
+            @php $colors = ['new'=>'clay','read'=>'ink','quoted'=>'draft','converted'=>'moss','closed'=>'ink']; @endphp
+            @foreach(\App\Models\Inquiry::STATUSES as $status => $statusLabel)
+                @php $color = $colors[$status] ?? 'ink'; @endphp
                 <div>
                     <div class="flex justify-between text-sm mb-1">
-                        <span class="text-ink/70 capitalize">{{ $status }}</span>
+                        <span class="text-ink/70">{{ $statusLabel }}</span>
                         <span class="font-mono text-xs text-ink/40">
                             {{ $statusBreakdown[$status] }}
                             ({{ round(($statusBreakdown[$status] / $totalStatus) * 100) }}%)

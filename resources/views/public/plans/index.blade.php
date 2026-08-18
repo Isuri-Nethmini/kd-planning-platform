@@ -152,4 +152,6 @@
     </div>
 </div>
 
+<x-how-it-works :compact="true" />
+
 @endsection

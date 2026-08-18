@@ -15,13 +15,14 @@
 </div>
 
 {{-- Stats --}}
-<div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
+<div class="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-10">
     @foreach([
         ['Total Plans',      $stats['total_plans'],      'ink'],
         ['Active Plans',     $stats['active_plans'],     'moss'],
         ['All Inquiries',    $stats['total_inquiries'],  'draft'],
         ['New Inquiries',    $stats['new_inquiries'],    'clay'],
         ['This Week',        $stats['this_week'],        'draft'],
+        ['Converted',        $stats['converted'],        'moss'],
     ] as [$label, $value, $color])
         <div class="bg-white border border-ink/10 rounded-sm p-5">
             <p class="font-mono text-xs uppercase tracking-wider text-ink/40 mb-2">{{ $label }}</p>
@@ -49,9 +50,8 @@
                             {{ $inquiry->created_at->diffForHumans() }}
                         </p>
                     </div>
-                    <span class="font-mono text-[11px] uppercase px-2 py-1 rounded-sm
-                        {{ $inquiry->status === 'new' ? 'bg-clay/10 text-clay' : 'bg-ink/5 text-ink/40' }}">
-                        {{ $inquiry->status }}
+                    <span class="font-mono text-[11px] uppercase px-2 py-1 rounded-sm {{ $inquiry->status_class }}">
+                        {{ $inquiry->status_label }}
                     </span>
                 </div>
             @empty

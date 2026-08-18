@@ -117,6 +117,9 @@
     </div>
 </section>
 
+{{-- ───────────────────────── HOW IT WORKS ───────────────────────── --}}
+<x-how-it-works />
+
 {{-- ───────────────────────── TESTIMONIALS ───────────────────────── --}}
 <section id="testimonials" class="bg-moss/10 py-20">
     <div class="max-w-6xl mx-auto px-5">
