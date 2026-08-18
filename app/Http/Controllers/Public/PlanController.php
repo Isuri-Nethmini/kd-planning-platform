@@ -41,6 +41,9 @@ class PlanController extends Controller
         }
 
         // Floor filter
+        // The floors dropdown was removed from the filter panel (the Category
+        // list covers storeys), but the parameter is still honoured so older
+        // bookmarks and any shared links continue to work.
         if ($request->filled('floors')) {
             $query->where('floors', $request->floors);
         }

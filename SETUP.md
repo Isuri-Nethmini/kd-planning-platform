@@ -75,6 +75,21 @@ uploaded becomes the card thumbnail. Until images exist, every plan renders the
 
 ---
 
+## Client assets (received 18 Aug 2026)
+
+| Asset | Where it went |
+|---|---|
+| `logo.ai` / `logo.png` | Header, footer and all favicons — rasterised from the **vector**, so it stays sharp |
+| `hero video.mp4` (100 MB) | Cut to an 18 s silent 720p loop, **3.0 MB**, at `public/media/hero.mp4` with a poster frame |
+| `Previous work/` (5 images) | Seeded as five real completed projects with the client's own names, locations and costs |
+| `About us section.doc` | The `/about` page — company profile, principles, "We Design, We Build" |
+| `Contcas page.doc` | Director credentials and phone number on `/about`; contact details in the footer |
+| `3d architec.jpg` | `public/media/projects/render-showcase.jpg` — available for use as plan artwork |
+
+The service images (CCTV, electrical work, consulting, construction) were **not**
+used. They suggest the business offers more than house plans, which is a scope
+question for the client rather than something to guess at.
+
 ## Known gaps
 
 1. **3D plan views (FR-03)** — client requested; not started. Approach not yet chosen.
@@ -82,8 +97,16 @@ uploaded becomes the card thumbnail. Until images exist, every plan renders the
    `MAIL_MAILER=log` in `.env`, so notifications are written to
    `storage/logs/laravel.log` rather than sent. Switching to Gmail SMTP needs an
    app password from the client.
-3. **Real content** — plan names, descriptions and prices are placeholder data
-   written for development. The client has ~40 real plans to supply.
+3. **Real plan content** — the 12 seeded plans are placeholder data. The client
+   has around 40 real plans to supply, with drawings.
+4. **Testimonials are placeholder.** The five seeded testimonials are invented
+   names. Completed projects, by contrast, are real. Ask the client for genuine
+   quotes before launch — and be ready to say so if asked during a review.
+5. **`.obj` 3D files are not web-renderable.** Browsers cannot display `.obj`
+   natively, and the format is geometry-only with separate `.mtl` and texture
+   files, uncompressed. The web standard is **glTF 2.0 (`.glb`)** — one
+   self-contained file, typically 5-20x smaller. Most CAD tools (SketchUp,
+   Revit, 3ds Max, Blender, Lumion) can export or convert to it.
 
 ---
 

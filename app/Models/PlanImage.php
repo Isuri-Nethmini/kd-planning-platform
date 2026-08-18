@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Concerns\ResolvesImageUrl;
 
 class PlanImage extends Model
 {
     use HasFactory;
+    use ResolvesImageUrl;
 
     protected $fillable = [
         'house_plan_id',
@@ -30,23 +31,9 @@ class PlanImage extends Model
     // Convenience accessor: $image->url
     /**
      * Convenience accessor: $image->url
-     *
-     * Resolves against the "public" disk explicitly. Using the default disk
-     * here was a bug: the default is "local", whose root is storage/app/private,
-     * so uploaded images produced URLs that pointed at a path where the file
-     * did not exist. Swapping the disk name here (or the disk's driver in
-     * config/filesystems.php) is the single change needed to move to S3 later.
-     *
-     * Absolute URLs are passed through untouched so a CDN can be mixed in.
      */
     public function getUrlAttribute(): ?string
     {
-        if (blank($this->image_path)) {
-            return null;
-        }
-
-        return str_starts_with($this->image_path, 'http')
-            ? $this->image_path
-            : Storage::disk('public')->url($this->image_path);
+        return $this->resolveImageUrl($this->image_path);
     }
 }

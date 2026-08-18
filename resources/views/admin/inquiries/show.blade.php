@@ -22,6 +22,24 @@
             <p class="text-ink/80 leading-relaxed whitespace-pre-line">{{ $inquiry->message }}</p>
         </div>
 
+        @if($inquiry->completedProject)
+            <div class="bg-white border border-ink/10 rounded-sm p-6">
+                <h2 class="font-display font-semibold text-ink mb-1">Wants a Design Like</h2>
+                <p class="text-xs text-ink/40 mb-4">Client asked for a variation of a project we've already built.</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-20 h-16 rounded-sm overflow-hidden bg-ink/5 shrink-0">
+                        <x-image-frame :src="$inquiry->completedProject->primaryImage?->url" :alt="$inquiry->completedProject->title" :zoom="false" note="" />
+                    </div>
+                    <div>
+                        <p class="font-display font-semibold text-ink">{{ $inquiry->completedProject->title }}</p>
+                        @if($inquiry->completedProject->location)
+                            <p class="font-mono text-xs text-ink/40">{{ $inquiry->completedProject->location }}</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
+
         @if($inquiry->housePlan)
             <div class="bg-white border border-ink/10 rounded-sm p-6">
                 <h2 class="font-display font-semibold text-ink mb-4">Plan of Interest</h2>

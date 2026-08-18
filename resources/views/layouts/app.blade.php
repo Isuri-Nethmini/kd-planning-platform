@@ -6,6 +6,13 @@
     <title>@yield('title', 'KD Planning & Design') | House Plans &amp; Construction</title>
     <meta name="description" content="@yield('meta_description', 'Browse house plans and request a free construction quote from KD Planning & Design, Minuwangoda, Sri Lanka.')">
 
+    {{-- Favicons, generated from the client's vector logo --}}
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#1C2733">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -16,14 +23,16 @@
 
     <header class="sticky top-0 z-40 bg-paper/95 backdrop-blur border-b border-ink/10">
         <div class="max-w-6xl mx-auto px-5 flex items-center justify-between h-16">
-            <a href="{{ url('/') }}" class="font-display font-bold text-lg text-ink tracking-tight">
-                KD <span class="text-clay">Planning</span> &amp; Design
+            <a href="{{ url('/') }}" class="flex items-center" aria-label="KD Planning &amp; Design — home">
+                <img src="{{ asset('media/logo.png') }}" alt="KD Planning &amp; Design"
+                     class="h-10 w-auto" width="520" height="225">
             </a>
 
             <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-ink/80">
                 <a href="/" class="hover:text-draft transition-colors">Home</a>
                 <a href="/plans" class="hover:text-draft transition-colors">House Plans</a>
                 <a href="/completed-projects" class="hover:text-draft transition-colors">Completed Work</a>
+                <a href="/about" class="hover:text-draft transition-colors">About</a>
                 <a href="/blog" class="hover:text-draft transition-colors">Blog</a>
                 <a href="/#testimonials" class="hover:text-draft transition-colors">Testimonials</a>
             </nav>
@@ -41,8 +50,10 @@
     <footer class="bg-ink text-paper/80 mt-24">
         <div class="max-w-6xl mx-auto px-5 py-12 grid gap-10 md:grid-cols-3 text-sm">
             <div>
-                <p class="font-display text-lg text-paper font-semibold mb-3">KD Planning &amp; Design</p>
-                <p class="text-paper/60 leading-relaxed">House plans and construction services based in Minuwangoda, Sri Lanka.</p>
+                <img src="{{ asset('media/logo.png') }}" alt="KD Planning &amp; Design"
+                     class="h-11 w-auto mb-4 brightness-0 invert opacity-90" width="520" height="225">
+                <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-clay mb-3">We Design, We Build</p>
+                <p class="text-paper/60 leading-relaxed">A design firm and construction company in Sri Lanka, specialising in architectural design and construction works.</p>
             </div>
             <div>
                 <p class="uppercase tracking-wider text-xs text-draft mb-3">Navigate</p>

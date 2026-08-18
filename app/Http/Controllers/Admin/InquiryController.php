@@ -13,7 +13,7 @@ class InquiryController extends Controller
 {
     public function index(Request $request): View
     {
-        $query = Inquiry::with('housePlan')->latest();
+        $query = Inquiry::with(['housePlan', 'completedProject'])->latest();
 
         if ($request->filled('status') && $request->status !== 'all') {
             $query->where('status', $request->status);
@@ -51,7 +51,7 @@ class InquiryController extends Controller
             $inquiry->update(['status' => 'read']);
         }
 
-        $inquiry->load('housePlan');
+        $inquiry->load(['housePlan', 'completedProject']);
 
         return view('admin.inquiries.show', compact('inquiry'));
     }

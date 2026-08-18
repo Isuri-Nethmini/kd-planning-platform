@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Concerns\ResolvesImageUrl;
 use Illuminate\Support\Str;
 
 class BlogPost extends Model
 {
     use HasFactory;
+    use ResolvesImageUrl;
 
     protected $fillable = [
         'title',
@@ -31,13 +32,7 @@ class BlogPost extends Model
      */
     public function getCoverUrlAttribute(): ?string
     {
-        if (blank($this->cover_image)) {
-            return null;
-        }
-
-        return str_starts_with($this->cover_image, 'http')
-            ? $this->cover_image
-            : Storage::disk('public')->url($this->cover_image);
+        return $this->resolveImageUrl($this->cover_image);
     }
 
     public function getExcerptAttribute(): string
