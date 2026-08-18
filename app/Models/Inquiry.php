@@ -32,6 +32,7 @@ class Inquiry extends Model
         'email',
         'phone',
         'house_plan_id',
+        'completed_project_id',
         'message',
         'status',
         'admin_notes',
@@ -47,6 +48,29 @@ class Inquiry extends Model
     public function housePlan(): BelongsTo
     {
         return $this->belongsTo(HousePlan::class);
+    }
+
+    /**
+     * Set when the buyer asked for a design based on a house KD already built,
+     * rather than picking something from the catalogue.
+     */
+    public function completedProject(): BelongsTo
+    {
+        return $this->belongsTo(CompletedProject::class);
+    }
+
+    /** Short human label for whatever this inquiry is about. */
+    public function getSubjectLabelAttribute(): string
+    {
+        if ($this->housePlan) {
+            return $this->housePlan->name;
+        }
+
+        if ($this->completedProject) {
+            return 'Similar to: ' . $this->completedProject->title;
+        }
+
+        return 'General inquiry';
     }
 
     public function getStatusLabelAttribute(): string

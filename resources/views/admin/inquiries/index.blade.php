@@ -46,7 +46,7 @@
                         <p class="font-mono text-xs text-ink/40">{{ $inquiry->email }}</p>
                     </td>
                     <td class="px-4 py-4 text-ink/60 hidden md:table-cell">
-                        {{ $inquiry->housePlan?->name ?? 'General inquiry' }}
+                        {{ $inquiry->subject_label }}
                     </td>
                     <td class="px-4 py-4 font-mono text-xs text-ink/40 hidden lg:table-cell">
                         {{ $inquiry->created_at->format('d M Y, H:i') }}

@@ -16,13 +16,21 @@
 
 <section class="bp-grid bg-ink text-paper relative overflow-hidden">
     @if($heroVideo)
+        {{--
+            Muted, looping background video. The poster frame shows first and
+            remains visible if autoplay is blocked (common on iOS Low Power
+            Mode), so the hero never falls back to an empty dark box.
+            preload="none" on small screens keeps the 3 MB off mobile data.
+        --}}
         <video
-            class="absolute inset-0 w-full h-full object-cover opacity-30"
-            src="{{ $heroVideo }}"
-            autoplay muted loop playsinline
+            class="absolute inset-0 w-full h-full object-cover opacity-35"
+            poster="{{ asset('media/hero-poster.jpg') }}"
+            autoplay muted loop playsinline preload="metadata"
             aria-hidden="true"
-        ></video>
-        <div class="absolute inset-0 bg-ink/60" aria-hidden="true"></div>
+        >
+            <source src="{{ $heroVideo }}" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-ink/70" aria-hidden="true"></div>
     @endif
 
     <div class="max-w-6xl mx-auto px-5 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center relative z-10">
@@ -32,7 +40,7 @@
                 Find the house plan<br>you'll actually build.
             </h1>
             <p class="text-paper/70 text-lg leading-relaxed mb-8 max-w-md">
-                Browse {{ $totalPlans }}+ ready-made designs with full specifications — no login, no waiting on a phone call.
+                Browse {{ $totalPlans }} ready-made designs with full specifications — no login, no waiting on a phone call.
             </p>
             <div class="flex flex-wrap gap-4">
                 <a href="/plans" class="inline-flex items-center rounded-sm bg-draft text-ink font-medium px-6 py-3 hover:bg-draft/90 transition-colors">
@@ -72,13 +80,13 @@
 {{-- ───────────────────────── TRUST STRIP ───────────────────────── --}}
 <section class="border-b border-ink/10 bg-paper">
     <div class="max-w-6xl mx-auto px-5 py-5 flex flex-wrap gap-x-10 gap-y-2 justify-center text-sm font-mono text-ink/60">
-        <span>{{ $totalPlans }}+ PLANS LISTED</span>
+        <span>{{ $totalPlans }} PLANS LISTED</span>
         <span class="text-clay/50">·</span>
         <span>NEW PLANS WEEKLY</span>
         <span class="text-clay/50">·</span>
         <span>NO LOGIN TO INQUIRE</span>
         <span class="text-clay/50">·</span>
-        <span>FREE QUOTES</span>
+        <span>FREE ESTIMATES</span>
     </div>
 </section>
 
@@ -99,7 +107,6 @@
                     <x-image-frame
                         :src="$plan->primaryImage?->url"
                         :alt="$plan->name"
-                        :label="'PLAN NO. '.str_pad($plan->id, 4, '0', STR_PAD_LEFT)"
                     />
                     <span class="absolute top-3 left-3 font-mono text-[11px] bg-ink/80 text-paper px-2 py-1 rounded-sm">
                         PLAN NO. {{ str_pad($plan->id, 4, '0', STR_PAD_LEFT) }}

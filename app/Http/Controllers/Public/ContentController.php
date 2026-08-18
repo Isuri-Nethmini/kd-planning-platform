@@ -13,6 +13,11 @@ use Illuminate\View\View;
  */
 class ContentController extends Controller
 {
+    public function about(): View
+    {
+        return view('public.about.index');
+    }
+
     public function projects(): View
     {
         $projects = CompletedProject::active()

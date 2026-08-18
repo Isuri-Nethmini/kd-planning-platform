@@ -59,15 +59,16 @@
                         </select>
                     </div>
 
-                    {{-- Floors --}}
-                    <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-2">Floors</label>
-                        <select name="floors" onchange="document.getElementById('filter-form').submit()" class="w-full border border-ink/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-draft">
-                            <option value="">Any</option>
-                            <option value="1" {{ request('floors') == 1 ? 'selected' : '' }}>Single Storey</option>
-                            <option value="2" {{ request('floors') == 2 ? 'selected' : '' }}>Double Storey</option>
-                        </select>
-                    </div>
+    {{--
+        The "Floors" dropdown that used to sit here was removed: the Category
+        list already offers Single Storey and Double Storey, so the panel
+        presented two different controls for the same attribute, which could
+        also be set to contradict each other (category "Single Storey" plus
+        floors "2" returned nothing). Category is now the single control for
+        storeys. The floors figure is still shown on every plan card and the
+        detail page, and the ?floors= query parameter is still honoured by the
+        controller so any existing links keep working.
+    --}}
 
                     {{-- Sort --}}
                     <div>
@@ -107,7 +108,6 @@
                                 <x-image-frame
                                     :src="$plan->primaryImage?->url"
                                     :alt="$plan->name"
-                                    :label="'PLAN NO. '.str_pad($plan->id, 4, '0', STR_PAD_LEFT)"
                                 />
                                 <span class="absolute top-3 left-3 font-mono text-[11px] bg-ink/80 text-paper px-2 py-1 rounded-sm">
                                     PLAN NO. {{ str_pad($plan->id, 4, '0', STR_PAD_LEFT) }}

@@ -22,6 +22,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
 Route::get('/plans/{housePlan}', [PlanController::class, 'show'])->name('plans.show');
 
+Route::get('/about', [ContentController::class, 'about'])->name('about');
 Route::get('/completed-projects', [ContentController::class, 'projects'])->name('projects.index');
 
 Route::get('/blog', [ContentController::class, 'blog'])->name('blog.index');

@@ -40,11 +40,17 @@
                         @if($project->description)
                             <p class="text-sm text-ink/60 leading-relaxed">{{ $project->description }}</p>
                         @endif
-                        @if($project->images->count() > 1)
-                            <p class="font-mono text-[10px] uppercase tracking-wider text-ink/30 mt-3">
-                                {{ $project->images->count() }} photos
-                            </p>
-                        @endif
+                        {{--
+                            The client asked for this: buyers frequently point at
+                            a house KD has already built and want the same design
+                            with changes. This carries the project id into the
+                            inquiry so the office knows exactly which house.
+                        --}}
+                        <a href="/inquire?project={{ $project->id }}"
+                           class="inline-flex items-center gap-2 mt-4 font-mono text-[11px] uppercase tracking-wider text-clay hover:text-ink transition-colors">
+                            Request a design like this
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
                     </div>
                 </article>
             @endforeach
@@ -59,7 +65,10 @@
 
     <div class="mt-16 bg-ink text-paper rounded-sm p-10 text-center">
         <h2 class="font-display text-xl md:text-2xl font-semibold mb-3">Want a home like these?</h2>
-        <p class="text-paper/70 mb-6 max-w-lg mx-auto">Browse our plan catalogue or send us your requirements and we'll come back with options.</p>
+        <p class="text-paper/70 mb-6 max-w-lg mx-auto">
+            We can adapt any design we've already built — change the room layout, the size or the finishes
+            to suit your land and budget. Tell us which one caught your eye.
+        </p>
         <a href="/inquire" class="inline-flex items-center rounded-sm bg-draft text-ink font-medium px-8 py-3 hover:bg-draft/90 transition-colors">
             Request an Estimate
         </a>

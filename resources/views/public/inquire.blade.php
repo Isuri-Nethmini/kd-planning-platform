@@ -16,6 +16,21 @@
 
 <div class="max-w-2xl mx-auto px-5 py-14">
 
+    @if($project)
+        <div class="bg-clay/10 border border-clay/30 rounded-sm p-4 mb-8 flex items-center gap-4">
+            <div class="w-16 h-14 rounded-sm overflow-hidden shrink-0">
+                <x-image-frame :src="$project->primaryImage?->url" :alt="$project->title" :zoom="false" note="" />
+            </div>
+            <div>
+                <p class="font-mono text-xs text-clay uppercase tracking-wider">Wants a design similar to</p>
+                <p class="font-display font-semibold text-ink">{{ $project->title }}</p>
+                @if($project->location)
+                    <p class="font-mono text-[11px] text-ink/40">{{ $project->location }}</p>
+                @endif
+            </div>
+        </div>
+    @endif
+
     @if($plan)
         <div class="bg-draft/10 border border-draft/30 rounded-sm p-4 mb-8 flex items-center gap-4">
             <div class="w-16 h-14 rounded-sm overflow-hidden shrink-0">
@@ -34,6 +49,10 @@
 
         @if($plan)
             <input type="hidden" name="house_plan_id" value="{{ $plan->id }}">
+        @endif
+
+        @if($project)
+            <input type="hidden" name="completed_project_id" value="{{ $project->id }}">
         @endif
 
         <div class="grid sm:grid-cols-2 gap-5">
