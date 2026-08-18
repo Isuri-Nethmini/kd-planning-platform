@@ -10,6 +10,23 @@ class Inquiry extends Model
 {
     use HasFactory;
 
+    /**
+     * The sales pipeline, in order.
+     *
+     * Kept here rather than in a database ENUM so a new stage is a one-line
+     * change. Validation rules and the admin UI both read from this list.
+     */
+    public const STATUSES = [
+        'new'       => 'New',
+        'read'      => 'Read',
+        'quoted'    => 'Quoted',
+        'converted' => 'Converted',
+        'closed'    => 'Closed',
+    ];
+
+    /** Stages that count as a completed sale. */
+    public const WON = ['converted'];
+
     protected $fillable = [
         'name',
         'email',
@@ -17,6 +34,14 @@ class Inquiry extends Model
         'house_plan_id',
         'message',
         'status',
+        'admin_notes',
+        'quoted_amount',
+        'responded_at',
+    ];
+
+    protected $casts = [
+        'quoted_amount' => 'decimal:2',
+        'responded_at'  => 'datetime',
     ];
 
     public function housePlan(): BelongsTo
@@ -24,10 +49,35 @@ class Inquiry extends Model
         return $this->belongsTo(HousePlan::class);
     }
 
+    public function getStatusLabelAttribute(): string
+    {
+        return self::STATUSES[$this->status] ?? ucfirst($this->status);
+    }
+
+    /**
+     * Tailwind classes for the status pill, so the colour coding stays
+     * consistent everywhere the status is displayed.
+     */
+    public function getStatusClassAttribute(): string
+    {
+        return match ($this->status) {
+            'new'       => 'bg-clay/10 text-clay',
+            'quoted'    => 'bg-draft/10 text-draft',
+            'converted' => 'bg-moss/10 text-moss',
+            'closed'    => 'bg-ink/10 text-ink/40',
+            default     => 'bg-ink/5 text-ink/50',
+        };
+    }
+
     // ── Scopes ────────────────────────────────────────────
     public function scopeNew($query)
     {
         return $query->where('status', 'new');
+    }
+
+    public function scopeWon($query)
+    {
+        return $query->whereIn('status', self::WON);
     }
 
     public function scopeRecent($query, int $days = 7)

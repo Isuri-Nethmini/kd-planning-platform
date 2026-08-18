@@ -17,6 +17,7 @@ class DashboardController extends Controller
             'total_inquiries'   => Inquiry::count(),
             'new_inquiries'     => Inquiry::where('status', 'new')->count(),
             'this_week'         => Inquiry::where('created_at', '>=', now()->startOfWeek())->count(),
+            'converted'         => Inquiry::won()->count(),
         ];
 
         $recentInquiries = Inquiry::with('housePlan')
