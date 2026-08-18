@@ -61,7 +61,7 @@
         <h2 class="font-display text-xl md:text-2xl font-semibold mb-3">Want a home like these?</h2>
         <p class="text-paper/70 mb-6 max-w-lg mx-auto">Browse our plan catalogue or send us your requirements and we'll come back with options.</p>
         <a href="/inquire" class="inline-flex items-center rounded-sm bg-draft text-ink font-medium px-8 py-3 hover:bg-draft/90 transition-colors">
-            Request a Quote
+            Request an Estimate
         </a>
     </div>
 </div>

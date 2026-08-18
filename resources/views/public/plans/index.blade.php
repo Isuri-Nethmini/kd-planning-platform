@@ -75,8 +75,8 @@
                         <select name="sort" onchange="document.getElementById('filter-form').submit()" class="w-full border border-ink/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-draft">
                             <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Newest</option>
                             <option value="most_viewed" {{ request('sort') === 'most_viewed' ? 'selected' : '' }}>Most Viewed</option>
-                            <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Price: Low → High</option>
-                            <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Price: High → Low</option>
+                            <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Plan Price: Low → High</option>
+                            <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Plan Price: High → Low</option>
                         </select>
                     </div>
 

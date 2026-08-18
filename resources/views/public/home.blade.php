@@ -39,7 +39,7 @@
                     Browse Plans
                 </a>
                 <a href="/inquire" class="inline-flex items-center rounded-sm border border-paper/30 text-paper font-medium px-6 py-3 hover:bg-paper/10 transition-colors">
-                    Get a Quote
+                    Get an Estimate
                 </a>
             </div>
         </div>
@@ -160,7 +160,7 @@
 <section class="bg-ink text-paper">
     <div class="max-w-4xl mx-auto px-5 py-16 text-center">
         <h2 class="font-display text-2xl md:text-3xl font-semibold mb-4">Ready to start building?</h2>
-        <p class="text-paper/70 mb-8 max-w-lg mx-auto">Tell us what you're looking for and we'll get back to you with options and pricing — no obligation.</p>
+        <p class="text-paper/70 mb-8 max-w-lg mx-auto">Send us your land details and the design you like, and we'll prepare a construction estimate — no obligation.</p>
         <a href="/inquire" class="inline-flex items-center rounded-sm bg-draft text-ink font-medium px-8 py-3 hover:bg-draft/90 transition-colors">
             Submit an Inquiry
         </a>

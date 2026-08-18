@@ -90,7 +90,7 @@
                     ['Floors',     $housePlan->floors],
                     ['Floor Area', number_format($housePlan->floor_area).' sqft'],
                     ['Style',      $housePlan->style ?? '—'],
-                    ['Price',      'Rs. '.number_format($housePlan->price)],
+                    ['Plan Price', 'Rs. '.number_format($housePlan->price)],
                 ] as [$label, $value])
                     <div class="bg-white border border-ink/10 rounded-sm p-3">
                         <p class="font-mono text-[10px] uppercase tracking-wider text-ink/40 mb-1">{{ $label }}</p>
@@ -99,12 +99,28 @@
                 @endforeach
             </div>
 
+            {{--
+                The panel flagged this at the last review: if a price is shown,
+                why ask for a quote? Because they are two different numbers.
+                The price above buys the drawings; the estimate is for building
+                the house, which depends on the land, materials and finishes.
+                Spelling that out removes the contradiction.
+            --}}
+            <div class="bg-draft/5 border border-draft/20 rounded-sm p-4">
+                <p class="font-mono text-[10px] uppercase tracking-wider text-draft mb-1">What's included</p>
+                <p class="text-sm text-ink/70 leading-relaxed">
+                    The plan price covers the architectural drawings and documentation for this design.
+                    <strong class="text-ink">Construction is quoted separately</strong> — the cost depends on your
+                    land, material choices and finishes, so we prepare that estimate for you individually.
+                </p>
+            </div>
+
             <div class="space-y-3 pt-2">
                 <a
                     href="/inquire?plan={{ $housePlan->id }}&name={{ urlencode($housePlan->name) }}"
                     class="block w-full text-center bg-ink text-paper font-medium py-3 rounded-sm hover:bg-ink/90 transition-colors"
                 >
-                    Request a Quote for this Plan
+                    Request a Construction Estimate
                 </a>
                 <a
                     href="https://wa.me/{{ preg_replace('/\D/', '', \App\Models\SystemSetting::get('whatsapp_number', '+94717261930')) }}?text={{ urlencode('Hi, I am interested in: '.$housePlan->name.' (Plan No. '.str_pad($housePlan->id,4,'0',STR_PAD_LEFT).')') }}"
