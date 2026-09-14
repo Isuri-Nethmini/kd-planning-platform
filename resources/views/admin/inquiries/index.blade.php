@@ -20,7 +20,7 @@
         @php $isActive = request('status', 'all') === $key; @endphp
         <a href="/admin/inquiries?status={{ $key }}{{ request('q') ? '&q='.urlencode(request('q')) : '' }}"
            class="font-mono text-xs uppercase tracking-wider px-3 py-2 rounded-sm border transition-colors
-                  {{ $isActive ? 'bg-ink text-paper border-ink' : 'border-ink/20 text-ink/60 hover:border-draft hover:text-draft' }}">
+                  {{ $isActive ? 'bg-ink text-paper border-ink' : 'border-ink/20 text-ink/70 hover:border-draft hover:text-draft' }}">
             {{ $label }} ({{ $counts[$key] }})
         </a>
     @endforeach
@@ -30,12 +30,12 @@
     <table class="w-full text-sm">
         <thead class="bg-ink/5 border-b border-ink/10">
             <tr>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">From</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50 hidden md:table-cell">Plan</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50 hidden lg:table-cell">Received</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50 hidden xl:table-cell">Quoted</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Status</th>
-                <th class="text-right px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Actions</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">From</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70 hidden md:table-cell">Plan</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70 hidden lg:table-cell">Received</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70 hidden xl:table-cell">Quoted</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Status</th>
+                <th class="text-right px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -43,19 +43,19 @@
                 <tr class="border-b border-ink/5 last:border-0 hover:bg-ink/5 transition-colors">
                     <td class="px-4 py-4">
                         <p class="font-medium text-ink">{{ $inquiry->name }}</p>
-                        <p class="font-mono text-xs text-ink/40">{{ $inquiry->email }}</p>
+                        <p class="font-mono text-xs text-ink/70">{{ $inquiry->email }}</p>
                     </td>
-                    <td class="px-4 py-4 text-ink/60 hidden md:table-cell">
+                    <td class="px-4 py-4 text-ink/70 hidden md:table-cell">
                         {{ $inquiry->subject_label }}
                     </td>
-                    <td class="px-4 py-4 font-mono text-xs text-ink/40 hidden lg:table-cell">
+                    <td class="px-4 py-4 font-mono text-xs text-ink/70 hidden lg:table-cell">
                         {{ $inquiry->created_at->format('d M Y, H:i') }}
                     </td>
-                    <td class="px-4 py-4 font-mono text-xs hidden xl:table-cell {{ $inquiry->quoted_amount ? 'text-clay' : 'text-ink/25' }}">
+                    <td class="px-4 py-4 font-mono text-xs hidden xl:table-cell {{ $inquiry->quoted_amount ? 'text-clay' : 'text-ink/70' }}">
                         {{ $inquiry->quoted_amount ? 'Rs. '.number_format($inquiry->quoted_amount) : '—' }}
                     </td>
                     <td class="px-4 py-4">
-                        <span class="font-mono text-[11px] uppercase px-2 py-1 rounded-sm {{ $inquiry->status_class }}">
+                        <span class="font-mono text-xs uppercase px-2 py-1 rounded-sm {{ $inquiry->status_class }}">
                             {{ $inquiry->status_label }}
                         </span>
                     </td>
@@ -65,7 +65,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="px-4 py-10 text-center text-ink/40">No inquiries found.</td>
+                    <td colspan="6" class="px-4 py-10 text-center text-ink/70">No inquiries found.</td>
                 </tr>
             @endforelse
         </tbody>

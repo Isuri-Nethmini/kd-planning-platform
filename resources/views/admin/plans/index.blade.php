@@ -15,11 +15,11 @@
     <table class="w-full text-sm">
         <thead class="bg-ink/5 border-b border-ink/10">
             <tr>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Plan</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50 hidden md:table-cell">Specs</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50 hidden lg:table-cell">Price</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Status</th>
-                <th class="text-right px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Actions</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Plan</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70 hidden md:table-cell">Specs</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70 hidden lg:table-cell">Price</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Status</th>
+                <th class="text-right px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@
                             </div>
                             <div>
                                 <p class="font-medium text-ink">{{ $plan->name }}</p>
-                                <p class="font-mono text-xs text-ink/40">
+                                <p class="font-mono text-xs text-ink/70">
                                     PLAN-{{ str_pad($plan->id, 4, '0', STR_PAD_LEFT) }}
                                     @if($plan->is_featured)
                                         &nbsp;⭐
@@ -41,15 +41,15 @@
                             </div>
                         </div>
                     </td>
-                    <td class="px-4 py-4 text-ink/60 hidden md:table-cell">
+                    <td class="px-4 py-4 text-ink/70 hidden md:table-cell">
                         {{ $plan->bedrooms }}BR · {{ $plan->bathrooms }}BA · {{ $plan->floors }}FL
                     </td>
                     <td class="px-4 py-4 font-mono text-clay hidden lg:table-cell">
                         Rs. {{ number_format($plan->price) }}
                     </td>
                     <td class="px-4 py-4">
-                        <span class="font-mono text-[11px] uppercase px-2 py-1 rounded-sm
-                            {{ $plan->is_active ? 'bg-moss/10 text-moss' : 'bg-ink/5 text-ink/40' }}">
+                        <span class="font-mono text-xs uppercase px-2 py-1 rounded-sm
+                            {{ $plan->is_active ? 'bg-moss/10 text-moss' : 'bg-ink/5 text-ink/70' }}">
                             {{ $plan->is_active ? 'Active' : 'Hidden' }}
                         </span>
                     </td>
@@ -66,7 +66,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="px-4 py-10 text-center text-ink/40">No plans yet.</td>
+                    <td colspan="5" class="px-4 py-10 text-center text-ink/70">No plans yet.</td>
                 </tr>
             @endforelse
         </tbody>
@@ -78,7 +78,7 @@
         @if(!$plans->onFirstPage())
             <a href="{{ $plans->previousPageUrl() }}" class="px-3 py-2 border border-ink/20 rounded-sm hover:bg-ink hover:text-paper transition-colors">← Prev</a>
         @endif
-        <span class="px-3 py-2 text-ink/60">Page {{ $plans->currentPage() }} of {{ $plans->lastPage() }}</span>
+        <span class="px-3 py-2 text-ink/70">Page {{ $plans->currentPage() }} of {{ $plans->lastPage() }}</span>
         @if($plans->hasMorePages())
             <a href="{{ $plans->nextPageUrl() }}" class="px-3 py-2 border border-ink/20 rounded-sm hover:bg-ink hover:text-paper transition-colors">Next →</a>
         @endif

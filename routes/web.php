@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CompletedProjectController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LoginLogController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\InquiryController as AdminInquiryController;
 use App\Http\Controllers\Admin\PlanController as AdminPlanController;
 use App\Http\Controllers\Admin\SettingController;
@@ -82,12 +84,20 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->group(function () {
     Route::delete('/admin/testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('admin.testimonials.destroy');
 
     // Analytics & settings
-    Route::get('/admin/analytics', [AnalyticsController::class, 'index'])->name('admin.analytics');
     Route::get('/admin/settings', [SettingController::class, 'edit'])->name('admin.settings');
     Route::put('/admin/settings', [SettingController::class, 'update'])->name('admin.settings.update');
 
-    // Admin account management — primary admins only
+    // Downloadable CSV reports
+    Route::get('/admin/reports', [ReportController::class, 'page'])->name('admin.reports');
+    Route::get('/admin/reports/inquiries.csv', [ReportController::class, 'inquiries'])->name('admin.reports.inquiries');
+
+    // Admin account management, audit log and commercial reports —
+    // primary admins only
     Route::middleware(\App\Http\Middleware\PrimaryAdmin::class)->group(function () {
+        Route::get('/admin/analytics', [AnalyticsController::class, 'index'])->name('admin.analytics');
+        Route::get('/admin/logs', [LoginLogController::class, 'index'])->name('admin.logs');
+        Route::get('/admin/reports/plans.csv', [ReportController::class, 'plans'])->name('admin.reports.plans');
+        Route::get('/admin/reports/summary.csv', [ReportController::class, 'summary'])->name('admin.reports.summary');
         Route::get('/admin/admins', [AdminUserController::class, 'index'])->name('admin.admins.index');
         Route::get('/admin/admins/create', [AdminUserController::class, 'create'])->name('admin.admins.create');
         Route::post('/admin/admins', [AdminUserController::class, 'store'])->name('admin.admins.store');

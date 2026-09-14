@@ -7,7 +7,7 @@
 
 <article class="max-w-3xl mx-auto px-5 py-12">
 
-    <nav class="font-mono text-xs text-ink/50 mb-8">
+    <nav class="font-mono text-xs text-ink/70 mb-8">
         <a href="/" class="hover:text-draft">Home</a>
         <span class="mx-2">/</span>
         <a href="/blog" class="hover:text-draft">Blog</a>

@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="flex items-center gap-3 mb-8">
-    <a href="/admin/projects" class="text-sm text-ink/50 hover:text-draft">← Projects</a>
-    <span class="text-ink/20">/</span>
+    <a href="/admin/projects" class="text-sm text-ink/70 hover:text-draft">← Projects</a>
+    <span class="text-ink/70">/</span>
     <h1 class="font-display text-2xl font-semibold text-ink">
         {{ isset($project) ? 'Edit: '.$project->title : 'Add Project' }}
     </h1>
@@ -29,19 +29,19 @@
 
     <div class="bg-white border border-ink/10 rounded-sm p-6 space-y-5">
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Project Title *</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Project Title *</label>
             <input type="text" name="title" value="{{ old('title', $project->title ?? '') }}"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
         </div>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Location</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Location</label>
             <input type="text" name="location" value="{{ old('location', $project->location ?? '') }}" placeholder="Negombo, Gampaha…"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
         </div>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Description</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Description</label>
             <textarea name="description" rows="4"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft resize-none">{{ old('description', $project->description ?? '') }}</textarea>
         </div>
@@ -62,7 +62,7 @@
                     <div class="relative w-24 h-20 rounded-sm overflow-hidden bg-ink/5">
                         <x-image-frame :src="$img->url" :zoom="false" note="" />
                         @if($img->is_primary)
-                            <span class="absolute bottom-0 inset-x-0 text-center font-mono text-[9px] bg-draft text-white py-0.5">PRIMARY</span>
+                            <span class="absolute bottom-0 inset-x-0 text-center font-mono text-xs bg-draft text-white py-0.5">PRIMARY</span>
                         @endif
                     </div>
                 @endforeach
@@ -70,8 +70,8 @@
         @endif
 
         <input type="file" name="images[]" multiple accept="image/*"
-            class="w-full text-sm text-ink/60 file:mr-3 file:py-2 file:px-4 file:rounded-sm file:border file:border-ink/20 file:text-xs file:font-medium file:bg-paper hover:file:bg-ink hover:file:text-paper file:cursor-pointer file:transition-colors">
-        <p class="text-xs text-ink/40 mt-2">First photo becomes the cover. Max 5MB per image.</p>
+            class="w-full text-sm text-ink/70 file:mr-3 file:py-2 file:px-4 file:rounded-sm file:border file:border-ink/20 file:text-xs file:font-medium file:bg-paper hover:file:bg-ink hover:file:text-paper file:cursor-pointer file:transition-colors">
+        <p class="text-xs text-ink/70 mt-2">First photo becomes the cover. Max 5MB per image.</p>
     </div>
 
     <button type="submit" class="bg-ink text-paper font-medium px-8 py-3 rounded-sm hover:bg-ink/90 transition-colors">

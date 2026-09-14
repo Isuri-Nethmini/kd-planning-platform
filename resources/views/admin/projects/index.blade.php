@@ -15,11 +15,11 @@
     <table class="w-full text-sm">
         <thead class="bg-ink/5 border-b border-ink/10">
             <tr>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Project</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50 hidden md:table-cell">Location</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50 hidden lg:table-cell">Photos</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Status</th>
-                <th class="text-right px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Actions</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Project</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70 hidden md:table-cell">Location</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70 hidden lg:table-cell">Photos</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Status</th>
+                <th class="text-right px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -33,11 +33,11 @@
                             <p class="font-medium text-ink">{{ $project->title }}</p>
                         </div>
                     </td>
-                    <td class="px-4 py-4 text-ink/60 hidden md:table-cell">{{ $project->location ?? '—' }}</td>
-                    <td class="px-4 py-4 font-mono text-xs text-ink/40 hidden lg:table-cell">{{ $project->images_count }}</td>
+                    <td class="px-4 py-4 text-ink/70 hidden md:table-cell">{{ $project->location ?? '—' }}</td>
+                    <td class="px-4 py-4 font-mono text-xs text-ink/70 hidden lg:table-cell">{{ $project->images_count }}</td>
                     <td class="px-4 py-4">
-                        <span class="font-mono text-[11px] uppercase px-2 py-1 rounded-sm
-                            {{ $project->is_active ? 'bg-moss/10 text-moss' : 'bg-ink/5 text-ink/40' }}">
+                        <span class="font-mono text-xs uppercase px-2 py-1 rounded-sm
+                            {{ $project->is_active ? 'bg-moss/10 text-moss' : 'bg-ink/5 text-ink/70' }}">
                             {{ $project->is_active ? 'Visible' : 'Hidden' }}
                         </span>
                     </td>
@@ -52,7 +52,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="5" class="px-4 py-10 text-center text-ink/40">No projects yet.</td></tr>
+                <tr><td colspan="5" class="px-4 py-10 text-center text-ink/70">No projects yet.</td></tr>
             @endforelse
         </tbody>
     </table>

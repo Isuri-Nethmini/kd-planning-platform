@@ -6,7 +6,7 @@
 
 <div class="mb-8">
     <h1 class="font-display text-2xl font-semibold text-ink">Settings</h1>
-    <p class="text-ink/50 text-sm mt-1">Contact details used across the public site.</p>
+    <p class="text-ink/70 text-sm mt-1">Contact details used across the public site.</p>
 </div>
 
 <form method="POST" action="/admin/settings" class="space-y-6 max-w-xl">
@@ -22,19 +22,19 @@
 
     <div class="bg-white border border-ink/10 rounded-sm p-6 space-y-5">
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">WhatsApp Number *</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">WhatsApp Number *</label>
             <input type="text" name="whatsapp_number" value="{{ old('whatsapp_number', $settings['whatsapp_number']) }}"
                 placeholder="+94 71 726 1930"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
-            <p class="text-xs text-ink/40 mt-2">Used by the floating chat button and the "Ask on WhatsApp" links.</p>
+            <p class="text-xs text-ink/70 mt-2">Used by the floating chat button and the "Ask on WhatsApp" links.</p>
         </div>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Notification Email *</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Notification Email *</label>
             <input type="email" name="notification_email" value="{{ old('notification_email', $settings['notification_email']) }}"
                 placeholder="kdplanning@gmail.com"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
-            <p class="text-xs text-ink/40 mt-2">Every new inquiry submitted on the site is emailed here.</p>
+            <p class="text-xs text-ink/70 mt-2">Every new inquiry submitted on the site is emailed here.</p>
         </div>
     </div>
 

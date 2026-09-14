@@ -26,15 +26,15 @@
     >
 @else
     <div class="w-full h-full plan-placeholder bp-grid flex flex-col items-center justify-center text-center px-4 select-none">
-        <svg viewBox="0 0 48 40" class="w-10 h-8 mb-3 text-draft/70" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg viewBox="0 0 48 40" class="w-10 h-8 mb-3 text-draft/90" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="6" y="8" width="36" height="26" rx="1" />
             <path d="M6 27l9-8 7 6 6-5 14 11" />
             <circle cx="32" cy="16" r="3" />
         </svg>
-        <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-paper/70">Image pending</p>
-        <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-paper/35 mt-1">{{ $note }}</p>
+        <p class="font-mono text-xs uppercase tracking-[0.18em] text-paper/75">Image pending</p>
+        <p class="font-mono text-xs uppercase tracking-[0.14em] text-paper/75 mt-1">{{ $note }}</p>
         @if ($label)
-            <p class="font-mono text-[9px] tracking-widest text-draft/60 mt-2">{{ $label }}</p>
+            <p class="font-mono text-xs tracking-widest text-draft/90 mt-2">{{ $label }}</p>
         @endif
     </div>
 @endif

@@ -5,10 +5,10 @@
 @section('content')
 
 <div class="flex items-center gap-3 mb-8">
-    <a href="/admin/inquiries" class="text-sm text-ink/50 hover:text-draft">← Inquiries</a>
-    <span class="text-ink/20">/</span>
+    <a href="/admin/inquiries" class="text-sm text-ink/70 hover:text-draft">← Inquiries</a>
+    <span class="text-ink/70">/</span>
     <h1 class="font-display text-2xl font-semibold text-ink">{{ $inquiry->name }}</h1>
-    <span class="font-mono text-[11px] uppercase px-2 py-1 rounded-sm {{ $inquiry->status_class }}">
+    <span class="font-mono text-xs uppercase px-2 py-1 rounded-sm {{ $inquiry->status_class }}">
         {{ $inquiry->status_label }}
     </span>
 </div>
@@ -25,7 +25,7 @@
         @if($inquiry->completedProject)
             <div class="bg-white border border-ink/10 rounded-sm p-6">
                 <h2 class="font-display font-semibold text-ink mb-1">Wants a Design Like</h2>
-                <p class="text-xs text-ink/40 mb-4">Client asked for a variation of a project we've already built.</p>
+                <p class="text-xs text-ink/70 mb-4">Client asked for a variation of a project we've already built.</p>
                 <div class="flex items-center gap-4">
                     <div class="w-20 h-16 rounded-sm overflow-hidden bg-ink/5 shrink-0">
                         <x-image-frame :src="$inquiry->completedProject->primaryImage?->url" :alt="$inquiry->completedProject->title" :zoom="false" note="" />
@@ -33,7 +33,7 @@
                     <div>
                         <p class="font-display font-semibold text-ink">{{ $inquiry->completedProject->title }}</p>
                         @if($inquiry->completedProject->location)
-                            <p class="font-mono text-xs text-ink/40">{{ $inquiry->completedProject->location }}</p>
+                            <p class="font-mono text-xs text-ink/70">{{ $inquiry->completedProject->location }}</p>
                         @endif
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     </div>
                     <div>
                         <p class="font-display font-semibold text-ink">{{ $inquiry->housePlan->name }}</p>
-                        <p class="font-mono text-xs text-ink/40">
+                        <p class="font-mono text-xs text-ink/70">
                             PLAN-{{ str_pad($inquiry->housePlan->id, 4, '0', STR_PAD_LEFT) }}
                             &nbsp;·&nbsp; Rs. {{ number_format($inquiry->housePlan->price) }}
                         </p>
@@ -66,15 +66,15 @@
             <h2 class="font-display font-semibold text-ink">Contact</h2>
 
             <div>
-                <p class="font-mono text-[10px] uppercase tracking-wider text-ink/40 mb-1">Email</p>
+                <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-1">Email</p>
                 <a href="mailto:{{ $inquiry->email }}" class="text-sm text-draft hover:underline break-all">{{ $inquiry->email }}</a>
             </div>
             <div>
-                <p class="font-mono text-[10px] uppercase tracking-wider text-ink/40 mb-1">Phone</p>
+                <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-1">Phone</p>
                 <a href="tel:{{ $inquiry->phone }}" class="text-sm text-draft hover:underline">{{ $inquiry->phone }}</a>
             </div>
             <div>
-                <p class="font-mono text-[10px] uppercase tracking-wider text-ink/40 mb-1">Received</p>
+                <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-1">Received</p>
                 <p class="text-sm text-ink">{{ $inquiry->created_at->format('d M Y, H:i') }}</p>
             </div>
 
@@ -86,13 +86,13 @@
 
         <div class="bg-white border border-ink/10 rounded-sm p-6">
             <h2 class="font-display font-semibold text-ink mb-1">Sales Pipeline</h2>
-            <p class="text-xs text-ink/40 mb-4">Track this lead from first contact through to a completed sale.</p>
+            <p class="text-xs text-ink/70 mb-4">Track this lead from first contact through to a completed sale.</p>
 
             <form method="POST" action="/admin/inquiries/{{ $inquiry->id }}/status" class="space-y-4">
                 @csrf @method('PATCH')
 
                 <div>
-                    <label class="font-mono text-[10px] uppercase tracking-wider text-ink/40 block mb-1">Stage</label>
+                    <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Stage</label>
                     <select name="status" class="w-full border border-ink/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-draft">
                         @foreach(\App\Models\Inquiry::STATUSES as $value => $label)
                             <option value="{{ $value }}" {{ old('status', $inquiry->status) === $value ? 'selected' : '' }}>{{ $label }}</option>
@@ -101,20 +101,20 @@
                 </div>
 
                 <div>
-                    <label class="font-mono text-[10px] uppercase tracking-wider text-ink/40 block mb-1">Construction Estimate (Rs.)</label>
+                    <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Construction Estimate (Rs.)</label>
                     <input type="number" step="0.01" min="0" name="quoted_amount"
                         value="{{ old('quoted_amount', $inquiry->quoted_amount) }}"
                         placeholder="e.g. 8500000"
                         class="w-full border border-ink/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-draft">
-                    <p class="text-xs text-ink/40 mt-1">The figure you quoted this client for the build.</p>
+                    <p class="text-xs text-ink/70 mt-1">The figure you quoted this client for the build.</p>
                 </div>
 
                 <div>
-                    <label class="font-mono text-[10px] uppercase tracking-wider text-ink/40 block mb-1">Follow-up Notes</label>
+                    <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Follow-up Notes</label>
                     <textarea name="admin_notes" rows="5"
                         placeholder="What was discussed, agreed price, land details, next call date…"
                         class="w-full border border-ink/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-draft resize-none">{{ old('admin_notes', $inquiry->admin_notes) }}</textarea>
-                    <p class="text-xs text-ink/40 mt-1">Internal only — never shown to the client.</p>
+                    <p class="text-xs text-ink/70 mt-1">Internal only — never shown to the client.</p>
                 </div>
 
                 <button class="w-full bg-ink text-paper text-sm font-medium py-2.5 rounded-sm hover:bg-ink/90 transition-colors">
@@ -123,7 +123,7 @@
             </form>
 
             @if($inquiry->responded_at)
-                <p class="font-mono text-[10px] uppercase tracking-wider text-ink/30 mt-4 pt-4 border-t border-ink/5">
+                <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mt-4 pt-4 border-t border-ink/5">
                     First responded {{ $inquiry->responded_at->diffForHumans() }}
                 </p>
             @endif

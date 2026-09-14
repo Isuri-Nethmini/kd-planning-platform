@@ -16,8 +16,8 @@
     <aside class="w-56 bg-ink text-paper flex flex-col shrink-0">
         <div class="p-5 border-b border-paper/10">
             <p class="font-display font-bold text-paper">KD <span class="text-clay">Admin</span></p>
-            <p class="font-mono text-xs text-paper/40 mt-0.5">{{ session('admin_name') }}</p>
-            <p class="font-mono text-[10px] text-draft/70 uppercase tracking-wider mt-0.5">
+            <p class="font-mono text-xs text-paper/75 mt-0.5">{{ session('admin_name') }}</p>
+            <p class="font-mono text-xs text-draft/90 uppercase tracking-wider mt-0.5">
                 {{ session('admin_role') === 'primary' ? 'Primary Admin' : 'Staff Admin' }}
             </p>
         </div>
@@ -33,7 +33,7 @@
                 <span>📬</span> Inquiries
                 @php $newInquiries = \App\Models\Inquiry::where('status', 'new')->count(); @endphp
                 @if($newInquiries > 0)
-                    <span class="ml-auto font-mono text-[10px] bg-clay text-white px-1.5 py-0.5 rounded-sm">{{ $newInquiries }}</span>
+                    <span class="ml-auto font-mono text-xs bg-clay text-white px-1.5 py-0.5 rounded-sm">{{ $newInquiries }}</span>
                 @endif
             </a>
             <a href="/admin/projects" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/projects*') ? 'bg-paper/10' : '' }}">
@@ -47,8 +47,13 @@
             </a>
 
             <div class="pt-3 mt-3 border-t border-paper/10 space-y-1">
-                <a href="/admin/analytics" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/analytics*') ? 'bg-paper/10' : '' }}">
-                    <span>📈</span> Analytics
+                @if(session('admin_role') === 'primary')
+                    <a href="/admin/analytics" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/analytics*') ? 'bg-paper/10' : '' }}">
+                        <span>📈</span> Analytics
+                    </a>
+                @endif
+                <a href="/admin/reports" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/reports*') ? 'bg-paper/10' : '' }}">
+                    <span>📄</span> Reports
                 </a>
                 <a href="/admin/settings" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/settings*') ? 'bg-paper/10' : '' }}">
                     <span>⚙️</span> Settings
@@ -57,15 +62,18 @@
                     <a href="/admin/admins" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/admins*') ? 'bg-paper/10' : '' }}">
                         <span>👥</span> Admin Users
                     </a>
+                    <a href="/admin/logs" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/logs*') ? 'bg-paper/10' : '' }}">
+                        <span>🛡️</span> Login Activity
+                    </a>
                 @endif
             </div>
         </nav>
 
         <div class="p-4 border-t border-paper/10 space-y-2">
-            <a href="/" target="_blank" class="block text-xs text-paper/40 hover:text-paper transition-colors">← View website</a>
+            <a href="/" target="_blank" class="block text-xs text-paper/75 hover:text-paper transition-colors">← View website</a>
             <form method="POST" action="/admin/logout">
                 @csrf
-                <button type="submit" class="text-xs text-paper/40 hover:text-clay transition-colors">Log out</button>
+                <button type="submit" class="text-xs text-paper/75 hover:text-clay transition-colors">Log out</button>
             </form>
         </div>
     </aside>

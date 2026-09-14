@@ -6,7 +6,7 @@
 
 <div class="mb-8">
     <h1 class="font-display text-2xl font-semibold text-ink">Analytics &amp; Reports</h1>
-    <p class="text-ink/50 text-sm mt-1">How the catalogue is performing and where inquiries are coming from.</p>
+    <p class="text-ink/70 text-sm mt-1">How the catalogue is performing and where inquiries are coming from.</p>
 </div>
 
 {{-- Summary --}}
@@ -19,7 +19,7 @@
         ['Inquiry → Sale',   $summary['inquiry_to_sale'].'%'],
     ] as [$label, $value])
         <div class="bg-white border border-ink/10 rounded-sm p-5">
-            <p class="font-mono text-xs uppercase tracking-wider text-ink/40 mb-2">{{ $label }}</p>
+            <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-2">{{ $label }}</p>
             <p class="font-display text-2xl font-bold text-ink">{{ $value }}</p>
         </div>
     @endforeach
@@ -28,14 +28,14 @@
 {{-- Pipeline value --}}
 <div class="grid sm:grid-cols-2 gap-4 mb-10">
     <div class="bg-white border border-ink/10 rounded-sm p-5">
-        <p class="font-mono text-xs uppercase tracking-wider text-ink/40 mb-2">Total Quoted Value</p>
+        <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-2">Total Quoted Value</p>
         <p class="font-display text-2xl font-bold text-draft">Rs. {{ number_format($summary['quoted_value']) }}</p>
-        <p class="text-xs text-ink/40 mt-1">Across every inquiry with an estimate recorded.</p>
+        <p class="text-xs text-ink/70 mt-1">Across every inquiry with an estimate recorded.</p>
     </div>
     <div class="bg-white border border-ink/10 rounded-sm p-5">
-        <p class="font-mono text-xs uppercase tracking-wider text-ink/40 mb-2">Converted Value</p>
+        <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-2">Converted Value</p>
         <p class="font-display text-2xl font-bold text-moss">Rs. {{ number_format($summary['won_value']) }}</p>
-        <p class="text-xs text-ink/40 mt-1">Estimates on inquiries marked as converted.</p>
+        <p class="text-xs text-ink/70 mt-1">Estimates on inquiries marked as converted.</p>
     </div>
 </div>
 
@@ -45,11 +45,11 @@
     <div class="flex items-end justify-between gap-3 h-48">
         @foreach($months as $month)
             <div class="flex-1 flex flex-col items-center justify-end h-full">
-                <span class="font-mono text-xs text-ink/50 mb-1">{{ $month['count'] }}</span>
+                <span class="font-mono text-xs text-ink/70 mb-1">{{ $month['count'] }}</span>
                 <div class="w-full bg-draft/80 rounded-t-sm transition-all hover:bg-draft"
                      style="height: {{ max(2, round(($month['count'] / $peakMonth) * 100)) }}%"
                      title="{{ $month['label'] }}: {{ $month['count'] }} inquiries"></div>
-                <span class="font-mono text-[10px] uppercase tracking-wider text-ink/40 mt-2 text-center">
+                <span class="font-mono text-xs uppercase tracking-wider text-ink/70 mt-2 text-center">
                     {{ $month['label'] }}
                 </span>
             </div>
@@ -65,12 +65,12 @@
         <div class="bg-white border border-ink/10 rounded-sm overflow-hidden">
             @forelse($topViewed as $i => $plan)
                 <div class="flex items-center gap-3 px-4 py-3 border-b border-ink/5 last:border-0">
-                    <span class="font-mono text-xs text-ink/30 w-5">{{ $i + 1 }}</span>
+                    <span class="font-mono text-xs text-ink/70 w-5">{{ $i + 1 }}</span>
                     <p class="flex-1 text-sm font-medium text-ink truncate">{{ $plan->name }}</p>
                     <span class="font-mono text-xs text-draft">{{ number_format($plan->view_count) }}</span>
                 </div>
             @empty
-                <div class="px-4 py-8 text-center text-ink/40 text-sm">No data yet.</div>
+                <div class="px-4 py-8 text-center text-ink/70 text-sm">No data yet.</div>
             @endforelse
         </div>
     </div>
@@ -81,12 +81,12 @@
         <div class="bg-white border border-ink/10 rounded-sm overflow-hidden">
             @forelse($topInquired as $i => $plan)
                 <div class="flex items-center gap-3 px-4 py-3 border-b border-ink/5 last:border-0">
-                    <span class="font-mono text-xs text-ink/30 w-5">{{ $i + 1 }}</span>
+                    <span class="font-mono text-xs text-ink/70 w-5">{{ $i + 1 }}</span>
                     <p class="flex-1 text-sm font-medium text-ink truncate">{{ $plan->name }}</p>
                     <span class="font-mono text-xs text-clay">{{ $plan->inquiries_count }}</span>
                 </div>
             @empty
-                <div class="px-4 py-8 text-center text-ink/40 text-sm">No inquiries linked to a plan yet.</div>
+                <div class="px-4 py-8 text-center text-ink/70 text-sm">No inquiries linked to a plan yet.</div>
             @endforelse
         </div>
     </div>
@@ -103,7 +103,7 @@
                 <div>
                     <div class="flex justify-between text-sm mb-1">
                         <span class="text-ink/70">{{ $cat->name }}</span>
-                        <span class="font-mono text-xs text-ink/40">{{ $cat->house_plans_count }}</span>
+                        <span class="font-mono text-xs text-ink/70">{{ $cat->house_plans_count }}</span>
                     </div>
                     <div class="h-2 bg-ink/5 rounded-sm overflow-hidden">
                         <div class="h-full bg-moss/70" style="width: {{ round(($cat->house_plans_count / $maxCat) * 100) }}%"></div>
@@ -124,7 +124,7 @@
                 <div>
                     <div class="flex justify-between text-sm mb-1">
                         <span class="text-ink/70">{{ $statusLabel }}</span>
-                        <span class="font-mono text-xs text-ink/40">
+                        <span class="font-mono text-xs text-ink/70">
                             {{ $statusBreakdown[$status] }}
                             ({{ round(($statusBreakdown[$status] / $totalStatus) * 100) }}%)
                         </span>

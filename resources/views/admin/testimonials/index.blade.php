@@ -17,16 +17,16 @@
             <div class="flex items-start justify-between gap-4 mb-3">
                 <div>
                     <p class="font-display font-semibold text-ink">{{ $t->client_name }}</p>
-                    <p class="font-mono text-xs text-ink/40">{{ $t->location ?? '—' }}</p>
+                    <p class="font-mono text-xs text-ink/70">{{ $t->location ?? '—' }}</p>
                 </div>
-                <span class="font-mono text-[11px] uppercase px-2 py-1 rounded-sm shrink-0
-                    {{ $t->is_active ? 'bg-moss/10 text-moss' : 'bg-ink/5 text-ink/40' }}">
+                <span class="font-mono text-xs uppercase px-2 py-1 rounded-sm shrink-0
+                    {{ $t->is_active ? 'bg-moss/10 text-moss' : 'bg-ink/5 text-ink/70' }}">
                     {{ $t->is_active ? 'Visible' : 'Hidden' }}
                 </span>
             </div>
 
             @if($t->rating)
-                <p class="text-clay text-sm mb-2">{{ str_repeat('★', $t->rating) }}<span class="text-ink/15">{{ str_repeat('★', 5 - $t->rating) }}</span></p>
+                <p class="text-clay text-sm mb-2">{{ str_repeat('★', $t->rating) }}<span class="text-ink/70">{{ str_repeat('★', 5 - $t->rating) }}</span></p>
             @endif
 
             <p class="text-sm text-ink/70 leading-relaxed mb-4">"{{ $t->content }}"</p>
@@ -40,7 +40,7 @@
             </div>
         </div>
     @empty
-        <div class="md:col-span-2 bg-white border border-ink/10 rounded-sm px-4 py-10 text-center text-ink/40">
+        <div class="md:col-span-2 bg-white border border-ink/10 rounded-sm px-4 py-10 text-center text-ink/70">
             No testimonials yet.
         </div>
     @endforelse

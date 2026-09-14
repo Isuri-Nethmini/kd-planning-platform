@@ -9,7 +9,7 @@
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-2">Our Work</p>
         <h1 class="font-display text-3xl md:text-4xl font-semibold">Completed Projects</h1>
-        <p class="text-paper/60 mt-3 max-w-xl leading-relaxed">
+        <p class="text-paper/75 mt-3 max-w-xl leading-relaxed">
             Homes we've designed and delivered for families across the Western Province.
         </p>
     </div>
@@ -18,7 +18,7 @@
 <div class="max-w-6xl mx-auto px-5 py-14">
 
     @if($projects->isEmpty())
-        <div class="text-center py-24 text-ink/40">
+        <div class="text-center py-24 text-ink/70">
             <p class="font-display text-lg">No completed projects published yet.</p>
         </div>
     @else
@@ -34,11 +34,11 @@
                     </div>
                     <div class="p-5">
                         @if($project->location)
-                            <p class="font-mono text-[10px] uppercase tracking-wider text-clay mb-2">{{ $project->location }}</p>
+                            <p class="font-mono text-xs uppercase tracking-wider text-clay mb-2">{{ $project->location }}</p>
                         @endif
                         <h2 class="font-display font-semibold text-lg text-ink mb-2 leading-snug">{{ $project->title }}</h2>
                         @if($project->description)
-                            <p class="text-sm text-ink/60 leading-relaxed">{{ $project->description }}</p>
+                            <p class="text-sm text-ink/70 leading-relaxed">{{ $project->description }}</p>
                         @endif
                         {{--
                             The client asked for this: buyers frequently point at
@@ -46,11 +46,26 @@
                             with changes. This carries the project id into the
                             inquiry so the office knows exactly which house.
                         --}}
-                        <a href="/inquire?project={{ $project->id }}"
-                           class="inline-flex items-center gap-2 mt-4 font-mono text-[11px] uppercase tracking-wider text-clay hover:text-ink transition-colors">
-                            Request a design like this
-                            <span aria-hidden="true">&rarr;</span>
-                        </a>
+                        <div class="flex flex-wrap items-center gap-4 mt-4">
+                            <a href="/inquire?project={{ $project->id }}"
+                               class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-clay hover:text-ink transition-colors">
+                                Request a design like this
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+                            @php
+                                $waNumber  = preg_replace('/\D/', '', \App\Models\SystemSetting::get('whatsapp_number', '+94717261930'));
+                                $waProject = "Hi, I'd like a design similar to this project.\n\n"
+                                           . $project->title
+                                           . ($project->location ? "\nLocation: {$project->location}" : '')
+                                           . "\n" . url('/completed-projects')
+                                           . "\n\nCan we discuss changes?";
+                            @endphp
+                            <a href="https://wa.me/{{ $waNumber }}?text={{ rawurlencode($waProject) }}"
+                               target="_blank" rel="noopener"
+                               class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[#128C4A] hover:text-ink transition-colors">
+                                WhatsApp us
+                            </a>
+                        </div>
                     </div>
                 </article>
             @endforeach
@@ -65,7 +80,7 @@
 
     <div class="mt-16 bg-ink text-paper rounded-sm p-10 text-center">
         <h2 class="font-display text-xl md:text-2xl font-semibold mb-3">Want a home like these?</h2>
-        <p class="text-paper/70 mb-6 max-w-lg mx-auto">
+        <p class="text-paper/75 mb-6 max-w-lg mx-auto">
             We can adapt any design we've already built — change the room layout, the size or the finishes
             to suit your land and budget. Tell us which one caught your eye.
         </p>

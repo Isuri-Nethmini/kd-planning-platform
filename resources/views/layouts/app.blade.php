@@ -52,12 +52,12 @@
             <div>
                 <img src="{{ asset('media/logo.png') }}" alt="KD Planning &amp; Design"
                      class="h-11 w-auto mb-4 brightness-0 invert opacity-90" width="520" height="225">
-                <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-clay mb-3">We Design, We Build</p>
-                <p class="text-paper/60 leading-relaxed">A design firm and construction company in Sri Lanka, specialising in architectural design and construction works.</p>
+                <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-3">We Design, We Build</p>
+                <p class="text-paper/75 leading-relaxed">A design firm and construction company in Sri Lanka, specialising in architectural design and construction works.</p>
             </div>
             <div>
                 <p class="uppercase tracking-wider text-xs text-draft mb-3">Navigate</p>
-                <ul class="space-y-2 text-paper/70">
+                <ul class="space-y-2 text-paper/75">
                     <li><a href="/plans" class="hover:text-paper">House Plans</a></li>
                     <li><a href="/completed-projects" class="hover:text-paper">Completed Work</a></li>
                     <li><a href="/blog" class="hover:text-paper">Blog</a></li>
@@ -65,14 +65,14 @@
             </div>
             <div>
                 <p class="uppercase tracking-wider text-xs text-draft mb-3">Contact</p>
-                <ul class="space-y-2 text-paper/70">
+                <ul class="space-y-2 text-paper/75">
                     <li>kdplanning@gmail.com</li>
                     <li>+94 71 726 1930</li>
                     <li>Minuwangoda, Sri Lanka</li>
                 </ul>
             </div>
         </div>
-        <div class="border-t border-paper/10 py-5 text-center text-xs text-paper/40">
+        <div class="border-t border-paper/10 py-5 text-center text-xs text-paper/75">
             © {{ date('Y') }} KD Planning &amp; Design. All rights reserved.
         </div>
     </footer>

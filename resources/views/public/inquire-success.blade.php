@@ -11,7 +11,7 @@
     </p>
 
     <div class="bg-white border border-ink/10 rounded-sm p-6 text-left mb-8">
-        <p class="font-mono text-[10px] uppercase tracking-wider text-clay mb-3">What happens next</p>
+        <p class="font-mono text-xs uppercase tracking-wider text-clay mb-3">What happens next</p>
         <ol class="space-y-3 text-sm text-ink/70">
             <li class="flex gap-3">
                 <span class="font-mono text-draft shrink-0">01</span>
@@ -26,7 +26,7 @@
                 <span>We discuss your land and any changes you'd like, then prepare a construction estimate.</span>
             </li>
         </ol>
-        <p class="text-xs text-ink/40 mt-4 pt-4 border-t border-ink/5">
+        <p class="text-xs text-ink/70 mt-4 pt-4 border-t border-ink/5">
             In a hurry? Message us directly on WhatsApp using the button in the corner.
         </p>
     </div>

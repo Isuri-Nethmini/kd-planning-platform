@@ -10,7 +10,7 @@
         + Add Admin
     </a>
 </div>
-<p class="text-ink/50 text-sm mb-8">
+<p class="text-ink/70 text-sm mb-8">
     Primary admins can manage accounts. Secondary (staff) admins can manage site content only.
 </p>
 
@@ -18,11 +18,11 @@
     <table class="w-full text-sm">
         <thead class="bg-ink/5 border-b border-ink/10">
             <tr>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Name</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50 hidden md:table-cell">Email</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Role</th>
-                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50 hidden lg:table-cell">Last Login</th>
-                <th class="text-right px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/50">Actions</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Name</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70 hidden md:table-cell">Email</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Role</th>
+                <th class="text-left px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70 hidden lg:table-cell">Last Login</th>
+                <th class="text-right px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink/70">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -32,19 +32,19 @@
                         <p class="font-medium text-ink">
                             {{ $admin->name }}
                             @if(session('admin_id') === $admin->id)
-                                <span class="font-mono text-[10px] text-draft ml-1">(you)</span>
+                                <span class="font-mono text-xs text-draft ml-1">(you)</span>
                             @endif
                         </p>
-                        <p class="font-mono text-xs text-ink/40 md:hidden">{{ $admin->email }}</p>
+                        <p class="font-mono text-xs text-ink/70 md:hidden">{{ $admin->email }}</p>
                     </td>
-                    <td class="px-4 py-4 text-ink/60 hidden md:table-cell">{{ $admin->email }}</td>
+                    <td class="px-4 py-4 text-ink/70 hidden md:table-cell">{{ $admin->email }}</td>
                     <td class="px-4 py-4">
-                        <span class="font-mono text-[11px] uppercase px-2 py-1 rounded-sm
-                            {{ $admin->role === 'primary' ? 'bg-clay/10 text-clay' : 'bg-ink/5 text-ink/50' }}">
+                        <span class="font-mono text-xs uppercase px-2 py-1 rounded-sm
+                            {{ $admin->role === 'primary' ? 'bg-clay/10 text-clay' : 'bg-ink/5 text-ink/70' }}">
                             {{ $admin->role === 'primary' ? 'Primary' : 'Staff' }}
                         </span>
                     </td>
-                    <td class="px-4 py-4 font-mono text-xs text-ink/40 hidden lg:table-cell">
+                    <td class="px-4 py-4 font-mono text-xs text-ink/70 hidden lg:table-cell">
                         {{ $admin->last_login_at?->format('d M Y, H:i') ?? 'Never' }}
                     </td>
                     <td class="px-4 py-4 text-right">
@@ -56,7 +56,7 @@
                                     <button class="text-xs text-clay hover:underline">Remove</button>
                                 </form>
                             @else
-                                <span class="text-xs text-ink/25">Remove</span>
+                                <span class="text-xs text-ink/70">Remove</span>
                             @endif
                         </div>
                     </td>
@@ -68,7 +68,7 @@
 
 <div class="mt-6 bg-draft/5 border border-draft/20 rounded-sm p-4 text-sm text-ink/70">
     <p class="font-medium text-ink mb-1">Safeguards in place</p>
-    <ul class="list-disc list-inside space-y-1 text-ink/60">
+    <ul class="list-disc list-inside space-y-1 text-ink/70">
         <li>You cannot delete your own account while logged in.</li>
         <li>The last remaining primary admin cannot be deleted or demoted.</li>
         <li>Only primary admins can reach this page.</li>

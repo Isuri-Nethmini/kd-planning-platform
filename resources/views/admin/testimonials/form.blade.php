@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="flex items-center gap-3 mb-8">
-    <a href="/admin/testimonials" class="text-sm text-ink/50 hover:text-draft">← Testimonials</a>
-    <span class="text-ink/20">/</span>
+    <a href="/admin/testimonials" class="text-sm text-ink/70 hover:text-draft">← Testimonials</a>
+    <span class="text-ink/70">/</span>
     <h1 class="font-display text-2xl font-semibold text-ink">
         {{ isset($testimonial) ? 'Edit Testimonial' : 'Add Testimonial' }}
     </h1>
@@ -30,19 +30,19 @@
     <div class="bg-white border border-ink/10 rounded-sm p-6 space-y-5">
         <div class="grid sm:grid-cols-2 gap-5">
             <div>
-                <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Client Name *</label>
+                <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Client Name *</label>
                 <input type="text" name="client_name" value="{{ old('client_name', $testimonial->client_name ?? '') }}"
                     class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
             </div>
             <div>
-                <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Location</label>
+                <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Location</label>
                 <input type="text" name="location" value="{{ old('location', $testimonial->location ?? '') }}" placeholder="Negombo"
                     class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
             </div>
         </div>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Rating</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Rating</label>
             <select name="rating" class="w-full border border-ink/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-draft">
                 <option value="">No rating</option>
                 @foreach([5,4,3,2,1] as $r)
@@ -54,7 +54,7 @@
         </div>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Testimonial *</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Testimonial *</label>
             <textarea name="content" rows="5"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft resize-none">{{ old('content', $testimonial->content ?? '') }}</textarea>
         </div>

@@ -39,7 +39,7 @@
             <h1 class="font-display text-4xl md:text-5xl font-semibold leading-[1.1] mb-6">
                 Find the house plan<br>you'll actually build.
             </h1>
-            <p class="text-paper/70 text-lg leading-relaxed mb-8 max-w-md">
+            <p class="text-paper/75 text-lg leading-relaxed mb-8 max-w-md">
                 Browse {{ $totalPlans }} ready-made designs with full specifications — no login, no waiting on a phone call.
             </p>
             <div class="flex flex-wrap gap-4">
@@ -79,7 +79,7 @@
 
 {{-- ───────────────────────── TRUST STRIP ───────────────────────── --}}
 <section class="border-b border-ink/10 bg-paper">
-    <div class="max-w-6xl mx-auto px-5 py-5 flex flex-wrap gap-x-10 gap-y-2 justify-center text-sm font-mono text-ink/60">
+    <div class="max-w-6xl mx-auto px-5 py-5 flex flex-wrap gap-x-10 gap-y-2 justify-center text-sm font-mono text-ink/70">
         <span>{{ $totalPlans }} PLANS LISTED</span>
         <span class="text-clay/50">·</span>
         <span>NEW PLANS WEEKLY</span>
@@ -108,7 +108,7 @@
                         :src="$plan->primaryImage?->url"
                         :alt="$plan->name"
                     />
-                    <span class="absolute top-3 left-3 font-mono text-[11px] bg-ink/80 text-paper px-2 py-1 rounded-sm">
+                    <span class="absolute top-3 left-3 font-mono text-xs bg-ink/80 text-paper px-2 py-1 rounded-sm">
                         PLAN NO. {{ str_pad($plan->id, 4, '0', STR_PAD_LEFT) }}
                     </span>
                 </div>
@@ -137,7 +137,7 @@
             @foreach ($testimonials as $t)
                 <blockquote class="bg-white p-6 rounded-sm border border-ink/10">
                     <p class="text-ink/80 leading-relaxed mb-4">&ldquo;{{ $t->content }}&rdquo;</p>
-                    <footer class="font-mono text-xs text-ink/50 uppercase tracking-wide">
+                    <footer class="font-mono text-xs text-ink/70 uppercase tracking-wide">
                         {{ $t->client_name }} — {{ $t->location }}
                     </footer>
                 </blockquote>
@@ -170,7 +170,7 @@
 <section class="bg-ink text-paper">
     <div class="max-w-4xl mx-auto px-5 py-16 text-center">
         <h2 class="font-display text-2xl md:text-3xl font-semibold mb-4">Ready to start building?</h2>
-        <p class="text-paper/70 mb-8 max-w-lg mx-auto">Send us your land details and the design you like, and we'll prepare a construction estimate — no obligation.</p>
+        <p class="text-paper/75 mb-8 max-w-lg mx-auto">Send us your land details and the design you like, and we'll prepare a construction estimate — no obligation.</p>
         <a href="/inquire" class="inline-flex items-center rounded-sm bg-draft text-ink font-medium px-8 py-3 hover:bg-draft/90 transition-colors">
             Submit an Inquiry
         </a>

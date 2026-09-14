@@ -11,7 +11,7 @@
 <div class="w-full max-w-sm mx-auto px-5">
     <div class="text-center mb-8">
         <p class="font-display text-2xl font-bold text-paper">KD <span class="text-clay">Admin</span></p>
-        <p class="font-mono text-xs text-paper/40 mt-1 uppercase tracking-widest">Planning & Design</p>
+        <p class="font-mono text-xs text-paper/75 mt-1 uppercase tracking-widest">Planning & Design</p>
     </div>
 
     <div class="bg-paper rounded-sm p-8">
@@ -26,7 +26,7 @@
         <form method="POST" action="/admin/login" class="space-y-4">
             @csrf
             <div>
-                <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Email</label>
+                <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Email</label>
                 <input
                     type="email" name="email" value="{{ old('email') }}"
                     class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft"
@@ -34,7 +34,7 @@
                 >
             </div>
             <div>
-                <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Password</label>
+                <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Password</label>
                 <input
                     type="password" name="password"
                     class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft"

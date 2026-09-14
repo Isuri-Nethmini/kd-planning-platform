@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="flex items-center gap-3 mb-8">
-    <a href="/admin/admins" class="text-sm text-ink/50 hover:text-draft">← Admin Users</a>
-    <span class="text-ink/20">/</span>
+    <a href="/admin/admins" class="text-sm text-ink/70 hover:text-draft">← Admin Users</a>
+    <span class="text-ink/70">/</span>
     <h1 class="font-display text-2xl font-semibold text-ink">
         {{ isset($admin) ? 'Edit: '.$admin->name : 'Add Admin' }}
     </h1>
@@ -31,20 +31,20 @@
         <h2 class="font-display font-semibold text-ink">Account Details</h2>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Full Name *</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Full Name *</label>
             <input type="text" name="name" value="{{ old('name', $admin->name ?? '') }}"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
         </div>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Email *</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Email *</label>
             <input type="email" name="email" value="{{ old('email', $admin->email ?? '') }}"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
-            <p class="text-xs text-ink/40 mt-2">This is the login username.</p>
+            <p class="text-xs text-ink/70 mt-2">This is the login username.</p>
         </div>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Role *</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Role *</label>
             <select name="role" class="w-full border border-ink/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-draft">
                 <option value="secondary" {{ old('role', $admin->role ?? 'secondary') === 'secondary' ? 'selected' : '' }}>
                     Staff — manage plans, inquiries, blog, projects
@@ -62,20 +62,20 @@
         </h2>
 
         @if(isset($admin))
-            <p class="text-sm text-ink/50">Leave both fields blank to keep the current password.</p>
+            <p class="text-sm text-ink/70">Leave both fields blank to keep the current password.</p>
         @endif
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">
                 Password {{ isset($admin) ? '' : '*' }}
             </label>
             <input type="password" name="password" autocomplete="new-password"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
-            <p class="text-xs text-ink/40 mt-2">Minimum 8 characters.</p>
+            <p class="text-xs text-ink/70 mt-2">Minimum 8 characters.</p>
         </div>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">
                 Confirm Password {{ isset($admin) ? '' : '*' }}
             </label>
             <input type="password" name="password_confirmation" autocomplete="new-password"

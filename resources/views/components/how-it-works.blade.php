@@ -45,7 +45,7 @@
             <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink">
                 From browsing to building
             </h2>
-            <p class="text-ink/60 mt-3 max-w-2xl {{ $compact ? '' : 'mx-auto' }} leading-relaxed">
+            <p class="text-ink/70 mt-3 max-w-2xl {{ $compact ? '' : 'mx-auto' }} leading-relaxed">
                 There is no online checkout — house plans are a conversation, not a shopping cart.
                 Here is what happens after you get in touch.
             </p>
@@ -54,9 +54,9 @@
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($steps as $step)
                 <div class="relative bg-white border border-ink/10 rounded-sm p-6">
-                    <span class="font-mono text-[11px] tracking-widest text-draft">{{ $step['n'] }}</span>
+                    <span class="font-mono text-xs tracking-widest text-draft">{{ $step['n'] }}</span>
                     <h3 class="font-display font-semibold text-ink mt-3 mb-2">{{ $step['title'] }}</h3>
-                    <p class="text-sm text-ink/60 leading-relaxed">{{ $step['body'] }}</p>
+                    <p class="text-sm text-ink/70 leading-relaxed">{{ $step['body'] }}</p>
 
                     {{-- Connector tick between cards, blueprint-dimension style --}}
                     @unless ($loop->last)

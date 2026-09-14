@@ -40,13 +40,13 @@
 
     <div class="grid sm:grid-cols-2 gap-6 my-12">
         <div class="bg-white border border-ink/10 rounded-sm p-6">
-            <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-clay mb-2">Long Term Outlook</p>
+            <p class="font-mono text-xs uppercase tracking-[0.18em] text-clay mb-2">Long Term Outlook</p>
             <p class="text-sm text-ink/70 leading-relaxed">
                 We help clients manage land as an asset that increases in value over many years.
             </p>
         </div>
         <div class="bg-white border border-ink/10 rounded-sm p-6">
-            <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-clay mb-2">Interdisciplinary Practice</p>
+            <p class="font-mono text-xs uppercase tracking-[0.18em] text-clay mb-2">Interdisciplinary Practice</p>
             <p class="text-sm text-ink/70 leading-relaxed">
                 We combine planning, architecture, landscape architecture and interior design into a single
                 profession — designing complete environments.
@@ -81,7 +81,7 @@
             </div>
             <div class="mt-6 sm:mt-0 sm:w-56 shrink-0">
                 <div class="bg-paper border border-ink/10 rounded-sm p-5">
-                    <p class="font-mono text-[10px] uppercase tracking-wider text-ink/40 mb-1">Direct Line</p>
+                    <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-1">Direct Line</p>
                     <a href="tel:+94717261930" class="font-display font-semibold text-ink hover:text-draft transition-colors">
                         +94 71 726 1930
                     </a>
@@ -96,7 +96,7 @@
         <h2 class="font-display text-2xl font-semibold mb-3">
             Call us today
         </h2>
-        <p class="text-paper/70 mb-8 max-w-xl mx-auto leading-relaxed">
+        <p class="text-paper/75 mb-8 max-w-xl mx-auto leading-relaxed">
             See how we can start designing and building your dream home with advanced value engineering principles.
         </p>
         <div class="flex flex-wrap gap-4 justify-center">

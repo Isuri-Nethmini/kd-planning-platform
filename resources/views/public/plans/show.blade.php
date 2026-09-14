@@ -7,7 +7,7 @@
 <div class="max-w-6xl mx-auto px-5 py-10">
 
     {{-- Breadcrumb --}}
-    <nav class="font-mono text-xs text-ink/50 mb-8">
+    <nav class="font-mono text-xs text-ink/70 mb-8">
         <a href="/" class="hover:text-draft">Home</a>
         <span class="mx-2">/</span>
         <a href="/plans" class="hover:text-draft">Plans</a>
@@ -65,7 +65,7 @@
         {{-- ── RIGHT: Info + CTA ── --}}
         <div class="space-y-5">
 
-            <p class="font-mono text-xs text-ink/40 uppercase tracking-widest">
+            <p class="font-mono text-xs text-ink/70 uppercase tracking-widest">
                 PLAN NO. {{ str_pad($housePlan->id, 4, '0', STR_PAD_LEFT) }}
                 &nbsp;·&nbsp;
                 {{ $housePlan->view_count }} views
@@ -77,7 +77,7 @@
 
             <div class="flex flex-wrap gap-1">
                 @foreach($housePlan->categories as $cat)
-                    <a href="/plans?category={{ $cat->slug }}" class="font-mono text-[11px] uppercase tracking-wider bg-draft/10 text-draft px-2 py-1 rounded-sm hover:bg-draft/20 transition-colors">
+                    <a href="/plans?category={{ $cat->slug }}" class="font-mono text-xs uppercase tracking-wider bg-draft/10 text-draft px-2 py-1 rounded-sm hover:bg-draft/20 transition-colors">
                         {{ $cat->name }}
                     </a>
                 @endforeach
@@ -93,7 +93,7 @@
                     ['Plan Price', 'Rs. '.number_format($housePlan->price)],
                 ] as [$label, $value])
                     <div class="bg-white border border-ink/10 rounded-sm p-3">
-                        <p class="font-mono text-[10px] uppercase tracking-wider text-ink/40 mb-1">{{ $label }}</p>
+                        <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-1">{{ $label }}</p>
                         <p class="font-display font-semibold text-ink text-sm">{{ $value }}</p>
                     </div>
                 @endforeach
@@ -107,7 +107,7 @@
                 Spelling that out removes the contradiction.
             --}}
             <div class="bg-draft/5 border border-draft/20 rounded-sm p-4">
-                <p class="font-mono text-[10px] uppercase tracking-wider text-draft mb-1">What's included</p>
+                <p class="font-mono text-xs uppercase tracking-wider text-draft mb-1">What's included</p>
                 <p class="text-sm text-ink/70 leading-relaxed">
                     The plan price covers the architectural drawings and documentation for this design.
                     <strong class="text-ink">Construction is quoted separately</strong> — the cost depends on your
@@ -123,7 +123,21 @@
                     Request a Construction Estimate
                 </a>
                 <a
-                    href="https://wa.me/{{ preg_replace('/\D/', '', \App\Models\SystemSetting::get('whatsapp_number', '+94717261930')) }}?text={{ urlencode('Hi, I am interested in: '.$housePlan->name.' (Plan No. '.str_pad($housePlan->id,4,'0',STR_PAD_LEFT).')') }}"
+                    @php
+                        // The panel asked that the WhatsApp message carry the plan
+                        // itself. The message now includes the plan reference, the
+                        // headline specification and a direct URL, so the office can
+                        // open exactly the right plan straight from the chat.
+                        $waNumber  = preg_replace('/\D/', '', \App\Models\SystemSetting::get('whatsapp_number', '+94717261930'));
+                        $planRef   = 'PLAN-' . str_pad($housePlan->id, 4, '0', STR_PAD_LEFT);
+                        $waMessage = "Hi, I'm interested in this house plan.\n\n"
+                                   . "{$planRef} — {$housePlan->name}\n"
+                                   . "{$housePlan->bedrooms} bed · {$housePlan->bathrooms} bath · "
+                                   . number_format($housePlan->floor_area) . " sqft\n"
+                                   . route('plans.show', $housePlan->id) . "\n\n"
+                                   . "Could you tell me more?";
+                    @endphp
+                    href="https://wa.me/{{ $waNumber }}?text={{ rawurlencode($waMessage) }}"
                     target="_blank"
                     class="block w-full text-center border border-[#25D366] text-[#25D366] font-medium py-3 rounded-sm hover:bg-[#25D366] hover:text-white transition-colors"
                 >

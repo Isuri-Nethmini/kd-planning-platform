@@ -21,7 +21,7 @@
 
                     {{-- Search --}}
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-2">Search</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-2">Search</label>
                         <input
                             type="text"
                             name="q"
@@ -33,7 +33,7 @@
 
                     {{-- Category --}}
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-2">Category</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-2">Category</label>
                         <div class="space-y-1">
                             <label class="flex items-center gap-2 text-sm cursor-pointer">
                                 <input type="radio" name="category" value="" {{ !request('category') ? 'checked' : '' }} onchange="document.getElementById('filter-form').submit()" class="accent-draft">
@@ -50,7 +50,7 @@
 
                     {{-- Bedrooms --}}
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-2">Min Bedrooms</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-2">Min Bedrooms</label>
                         <select name="bedrooms" onchange="document.getElementById('filter-form').submit()" class="w-full border border-ink/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-draft">
                             <option value="">Any</option>
                             @foreach ([1,2,3,4,5,6] as $n)
@@ -72,7 +72,7 @@
 
                     {{-- Sort --}}
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-2">Sort By</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-2">Sort By</label>
                         <select name="sort" onchange="document.getElementById('filter-form').submit()" class="w-full border border-ink/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-draft">
                             <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Newest</option>
                             <option value="most_viewed" {{ request('sort') === 'most_viewed' ? 'selected' : '' }}>Most Viewed</option>
@@ -91,11 +91,11 @@
         {{-- ── PLAN GRID ── --}}
         <div class="flex-1">
             <div class="flex items-center justify-between mb-6">
-                <p class="font-mono text-sm text-ink/50">{{ $plans->total() }} plan{{ $plans->total() !== 1 ? 's' : '' }} found</p>
+                <p class="font-mono text-sm text-ink/70">{{ $plans->total() }} plan{{ $plans->total() !== 1 ? 's' : '' }} found</p>
             </div>
 
             @if($plans->isEmpty())
-                <div class="text-center py-24 text-ink/40">
+                <div class="text-center py-24 text-ink/70">
                     <p class="text-4xl mb-4">🏠</p>
                     <p class="font-display text-lg">No plans match your filters.</p>
                     <a href="/plans" class="text-sm text-draft hover:underline mt-2 inline-block">Clear and try again</a>
@@ -109,14 +109,14 @@
                                     :src="$plan->primaryImage?->url"
                                     :alt="$plan->name"
                                 />
-                                <span class="absolute top-3 left-3 font-mono text-[11px] bg-ink/80 text-paper px-2 py-1 rounded-sm">
+                                <span class="absolute top-3 left-3 font-mono text-xs bg-ink/80 text-paper px-2 py-1 rounded-sm">
                                     PLAN NO. {{ str_pad($plan->id, 4, '0', STR_PAD_LEFT) }}
                                 </span>
                             </div>
                             <div class="p-5">
                                 <div class="flex flex-wrap gap-1 mb-2">
                                     @foreach($plan->categories->take(2) as $cat)
-                                        <span class="font-mono text-[10px] uppercase tracking-wider bg-draft/10 text-draft px-2 py-0.5 rounded-sm">{{ $cat->name }}</span>
+                                        <span class="font-mono text-xs uppercase tracking-wider bg-draft/10 text-draft px-2 py-0.5 rounded-sm">{{ $cat->name }}</span>
                                     @endforeach
                                 </div>
                                 <h2 class="font-display font-semibold text-ink mb-2 leading-snug">{{ $plan->name }}</h2>
@@ -133,17 +133,17 @@
                 @if($plans->hasPages())
                     <div class="mt-10 flex justify-center gap-2 font-mono text-sm">
                         @if($plans->onFirstPage())
-                            <span class="px-3 py-2 text-ink/30">← Prev</span>
+                            <span class="px-3 py-2 text-ink/70">← Prev</span>
                         @else
                             <a href="{{ $plans->previousPageUrl() }}" class="px-3 py-2 border border-ink/20 rounded-sm hover:bg-ink hover:text-paper transition-colors">← Prev</a>
                         @endif
 
-                        <span class="px-3 py-2 text-ink/60">Page {{ $plans->currentPage() }} of {{ $plans->lastPage() }}</span>
+                        <span class="px-3 py-2 text-ink/70">Page {{ $plans->currentPage() }} of {{ $plans->lastPage() }}</span>
 
                         @if($plans->hasMorePages())
                             <a href="{{ $plans->nextPageUrl() }}" class="px-3 py-2 border border-ink/20 rounded-sm hover:bg-ink hover:text-paper transition-colors">Next →</a>
                         @else
-                            <span class="px-3 py-2 text-ink/30">Next →</span>
+                            <span class="px-3 py-2 text-ink/70">Next →</span>
                         @endif
                     </div>
                 @endif

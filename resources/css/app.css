@@ -17,8 +17,38 @@
 }
 
 @layer base {
+  /*
+    Accessibility baseline, added after the interim review.
+
+    The panel flagged that text was hard to read. Auditing it against
+    WCAG 2.1 AA confirmed the problem was real rather than a projector
+    artefact: secondary labels sat at roughly 2.3:1 to 3.0:1 against the
+    paper background, where AA requires 4.5:1 for body text. All text
+    utilities were raised to a minimum of 70% opacity (5.31:1), and
+    arbitrary font sizes below 12px were removed.
+  */
+  html {
+    font-size: 100%;          /* respect the user's own browser setting */
+  }
+
   body {
     @apply font-body text-charcoal bg-paper antialiased;
+    font-size: 1rem;          /* 16px base, the accepted minimum for body text */
+    line-height: 1.6;
+  }
+
+  /* Never let a utility push text below a legible size */
+  .text-xs  { font-size: 0.8125rem; }   /* 13px rather than 12px */
+  .text-sm  { font-size: 0.9375rem; }   /* 15px rather than 14px */
+
+  /* Visible keyboard focus — required by WCAG 2.4.7 */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-draft);
+    outline-offset: 2px;
   }
 }
 

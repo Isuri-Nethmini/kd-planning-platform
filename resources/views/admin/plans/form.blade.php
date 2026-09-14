@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="flex items-center gap-3 mb-8">
-    <a href="/admin/plans" class="text-sm text-ink/50 hover:text-draft">← Plans</a>
-    <span class="text-ink/20">/</span>
+    <a href="/admin/plans" class="text-sm text-ink/70 hover:text-draft">← Plans</a>
+    <span class="text-ink/70">/</span>
     <h1 class="font-display text-2xl font-semibold text-ink">
         {{ isset($plan) ? 'Edit: '.$plan->name : 'Add New Plan' }}
     </h1>
@@ -41,14 +41,14 @@
                 <h2 class="font-display font-semibold text-ink">Plan Details</h2>
 
                 <div>
-                    <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Plan Name *</label>
+                    <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Plan Name *</label>
                     <input type="text" name="name" value="{{ old('name', $plan->name ?? '') }}"
                         class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('name') border-clay @enderror">
                     @error('name')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
                 </div>
 
                 <div>
-                    <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Description *</label>
+                    <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Description *</label>
                     <textarea name="description" rows="4"
                         class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft resize-none @error('description') border-clay @enderror"
                     >{{ old('description', $plan->description ?? '') }}</textarea>
@@ -57,32 +57,32 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Plan Price (Rs.) *</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Plan Price (Rs.) *</label>
                         <input type="number" name="price" value="{{ old('price', $plan->price ?? '') }}"
                             class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('price') border-clay @enderror">
                         @error('price')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
-                        <p class="text-xs text-ink/40 mt-1">Cost of the drawings — not the construction cost.</p>
+                        <p class="text-xs text-ink/70 mt-1">Cost of the drawings — not the construction cost.</p>
                     </div>
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Floor Area (sqft) *</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Floor Area (sqft) *</label>
                         <input type="number" name="floor_area" value="{{ old('floor_area', $plan->floor_area ?? '') }}"
                             class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('floor_area') border-clay @enderror">
                         @error('floor_area')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Bedrooms *</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Bedrooms *</label>
                         <input type="number" name="bedrooms" min="1" value="{{ old('bedrooms', $plan->bedrooms ?? '') }}"
                             class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('bedrooms') border-clay @enderror">
                         @error('bedrooms')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Bathrooms *</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Bathrooms *</label>
                         <input type="number" name="bathrooms" min="1" value="{{ old('bathrooms', $plan->bathrooms ?? '') }}"
                             class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('bathrooms') border-clay @enderror">
                         @error('bathrooms')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Floors *</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Floors *</label>
                         <select name="floors" class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
                             @foreach([1,2,3] as $f)
                                 <option value="{{ $f }}" {{ old('floors', $plan->floors ?? 1) == $f ? 'selected' : '' }}>{{ $f }}</option>
@@ -90,7 +90,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Style</label>
+                        <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Style</label>
                         <input type="text" name="style" value="{{ old('style', $plan->style ?? '') }}" placeholder="Modern, Colonial…"
                             class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
                     </div>
@@ -106,18 +106,18 @@
                             <div class="relative w-24 h-20 rounded-sm overflow-hidden">
                                 <img src="{{ $img->url }}" alt="" class="w-full h-full object-cover">
                                 @if($img->is_primary)
-                                    <span class="absolute bottom-0 left-0 right-0 text-center font-mono text-[9px] bg-draft text-white py-0.5">PRIMARY</span>
+                                    <span class="absolute bottom-0 left-0 right-0 text-center font-mono text-xs bg-draft text-white py-0.5">PRIMARY</span>
                                 @endif
                             </div>
                         @endforeach
                     </div>
                 @endif
-                <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">
+                <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">
                     {{ isset($plan) ? 'Add More Images' : 'Upload Images' }}
                 </label>
                 <input type="file" name="images[]" multiple accept="image/*"
-                    class="w-full text-sm text-ink/60 file:mr-3 file:py-2 file:px-4 file:rounded-sm file:border file:border-ink/20 file:text-xs file:font-medium file:bg-paper hover:file:bg-ink hover:file:text-paper file:cursor-pointer file:transition-colors">
-                <p class="text-xs text-ink/40 mt-2">First uploaded image will be set as primary. Max 5MB per image.</p>
+                    class="w-full text-sm text-ink/70 file:mr-3 file:py-2 file:px-4 file:rounded-sm file:border file:border-ink/20 file:text-xs file:font-medium file:bg-paper hover:file:bg-ink hover:file:text-paper file:cursor-pointer file:transition-colors">
+                <p class="text-xs text-ink/70 mt-2">First uploaded image will be set as primary. Max 5MB per image.</p>
             </div>
         </div>
 

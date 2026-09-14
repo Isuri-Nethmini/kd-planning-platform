@@ -8,7 +8,7 @@
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-2">Get in Touch</p>
         <h1 class="font-display text-3xl md:text-4xl font-semibold">Request a Construction Estimate</h1>
-        <p class="text-paper/60 mt-3 max-w-xl leading-relaxed text-sm">
+        <p class="text-paper/75 mt-3 max-w-xl leading-relaxed text-sm">
             Plan prices cover the drawings. Tell us about your land and finishes and we'll estimate the build cost.
         </p>
     </div>
@@ -25,7 +25,7 @@
                 <p class="font-mono text-xs text-clay uppercase tracking-wider">Wants a design similar to</p>
                 <p class="font-display font-semibold text-ink">{{ $project->title }}</p>
                 @if($project->location)
-                    <p class="font-mono text-[11px] text-ink/40">{{ $project->location }}</p>
+                    <p class="font-mono text-xs text-ink/70">{{ $project->location }}</p>
                 @endif
             </div>
         </div>
@@ -57,7 +57,7 @@
 
         <div class="grid sm:grid-cols-2 gap-5">
             <div>
-                <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Full Name *</label>
+                <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Full Name *</label>
                 <input
                     type="text" name="name" value="{{ old('name') }}"
                     class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('name') border-clay @enderror"
@@ -66,7 +66,7 @@
                 @error('name')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
             </div>
             <div>
-                <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Phone Number *</label>
+                <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Phone Number *</label>
                 <input
                     type="tel" name="phone" value="{{ old('phone') }}" pattern="[+]?[0-9\s\-\(\)]{7,20}"
                     title="Enter a valid phone number (e.g. +94 71 726 1930)"
@@ -78,7 +78,7 @@
         </div>
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Email Address *</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Email Address *</label>
             <input
                 type="email" name="email" value="{{ old('email') }}"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft @error('email') border-clay @enderror"
@@ -89,7 +89,7 @@
 
         @if(!$plan)
             <div>
-                <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Plan of Interest (optional)</label>
+                <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Plan of Interest (optional)</label>
                 <input
                     type="text" name="plan_name" value="{{ old('plan_name') }}"
                     class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft"
@@ -99,7 +99,7 @@
         @endif
 
         <div>
-            <label class="font-mono text-xs uppercase tracking-wider text-ink/50 block mb-1">Message *</label>
+            <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Message *</label>
             <textarea
                 name="message" rows="5"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft resize-none @error('message') border-clay @enderror"
@@ -115,7 +115,7 @@
             Submit Inquiry
         </button>
 
-        <p class="text-center font-mono text-xs text-ink/40">No login required. We'll get back to you within 24 hours.</p>
+        <p class="text-center font-mono text-xs text-ink/70">No login required. We'll get back to you within 24 hours.</p>
     </form>
 </div>
 

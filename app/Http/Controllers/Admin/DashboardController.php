@@ -25,10 +25,17 @@ class DashboardController extends Controller
             ->take(8)
             ->get();
 
-        $mostViewed = HousePlan::active()
-            ->orderByDesc('view_count')
-            ->take(5)
-            ->get();
+        // View counts are commercial performance data. Staff admins never
+        // receive it — the query does not run for them, so it cannot leak
+        // through the view.
+        $mostViewed = collect();
+
+        if (session('admin_role') === 'primary') {
+            $mostViewed = HousePlan::active()
+                ->orderByDesc('view_count')
+                ->take(5)
+                ->get();
+        }
 
         return view('admin.dashboard', compact('stats', 'recentInquiries', 'mostViewed'));
     }
