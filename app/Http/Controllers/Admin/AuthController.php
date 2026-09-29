@@ -39,7 +39,12 @@ class AuthController extends Controller
         if (RateLimiter::tooManyAttempts($key, self::MAX_ATTEMPTS)) {
             $seconds = RateLimiter::availableIn($key);
 
-            LoginLog::record($credentials['email'], false, null, $request);
+            // Attribute the blocked attempt to the account when it exists.
+            // Passing null here made lockouts of real accounts appear as
+            // "Unknown account" in the Login Activity page.
+            $lockedAdminId = AdminUser::where('email', $credentials['email'])->value('id');
+
+            LoginLog::record($credentials['email'], false, $lockedAdminId, $request);
 
             throw ValidationException::withMessages([
                 'email' => "Too many login attempts. Please try again in "
