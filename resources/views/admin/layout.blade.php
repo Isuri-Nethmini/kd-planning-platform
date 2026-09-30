@@ -63,7 +63,7 @@
                         <span>👥</span> Admin Users
                     </a>
                     <a href="/admin/logs" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/logs*') ? 'bg-paper/10' : '' }}">
-                        <span>🛡️</span> Login Activity
+                        <span>🛡️</span> Security Log
                     </a>
                 @endif
             </div>

@@ -41,10 +41,10 @@ class AuthController extends Controller
 
             // Attribute the blocked attempt to the account when it exists.
             // Passing null here made lockouts of real accounts appear as
-            // "Unknown account" in the Login Activity page.
+            // "Unknown account" in the Security Log.
             $lockedAdminId = AdminUser::where('email', $credentials['email'])->value('id');
 
-            LoginLog::record($credentials['email'], false, $lockedAdminId, $request);
+            LoginLog::record($credentials['email'], false, $lockedAdminId, $request, LoginLog::LOCKOUT);
 
             throw ValidationException::withMessages([
                 'email' => "Too many login attempts. Please try again in "

@@ -8,18 +8,23 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Read-only audit trail of admin login activity.
+ * Read-only security log: sign-ins, lockouts and blocked page access.
  * Primary admins only — enforced by PrimaryAdmin middleware on the route.
  */
 class LoginLogController extends Controller
 {
     public function index(Request $request): View
     {
-        $query = LoginLog::with('admin')->latest('attempted_at');
+        // Sorted by id as a tie-breaker: several events can share the same
+        // second, and without it they would come out in an arbitrary order.
+        $query = LoginLog::with('admin')->latest('attempted_at')->latest('id');
 
-        if ($request->filled('result') && $request->result !== 'all') {
-            $query->where('successful', $request->result === 'success');
-        }
+        match ($request->input('result', 'all')) {
+            'success' => $query->successful(),
+            'failed'  => $query->failed(),
+            'denied'  => $query->accessDenied(),
+            default   => null,
+        };
 
         if ($request->filled('q')) {
             $term = $request->q;
@@ -32,10 +37,10 @@ class LoginLogController extends Controller
         $logs = $query->paginate(25)->withQueryString();
 
         $stats = [
-            'total'         => LoginLog::count(),
-            'successful'    => LoginLog::where('successful', true)->count(),
-            'failed'        => LoginLog::failed()->count(),
-            'failed_24h'    => LoginLog::failed()->where('attempted_at', '>=', now()->subDay())->count(),
+            'successful' => LoginLog::successful()->count(),
+            'failed'     => LoginLog::failed()->count(),
+            'failed_24h' => LoginLog::failed()->where('attempted_at', '>=', now()->subDay())->count(),
+            'denied'     => LoginLog::accessDenied()->count(),
         ];
 
         return view('admin.logs.index', compact('logs', 'stats'));
