@@ -36,6 +36,18 @@
                     <span class="ml-auto font-mono text-xs bg-clay text-white px-1.5 py-0.5 rounded-sm">{{ $newInquiries }}</span>
                 @endif
             </a>
+            <a href="/admin/clients" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/clients*') || request()->is('admin/client-projects*') ? 'bg-paper/10' : '' }}">
+                <span>👷</span> Clients
+            </a>
+            @if(session('admin_role') === 'primary')
+                <a href="/admin/payments" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/payments*') ? 'bg-paper/10' : '' }}">
+                    <span>💳</span> Payments
+                    @php $pendingReceipts = \App\Models\PaymentReceipt::where('status', 'pending')->count(); @endphp
+                    @if($pendingReceipts > 0)
+                        <span class="ml-auto font-mono text-xs bg-draft text-white px-1.5 py-0.5 rounded-sm">{{ $pendingReceipts }}</span>
+                    @endif
+                </a>
+            @endif
             <a href="/admin/projects" class="flex items-center gap-3 px-3 py-2 rounded-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/projects*') ? 'bg-paper/10' : '' }}">
                 <span>🏗️</span> Completed Work
             </a>

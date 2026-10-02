@@ -84,6 +84,22 @@
             </a>
         </div>
 
+        {{-- The bridge from sales to the client portal --}}
+        @if($inquiry->customer)
+            <a href="/admin/clients/{{ $inquiry->customer->id }}"
+               class="block bg-moss/10 border border-moss/40 rounded-sm p-5 text-sm hover:border-moss transition-colors">
+                <p class="font-semibold text-ink">Client account created</p>
+                <p class="text-ink/75">{{ $inquiry->customer->name }} has portal access. View their project →</p>
+            </a>
+        @elseif($inquiry->status === 'converted')
+            <a href="/admin/clients/create?inquiry={{ $inquiry->id }}"
+               class="block bg-ink text-paper text-center text-sm font-medium py-3 rounded-sm hover:bg-ink/90 transition-colors">
+                Create client account
+            </a>
+        @else
+            <p class="text-xs text-ink/70">Mark this inquiry as <strong>Converted</strong> to create a client portal account for them.</p>
+        @endif
+
         <div class="bg-white border border-ink/10 rounded-sm p-6">
             <h2 class="font-display font-semibold text-ink mb-1">Sales Pipeline</h2>
             <p class="text-xs text-ink/70 mb-4">Track this lead from first contact through to a completed sale.</p>

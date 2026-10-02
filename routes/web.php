@@ -17,6 +17,14 @@ use App\Http\Controllers\Admin\PlanController as AdminPlanController;
 use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\ClientProjectController;
+use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Portal\AuthController as PortalAuthController;
+use App\Http\Controllers\Portal\PasswordController as PortalPasswordController;
+use App\Http\Controllers\Portal\ProjectController as PortalProjectController;
+use App\Http\Controllers\Portal\ReceiptController as PortalReceiptController;
+use App\Http\Controllers\ProtectedFileController;
 use Illuminate\Support\Facades\Route;
 
 // ── Public routes ────────────────────────────────────────────
@@ -35,6 +43,27 @@ Route::get('/inquire', [InquiryController::class, 'create'])->name('inquire');
 Route::post('/inquire', [InquiryController::class, 'store'])->name('inquire.store');
 Route::get('/inquire/success', [InquiryController::class, 'success'])->name('inquire.success');
 
+
+// ── Client portal ────────────────────────────────────────────
+// Confirmed clients only. Uses the separate "customer" guard, so these
+// routes and the admin panel can never share a login.
+Route::get('/portal/login', [PortalAuthController::class, 'showLogin'])->name('portal.login');
+Route::post('/portal/login', [PortalAuthController::class, 'login'])->middleware('throttle:20,1');
+Route::post('/portal/logout', [PortalAuthController::class, 'logout'])->name('portal.logout');
+
+Route::middleware(\App\Http\Middleware\CustomerAuth::class)->group(function () {
+    Route::get('/portal', [PortalProjectController::class, 'index'])->name('portal.index');
+    Route::get('/portal/projects/{project}', [PortalProjectController::class, 'show'])->name('portal.project');
+    Route::post('/portal/instalments/{instalment}/receipts', [PortalReceiptController::class, 'store'])->name('portal.receipt');
+    Route::get('/portal/password', [PortalPasswordController::class, 'edit'])->name('portal.password');
+    Route::put('/portal/password', [PortalPasswordController::class, 'update']);
+});
+
+// Private files (receipts, site photos). No middleware here on purpose:
+// both clients and admins use these, and the controller checks each request.
+Route::get('/files/receipts/{receipt}', [ProtectedFileController::class, 'receipt'])->name('files.receipt');
+Route::get('/files/photos/{photo}', [ProtectedFileController::class, 'photo'])->name('files.photo');
+
 // ── Admin auth routes (no middleware) ────────────────────────
 Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'login']);
@@ -45,6 +74,22 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->group(function () {
 
     Route::get('/admin', fn() => redirect('/admin/dashboard'));
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    // Clients and construction progress — all admins
+    Route::get('/admin/clients', [ClientController::class, 'index'])->name('admin.clients.index');
+    Route::get('/admin/clients/create', [ClientController::class, 'create'])->name('admin.clients.create');
+    Route::post('/admin/clients', [ClientController::class, 'store'])->name('admin.clients.store');
+    Route::get('/admin/clients/{client}', [ClientController::class, 'show'])->name('admin.clients.show');
+    Route::put('/admin/clients/{client}', [ClientController::class, 'update'])->name('admin.clients.update');
+    Route::post('/admin/clients/{client}/projects', [ClientController::class, 'storeProject'])->name('admin.clients.projects.store');
+    Route::post('/admin/clients/{client}/reset-password', [ClientController::class, 'resetPassword'])->name('admin.clients.reset');
+
+    Route::get('/admin/client-projects/{project}', [ClientProjectController::class, 'show'])->name('admin.client-projects.show');
+    Route::put('/admin/client-projects/{project}', [ClientProjectController::class, 'update'])->name('admin.client-projects.update');
+    Route::post('/admin/client-projects/{project}/stages', [ClientProjectController::class, 'storeStage'])->name('admin.stages.store');
+    Route::put('/admin/client-projects/{project}/stages/{stage}', [ClientProjectController::class, 'updateStage'])->name('admin.stages.update');
+    Route::post('/admin/client-projects/{project}/stages/{stage}/photos', [ClientProjectController::class, 'storePhotos'])->name('admin.stages.photos');
+    Route::delete('/admin/stage-photos/{photo}', [ClientProjectController::class, 'destroyPhoto'])->name('admin.photos.destroy');
 
     // Every admin can change their own password
     Route::get('/admin/password', [PasswordController::class, 'edit'])->name('admin.password.edit');
@@ -108,6 +153,14 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->group(function () {
         Route::post('/admin/admins', [AdminUserController::class, 'store'])->name('admin.admins.store');
         Route::get('/admin/admins/{admin}/edit', [AdminUserController::class, 'edit'])->name('admin.admins.edit');
         Route::put('/admin/admins/{admin}', [AdminUserController::class, 'update'])->name('admin.admins.update');
+        // Payments are the client's money — primary admins only
+        Route::get('/admin/payments', [PaymentController::class, 'index'])->name('admin.payments.index');
+        Route::post('/admin/client-projects/{project}/instalments', [PaymentController::class, 'storeInstalment'])->name('admin.instalments.store');
+        Route::delete('/admin/instalments/{instalment}', [PaymentController::class, 'destroyInstalment'])->name('admin.instalments.destroy');
+        Route::post('/admin/receipts/{receipt}/verify', [PaymentController::class, 'verify'])->name('admin.receipts.verify');
+        Route::post('/admin/receipts/{receipt}/reject', [PaymentController::class, 'reject'])->name('admin.receipts.reject');
+        Route::delete('/admin/clients/{client}', [ClientController::class, 'destroy'])->name('admin.clients.destroy');
+
         Route::post('/admin/admins/{admin}/reset-password', [AdminUserController::class, 'resetPassword'])->name('admin.admins.reset');
         Route::delete('/admin/admins/{admin}', [AdminUserController::class, 'destroy'])->name('admin.admins.destroy');
     });

@@ -17,6 +17,9 @@
 }
 
 @layer base {
+  /* Hide Alpine-controlled elements until Alpine has initialised */
+  [x-cloak] { display: none !important; }
+
   /*
     Accessibility baseline, added after the interim review.
 

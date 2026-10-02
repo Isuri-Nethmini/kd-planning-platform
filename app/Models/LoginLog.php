@@ -28,7 +28,7 @@ class LoginLog extends Model
     public const ACCOUNT_EVENTS = [self::ACCOUNT_CREATED, self::PASSWORD_RESET, self::PASSWORD_CHANGED, self::ACCOUNT_DELETED];
 
     protected $fillable = [
-        'admin_id', 'admin_name', 'email', 'event', 'path', 'note', 'successful',
+        'actor_type', 'admin_id', 'admin_name', 'email', 'event', 'path', 'note', 'successful',
         'ip_address', 'user_agent', 'attempted_at',
     ];
 
@@ -101,6 +101,26 @@ class LoginLog extends Model
         ]);
     }
 
+    /**
+     * Records a client-portal event: a sign-in, lockout or account change.
+     *
+     * Customers have no admin_id, so the name snapshot identifies them.
+     */
+    public static function recordCustomer(string $email, string $event, bool $successful, ?Customer $customer, Request $request, ?string $note = null): void
+    {
+        static::create([
+            'actor_type'   => 'customer',
+            'admin_name'   => $customer?->name,
+            'email'        => $email,
+            'event'        => $event,
+            'note'         => $note,
+            'successful'   => $successful,
+            'ip_address'   => $request->ip(),
+            'user_agent'   => substr((string) $request->userAgent(), 0, 512),
+            'attempted_at' => now(),
+        ]);
+    }
+
     /** Label shown in the Result column. */
     public function getResultLabelAttribute(): string
     {
@@ -150,6 +170,10 @@ class LoginLog extends Model
      */
     public function getAccountLabelAttribute(): string
     {
+        if ($this->actor_type === 'customer') {
+            return ($this->admin_name ?? 'Unknown') . ' (client)';
+        }
+
         return match (true) {
             $this->admin !== null      => $this->admin->name,
             $this->admin_name !== null => $this->admin_name . ' (deleted)',

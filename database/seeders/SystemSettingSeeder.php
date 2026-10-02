@@ -12,6 +12,6 @@ class SystemSettingSeeder extends Seeder
         // These two rows already exist from the migration (seeded as NULL) —
         // this just fills in real values for local testing.
         SystemSetting::set('whatsapp_number', '+94717261930');
-        SystemSetting::set('notification_email', 'kdplanning@gmail.com');
+        SystemSetting::set('notification_email', 'kdplanningdesign@gmail.com');   // the business's official inbox
     }
 }

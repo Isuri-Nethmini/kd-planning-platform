@@ -51,7 +51,7 @@ class InquiryController extends Controller
             $inquiry->update(['status' => 'read']);
         }
 
-        $inquiry->load(['housePlan', 'completedProject']);
+        $inquiry->load(['housePlan', 'completedProject', 'customer']);
 
         return view('admin.inquiries.show', compact('inquiry'));
     }

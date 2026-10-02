@@ -1,50 +1,112 @@
 # KD Planning & Design — Setup & Handover
 
-Online House Plan Browsing and Inquiry Platform
-LNBTI Industry Project · UOG0723006 · Isuri Nethmini
+Online House Plan Browsing, Inquiry and Client Portal Platform
+LNBTI Industry Project · Isuri Nethmini
 Client: Dhanushka Chathuranga De Soysa, KD Planning & Design, Minuwangoda
 
 ---
 
-## ⚠️ Run this first
-
-The seed data used to contain stock photos from picsum.photos. Those have been
-removed from the seeder files, **but they are still sitting in your database
-until you re-seed**. Run this once before you demo:
+## First-time setup
 
 ```bash
+composer install
+npm install
 php artisan migrate:fresh --seed
 php artisan storage:link
 npm run build
+php artisan serve          # http://127.0.0.1:8000
 ```
 
-`migrate:fresh` drops and rebuilds every table, so any test inquiries you have
-made will be cleared. That is what you want before a demo.
+`migrate:fresh` rebuilds every table and loads demo data, including a demo
+client mid-way through a build. Re-run it whenever a new version adds
+migrations.
 
-`storage:link` is required for uploaded images to be visible — without it,
-uploads succeed but render as broken images.
+## Test accounts (development only — delete before going live)
+
+| Area | Email | Password |
+|---|---|---|
+| Admin — primary | `kdplanning@gmail.com` | `password123` |
+| Admin — staff | `staff@kdplanning.test` | `password123` |
+| Client portal | `client@kdplanning.test` | `password123` |
+
+Admin sign-in: `/admin/login` · Client sign-in: `/portal/login`
+
+## Email
+
+Sent through the business Gmail account (`kdplanningdesign@gmail.com`) using an
+app password. The settings live in `.env`, which git ignores, so the password is
+never committed.
+
+- **Keep a backup of your `.env` outside the project folder.** Extracting a new
+  zip over the project replaces it.
+- Accounts you create while testing receive real emails, so use addresses you
+  can check.
+- If a send fails, the action still completes and the error is written to
+  `storage/logs/laravel.log`.
+
+## Automated tests
+
+```bash
+php artisan test
+```
+
+34 feature tests, run against an in-memory database, covering access control
+(clients cannot see each other's projects or receipts, staff cannot verify
+payments), the receipt workflow, admin security and the public site.
 
 ---
 
-## Running the project
+## What the system does
 
-```bash
-php artisan serve      # http://127.0.0.1:8000
-npm run dev            # in a second terminal, for live CSS rebuilds
-```
+**Public website** — plan catalogue with search and filters, plan detail pages,
+completed projects, blog, About page, guest inquiry form, WhatsApp links carrying
+the plan details. Responsive, with a mobile menu.
 
-For a demo, prefer `npm run build` once over `npm run dev` — fewer moving parts.
+**Admin panel** — plans, inquiries with a sales pipeline, completed projects,
+blog, testimonials, analytics, downloadable CSV reports, settings, admin accounts.
 
-## Admin access
+**Client portal** — confirmed clients sign in to follow their build stage by
+stage with site photos, and upload bank-transfer receipts for each instalment.
 
-| | |
+### Roles
+
+| | Staff admin | Primary admin |
+|---|---|---|
+| Plans, inquiries, blog, testimonials, completed projects | ✓ | ✓ |
+| Clients and construction progress | ✓ | ✓ |
+| Payment schedules and receipt verification | — | ✓ |
+| Analytics, view counts, plan and summary reports | — | ✓ |
+| Admin accounts, Security Log | — | ✓ |
+
+### The client journey
+
+1. A visitor sends an inquiry (no account needed).
+2. An admin works the lead through the sales pipeline.
+3. When it reaches **Converted**, the inquiry page shows **Create client
+   account**. The form is prefilled from the inquiry.
+4. The client is emailed a temporary password and must set their own on first
+   sign-in.
+5. Staff update construction stages and add site photos. Starting or finishing
+   a stage emails the client.
+6. The primary admin adds the payment schedule. The client pays by bank
+   transfer and uploads the receipt; the business is emailed.
+7. The primary admin verifies or rejects it from **Payments**. The client is
+   emailed either way, and a rejection shows them the reason.
+
+---
+
+## Security design
+
+| Protection | How |
 |---|---|
-| URL | `/admin/login` |
-| Email | `kdplanning@gmail.com` |
-| Password | `password123` |
-
-A second staff account exists: `staff@kdplanning.test` / `password123`.
-**Both must be changed before the site goes live.**
+| Separate client and admin logins | Different tables, and clients use Laravel's separate `customer` guard — neither session satisfies the other's checks |
+| Clients see only their own data | Ownership checked on the server on every request; others get a 404, which doesn't confirm the record exists |
+| Private files | Receipts and site photos are on the private disk with no URL; served only by `ProtectedFileController` after a check |
+| Brute-force protection | 5 failed sign-ins lock that email + IP for 15 minutes (admin and client) |
+| Temporary passwords | System-generated, never seen by anyone; forced change on first sign-in, after which the emailed one stops working |
+| Password policy | 10+ characters, mixed case, number, symbol, and checked against known breaches (`App\Support\PasswordPolicy`) |
+| Session safety | New session ID on sign-in and password change; admins time out after 30 minutes idle; a deleted account is signed out on its next request |
+| Audit trail | Security Log records sign-ins, lockouts, blocked pages and account changes, with a name snapshot so deleted accounts keep their history. Every receipt decision records who made it and when |
 
 ---
 
@@ -52,73 +114,33 @@ A second staff account exists: `staff@kdplanning.test` / `password123`.
 
 | What | Where |
 |---|---|
-| Public pages | `app/Http/Controllers/Public/` |
-| Admin pages | `app/Http/Controllers/Admin/` |
-| Views | `resources/views/public/`, `resources/views/admin/` |
-| Design tokens (colours, fonts) | `resources/css/app.css` (`@theme` block) |
-| Uploaded plan images | `storage/app/public/plans/{plan_id}/` |
-| Uploaded project photos | `storage/app/public/projects/{project_id}/` |
-| Client media drop folder | `public/media/` |
-
-## Adding the client's assets when they arrive
-
-**Hero video** — save as `public/media/hero.mp4`. The homepage detects the file
-automatically and switches from the blueprint-grid fallback to the video. No
-code change needed.
-
-**House plan images** — Admin → House Plans → Edit → Images. First image
-uploaded becomes the card thumbnail. Until images exist, every plan renders the
-`<x-image-frame>` blueprint placeholder.
-
-**Logo** — save as `public/media/logo.png`, then swap the text wordmark in
-`resources/views/layouts/app.blade.php` (around line 22) for an `<img>` tag.
+| Public controllers | `app/Http/Controllers/Public/` |
+| Admin controllers | `app/Http/Controllers/Admin/` |
+| Client portal controllers | `app/Http/Controllers/Portal/` |
+| Private file access | `app/Http/Controllers/ProtectedFileController.php` |
+| Emails | `app/Support/Notifier.php` |
+| Password rules | `app/Support/PasswordPolicy.php` |
+| Uploaded plan images (public) | `storage/app/public/plans/` |
+| Receipts and site photos (private) | `storage/app/private/` |
+| Client-supplied media | `public/media/` |
+| Tests | `tests/Feature/` |
 
 ---
 
-## Client assets (received 18 Aug 2026)
+## Before going live
 
-| Asset | Where it went |
-|---|---|
-| `logo.ai` / `logo.png` | Header, footer and all favicons — rasterised from the **vector**, so it stays sharp |
-| `hero video.mp4` (100 MB) | Cut to an 18 s silent 720p loop, **3.0 MB**, at `public/media/hero.mp4` with a poster frame |
-| `Previous work/` (5 images) | Seeded as five real completed projects with the client's own names, locations and costs |
-| `About us section.doc` | The `/about` page — company profile, principles, "We Design, We Build" |
-| `Contcas page.doc` | Director credentials and phone number on `/about`; contact details in the footer |
-| `3d architec.jpg` | `public/media/projects/render-showcase.jpg` — available for use as plan artwork |
+1. Delete the three test accounts above and create real ones through the admin panel.
+2. Replace the 12 placeholder plans with the client's real plans and drawings.
+3. Replace the five placeholder testimonials with genuine ones.
+4. Set `APP_ENV=production` and `APP_DEBUG=false`, and serve over HTTPS.
+5. Generate a fresh Gmail app password and update `.env`.
+6. Schedule database and `storage/` backups.
 
-The service images (CCTV, electrical work, consulting, construction) were **not**
-used. They suggest the business offers more than house plans, which is a scope
-question for the client rather than something to guess at.
+## Scope changes during the project
 
-## Known gaps
-
-1. **3D plan views (FR-03)** — client requested; not started. Approach not yet chosen.
-2. **Email notifications (FR-07)** — the code is written and wired up, but
-   `MAIL_MAILER=log` in `.env`, so notifications are written to
-   `storage/logs/laravel.log` rather than sent. Switching to Gmail SMTP needs an
-   app password from the client.
-3. **Real plan content** — the 12 seeded plans are placeholder data. The client
-   has around 40 real plans to supply, with drawings.
-4. **Testimonials are placeholder.** The five seeded testimonials are invented
-   names. Completed projects, by contrast, are real. Ask the client for genuine
-   quotes before launch — and be ready to say so if asked during a review.
-5. **`.obj` 3D files are not web-renderable.** Browsers cannot display `.obj`
-   natively, and the format is geometry-only with separate `.mtl` and texture
-   files, uncompressed. The web standard is **glTF 2.0 (`.glb`)** — one
-   self-contained file, typically 5-20x smaller. Most CAD tools (SketchUp,
-   Revit, 3ds Max, Blender, Lumion) can export or convert to it.
-
----
-
-## Bugs found and fixed during the 18 Aug cleanup
-
-| Bug | Impact |
-|---|---|
-| Controller directory was `Controllers/public/` but namespace was `...\Public` | Every public page returned HTTP 500 on Linux/macOS. Invisible on Windows because its filesystem is case-insensitive — this would have broken the first real deployment. |
-| `PlanImage::getUrlAttribute()` used `Storage::url()` (default disk = `local`, root `storage/app/private`) while uploads go to the `public` disk | Uploaded images produced URLs pointing where the file did not exist. Every real image would have rendered broken. |
-| Catalogue search used an ungrouped `orWhere` | The `orWhere` escaped the `active()` scope, so searching surfaced plans the admin had deliberately hidden. |
-| Analytics used `HAVING` without `GROUP BY` | Works on MySQL, crashes on SQLite. Replaced with `has()` for portability. |
-| `.plan-placeholder` used the `background` shorthand | Wiped out the blueprint grid whenever the two classes were combined. |
-| Deleting a plan left its uploaded files on disk | Orphaned files accumulated in storage forever. Deletion now cleans up files, image rows and category links. |
-| Two views had a literal `...` inside a `class` attribute | Hover zoom silently did nothing on those cards. |
-| `welcome.blade.php` (82 KB Laravel default) still present | Dead weight in the repo. Removed. |
+- **3D plan visualisation** — originally requested, then withdrawn by the client:
+  he works in AutoCAD, Revit and Lumion and cannot produce web-ready 3D output.
+- **Customer accounts** — the original SRS specified none. Requested by the
+  interim panel and agreed by the client, becoming the client portal.
+- **Receipt upload** — requested at the post-interim evaluation, as there is no
+  payment gateway by the client's choice.

@@ -21,7 +21,10 @@
 </head>
 <body class="bg-paper text-charcoal font-body">
 
-    <header class="sticky top-0 z-40 bg-paper/95 backdrop-blur border-b border-ink/10">
+    {{-- x-data drives the mobile menu. Below the md breakpoint the desktop
+         nav is hidden, so without this, phone visitors had no navigation. --}}
+    <header x-data="{ open: false }" @keydown.escape.window="open = false"
+            class="sticky top-0 z-40 bg-paper/95 backdrop-blur border-b border-ink/10">
         <div class="max-w-6xl mx-auto px-5 flex items-center justify-between h-16">
             <a href="{{ url('/') }}" class="flex items-center" aria-label="KD Planning &amp; Design — home">
                 <img src="{{ asset('media/logo.png') }}" alt="KD Planning &amp; Design"
@@ -35,12 +38,33 @@
                 <a href="/about" class="hover:text-draft transition-colors">About</a>
                 <a href="/blog" class="hover:text-draft transition-colors">Blog</a>
                 <a href="/#testimonials" class="hover:text-draft transition-colors">Testimonials</a>
+                <a href="/portal" class="hover:text-draft transition-colors">Client Login</a>
             </nav>
 
-            <a href="/inquire" class="inline-flex items-center rounded-sm bg-ink text-paper text-sm font-medium px-4 py-2 hover:bg-ink/90 transition-colors">
-                Get an Estimate
-            </a>
+            <div class="flex items-center gap-3">
+                <a href="/inquire" class="inline-flex items-center rounded-sm bg-ink text-paper text-sm font-medium px-4 py-2 hover:bg-ink/90 transition-colors">
+                    Get an Estimate
+                </a>
+                <button type="button" class="md:hidden p-2 -mr-2 text-ink" @click="open = !open"
+                        :aria-expanded="open.toString()" aria-controls="mobile-menu" aria-label="Menu">
+                    <svg x-show="!open" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+                    <svg x-show="open" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+            </div>
         </div>
+
+        <nav id="mobile-menu" x-show="open" x-cloak x-transition.opacity @click.outside="open = false"
+             class="md:hidden border-t border-ink/10 bg-paper">
+            <div class="max-w-6xl mx-auto px-5 py-3 flex flex-col text-base font-medium text-ink">
+                <a href="/" class="py-2.5 border-b border-ink/10">Home</a>
+                <a href="/plans" class="py-2.5 border-b border-ink/10">House Plans</a>
+                <a href="/completed-projects" class="py-2.5 border-b border-ink/10">Completed Work</a>
+                <a href="/about" class="py-2.5 border-b border-ink/10">About</a>
+                <a href="/blog" class="py-2.5 border-b border-ink/10">Blog</a>
+                <a href="/#testimonials" class="py-2.5 border-b border-ink/10" @click="open = false">Testimonials</a>
+                <a href="/portal" class="py-2.5">Client Login</a>
+            </div>
+        </nav>
     </header>
 
     <main>

@@ -33,7 +33,11 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            // Off on purpose. The private disk holds client receipts and site
+            // photos; with 'serve' on, Laravel adds a /storage/{path} route
+            // for signed URLs. Nothing here needs it — every private file is
+            // served by ProtectedFileController after an ownership check.
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],

@@ -59,6 +59,12 @@ class Inquiry extends Model
         return $this->belongsTo(CompletedProject::class);
     }
 
+    /** Set once this inquiry has been turned into a client account. */
+    public function customer(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Customer::class);
+    }
+
     /** Short human label for whatever this inquiry is about. */
     public function getSubjectLabelAttribute(): string
     {

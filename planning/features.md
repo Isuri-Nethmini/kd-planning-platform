@@ -1,5 +1,29 @@
 # Feature Planning Notes
 
+## Final status — October 2026
+
+All functional requirements are implemented except where the client withdrew them.
+
+| Requirement | Status |
+|---|---|
+| FR-01 to FR-16 (original SRS) | Complete — FR-03's 3D element withdrawn by the client |
+| FR-17 Sales pipeline | Complete |
+| FR-18 Admin account management (temporary passwords, forced change) | Complete |
+| FR-19 Company profile | Complete |
+| FR-20 Similar-design requests | Complete |
+| FR-23 Admin security (lockout, policy, timeouts, Security Log) | Complete |
+| FR-24 Downloadable reports | Complete |
+| FR-25 Client portal — separate login, construction progress with photos | Complete |
+| FR-26 Offline payments — receipt upload and verification | Complete |
+| Automated feature tests | 34 tests, all passing |
+
+Still pending from the client: real plan content and drawings, genuine
+testimonials, and a decision on the services page (FR-21) and commercial
+portfolio (FR-22).
+
+---
+
+
 ## Confirmed Features (from client requirements — June 2026)
 
 Status legend: ✅ done · 🟡 partial · ⬜ not started
