@@ -71,6 +71,9 @@
 
         <div class="p-4 border-t border-paper/10 space-y-2">
             <a href="/" target="_blank" class="block text-xs text-paper/75 hover:text-paper transition-colors">← View website</a>
+            <a href="/admin/password" class="flex items-center gap-3 px-3 py-2 mb-1 rounded-sm text-sm hover:bg-paper/10 transition-colors {{ request()->is('admin/password') ? 'bg-paper/10' : '' }}">
+                <span>🔑</span> Change Password
+            </a>
             <form method="POST" action="/admin/logout">
                 @csrf
                 <button type="submit" class="text-xs text-paper/75 hover:text-clay transition-colors">Log out</button>

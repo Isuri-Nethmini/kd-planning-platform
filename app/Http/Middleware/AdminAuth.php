@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\AdminUser;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +35,31 @@ class AdminAuth
         }
 
         session(['admin_last_seen' => now()->timestamp]);
+
+        // ── The account must still exist ─────────────────────────
+        // The session only stores an ID. Without this check, an admin who was
+        // deleted while logged in would keep working until their session ended.
+        $admin = AdminUser::find(session('admin_id'));
+
+        if (! $admin) {
+            $request->session()->flush();
+            $request->session()->regenerate();
+
+            return redirect('/admin/login')
+                ->with('error', 'Your account is no longer active.');
+        }
+
+        // ── Forced password change ────────────────────────────────
+        // An account holding a temporary password may only reach the
+        // change-password page (and log out) until a real one is set. Read
+        // from the database on every request, so a reset by the primary admin
+        // applies immediately — even to someone already logged in.
+        if ($admin->must_change_password
+            && ! $request->is('admin/password')
+            && ! $request->is('admin/logout')) {
+            return redirect('/admin/password')
+                ->with('error', 'You are using a temporary password. Set your own password to continue.');
+        }
 
         $response = $next($request);
 

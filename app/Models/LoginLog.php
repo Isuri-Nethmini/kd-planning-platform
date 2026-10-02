@@ -18,8 +18,17 @@ class LoginLog extends Model
     public const LOCKOUT       = 'lockout';
     public const ACCESS_DENIED = 'access_denied';
 
+    // Account changes
+    public const ACCOUNT_CREATED  = 'account_created';
+    public const PASSWORD_RESET   = 'password_reset';
+    public const PASSWORD_CHANGED = 'password_changed';
+    public const ACCOUNT_DELETED  = 'account_deleted';
+
+    /** Events that describe a change to an account rather than a sign-in. */
+    public const ACCOUNT_EVENTS = [self::ACCOUNT_CREATED, self::PASSWORD_RESET, self::PASSWORD_CHANGED, self::ACCOUNT_DELETED];
+
     protected $fillable = [
-        'admin_id', 'email', 'event', 'path', 'successful',
+        'admin_id', 'admin_name', 'email', 'event', 'path', 'note', 'successful',
         'ip_address', 'user_agent', 'attempted_at',
     ];
 
@@ -40,6 +49,7 @@ class LoginLog extends Model
     {
         static::create([
             'admin_id'     => $adminId,
+            'admin_name'   => $adminId ? AdminUser::whereKey($adminId)->value('name') : null,
             'email'        => $email,
             'event'        => $event,
             'successful'   => $successful,
@@ -59,6 +69,7 @@ class LoginLog extends Model
 
         static::create([
             'admin_id'     => $adminId,
+            'admin_name'   => session('admin_name'),
             'email'        => AdminUser::whereKey($adminId)->value('email') ?? 'unknown',
             'event'        => self::ACCESS_DENIED,
             'path'         => '/' . $request->path(),
@@ -69,12 +80,37 @@ class LoginLog extends Model
         ]);
     }
 
+    /**
+     * Records a change to an account: creation, a reset, or a password change.
+     *
+     * $note explains who did it, e.g. "Created by Dhanushka" — the row itself
+     * belongs to the account that was changed.
+     */
+    public static function recordAccountEvent(AdminUser $admin, string $event, Request $request, ?string $note = null): void
+    {
+        static::create([
+            'admin_id'     => $admin->id,
+            'admin_name'   => $admin->name,
+            'email'        => $admin->email,
+            'event'        => $event,
+            'note'         => $note,
+            'successful'   => true,
+            'ip_address'   => $request->ip(),
+            'user_agent'   => substr((string) $request->userAgent(), 0, 512),
+            'attempted_at' => now(),
+        ]);
+    }
+
     /** Label shown in the Result column. */
     public function getResultLabelAttribute(): string
     {
         return match (true) {
-            $this->event === self::ACCESS_DENIED => 'Access denied',
-            $this->event === self::LOCKOUT       => 'Locked out',
+            $this->event === self::ACCESS_DENIED    => 'Access denied',
+            $this->event === self::LOCKOUT          => 'Locked out',
+            $this->event === self::ACCOUNT_CREATED  => 'Account created',
+            $this->event === self::PASSWORD_RESET   => 'Password reset',
+            $this->event === self::PASSWORD_CHANGED => 'Password changed',
+            $this->event === self::ACCOUNT_DELETED  => 'Account deleted',
             $this->successful                    => 'Success',
             default                              => 'Failed',
         };
@@ -84,8 +120,9 @@ class LoginLog extends Model
     public function getResultClassAttribute(): string
     {
         return match (true) {
-            $this->event === self::ACCESS_DENIED => 'bg-draft/15 text-draft',
-            $this->event === self::LOCKOUT       => 'bg-clay text-white',
+            $this->event === self::ACCESS_DENIED          => 'bg-draft/15 text-draft',
+            $this->event === self::LOCKOUT                => 'bg-clay text-white',
+            in_array($this->event, self::ACCOUNT_EVENTS) => 'bg-ink/10 text-ink',
             $this->successful                    => 'bg-moss/15 text-moss',
             default                              => 'bg-clay/15 text-clay',
         };
@@ -97,9 +134,26 @@ class LoginLog extends Model
         return match (true) {
             $this->event === self::ACCESS_DENIED => "Tried to open {$this->path}",
             $this->event === self::LOCKOUT       => 'Refused — account locked',
+            in_array($this->event, self::ACCOUNT_EVENTS) => $this->note ?? 'Account updated',
             $this->successful                    => 'Signed in',
-            $this->admin_id === null             => 'No account with this email',
+            $this->admin_name === null           => 'No account with this email',
             default                              => 'Wrong password',
+        };
+    }
+
+    /**
+     * Name shown in the Account column.
+     *
+     * Uses the live account where it still exists, falls back to the name
+     * captured at the time for deleted accounts, and only says "Unknown" when
+     * no account ever matched — e.g. someone guessing email addresses.
+     */
+    public function getAccountLabelAttribute(): string
+    {
+        return match (true) {
+            $this->admin !== null      => $this->admin->name,
+            $this->admin_name !== null => $this->admin_name . ' (deleted)',
+            default                    => 'Unknown account',
         };
     }
 
@@ -135,5 +189,10 @@ class LoginLog extends Model
     public function scopeAccessDenied($query)
     {
         return $query->where('event', self::ACCESS_DENIED);
+    }
+
+    public function scopeAccountChanges($query)
+    {
+        return $query->whereIn('event', self::ACCOUNT_EVENTS);
     }
 }

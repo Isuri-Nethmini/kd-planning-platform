@@ -23,6 +23,7 @@ class LoginLogController extends Controller
             'success' => $query->successful(),
             'failed'  => $query->failed(),
             'denied'  => $query->accessDenied(),
+            'account' => $query->accountChanges(),
             default   => null,
         };
 

@@ -17,6 +17,8 @@ class AdminUser extends Model implements AuthenticatableContract
         'email',
         'password',
         'role',
+        'must_change_password',
+        'password_changed_at',
         'last_login_at',
     ];
 
@@ -26,8 +28,10 @@ class AdminUser extends Model implements AuthenticatableContract
     ];
 
     protected $casts = [
-        'last_login_at' => 'datetime',
-        'password' => 'hashed',
+        'last_login_at'        => 'datetime',
+        'password_changed_at'  => 'datetime',
+        'must_change_password' => 'boolean',
+        'password'             => 'hashed',
     ];
 
     public function isPrimary(): bool

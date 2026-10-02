@@ -7,8 +7,7 @@
 <div class="mb-2">
     <h1 class="font-display text-2xl font-semibold text-ink">Security Log</h1>
     <p class="text-ink/70 text-sm mt-1">
-        Every sign-in attempt, every lockout, and every time a staff account was refused a
-        restricted page — in one place.
+        Every sign-in attempt, lockout, blocked page and account change — in one place.
     </p>
 </div>
 
@@ -29,7 +28,7 @@
 
 {{-- Filters --}}
 <div class="flex flex-wrap items-center gap-2 mb-5">
-    @foreach(['all' => 'All', 'success' => 'Successful', 'failed' => 'Failed', 'denied' => 'Access denied'] as $key => $label)
+    @foreach(['all' => 'All', 'success' => 'Successful', 'failed' => 'Failed', 'denied' => 'Access denied', 'account' => 'Account changes'] as $key => $label)
         @php $isActive = request('result', 'all') === $key; @endphp
         <a href="/admin/logs?result={{ $key }}"
            class="font-mono text-xs uppercase tracking-wider px-3 py-2 rounded-sm border transition-colors
@@ -65,7 +64,7 @@
                         {{ $log->attempted_at->format('d M Y, H:i:s') }}
                     </td>
                     <td class="px-4 py-3">
-                        <p class="text-ink">{{ $log->admin?->name ?? 'Unknown account' }}</p>
+                        <p class="text-ink">{{ $log->account_label }}</p>
                         <p class="font-mono text-xs text-ink/70">{{ $log->email }}</p>
                     </td>
                     <td class="px-4 py-3 whitespace-nowrap">

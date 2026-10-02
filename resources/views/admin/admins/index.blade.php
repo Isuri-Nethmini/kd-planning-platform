@@ -46,6 +46,9 @@
                     </td>
                     <td class="px-4 py-4 font-mono text-xs text-ink/70 hidden lg:table-cell">
                         {{ $admin->last_login_at?->format('d M Y, H:i') ?? 'Never' }}
+                        @if($admin->must_change_password)
+                            <span class="block mt-1 font-mono text-[11px] uppercase text-clay">Temporary password</span>
+                        @endif
                     </td>
                     <td class="px-4 py-4 text-right">
                         <div class="flex items-center justify-end gap-3">

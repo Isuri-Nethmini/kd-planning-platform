@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\LoginLogController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\InquiryController as AdminInquiryController;
 use App\Http\Controllers\Admin\PlanController as AdminPlanController;
+use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TestimonialController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,10 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->group(function () {
 
     Route::get('/admin', fn() => redirect('/admin/dashboard'));
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    // Every admin can change their own password
+    Route::get('/admin/password', [PasswordController::class, 'edit'])->name('admin.password.edit');
+    Route::put('/admin/password', [PasswordController::class, 'update'])->name('admin.password.update');
 
     // House plans
     Route::get('/admin/plans', [AdminPlanController::class, 'index'])->name('admin.plans.index');
@@ -103,6 +108,7 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->group(function () {
         Route::post('/admin/admins', [AdminUserController::class, 'store'])->name('admin.admins.store');
         Route::get('/admin/admins/{admin}/edit', [AdminUserController::class, 'edit'])->name('admin.admins.edit');
         Route::put('/admin/admins/{admin}', [AdminUserController::class, 'update'])->name('admin.admins.update');
+        Route::post('/admin/admins/{admin}/reset-password', [AdminUserController::class, 'resetPassword'])->name('admin.admins.reset');
         Route::delete('/admin/admins/{admin}', [AdminUserController::class, 'destroy'])->name('admin.admins.destroy');
     });
 
