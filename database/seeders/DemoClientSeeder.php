@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\AdminUser;
 use App\Models\Customer;
-use App\Models\Inquiry;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -27,9 +26,6 @@ class DemoClientSeeder extends Seeder
             'phone'                => '+94 77 123 4567',
             'password'             => 'password123',
             'must_change_password' => false,   // so the demo goes straight in
-            // The inquiry this client came from, so the sales pipeline and the
-            // client portal show one continuous story.
-            'inquiry_id'           => Inquiry::where('name', 'Ruwan Fernando')->value('id'),
         ]);
 
         $project = $customer->projects()->create([

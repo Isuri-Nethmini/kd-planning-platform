@@ -17,10 +17,11 @@ npm run build
 php artisan serve          # http://127.0.0.1:8000
 ```
 
-`migrate:fresh` rebuilds every table and loads demo data: 12 plans, 13
-inquiries spread over six months across every pipeline stage, five real
-completed projects, and a demo client (Ruwan Fernando) mid-way through a build
-with real site photos, one verified payment and one receipt awaiting review.
+`migrate:fresh` rebuilds every table and loads starting data: 12 placeholder
+plans, five real completed projects, and a demo client (Ruwan Fernando) mid-way
+through a build with real site photos, one verified payment and one receipt
+awaiting review. No inquiries are seeded — the inquiry list, pipeline and
+analytics start empty and fill from real use.
 Re-run it whenever a new version adds migrations, and before every demo —
 the demo data is dated relative to the day you seed it.
 
