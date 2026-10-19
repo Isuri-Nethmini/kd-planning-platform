@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             BlogPostSeeder::class,
             CompletedProjectSeeder::class,
             SystemSettingSeeder::class,
+            DemoInquirySeeder::class,  // depends on HousePlanSeeder and CompletedProjectSeeder
             DemoClientSeeder::class,   // depends on HousePlanSeeder and AdminUserSeeder
         ]);
     }

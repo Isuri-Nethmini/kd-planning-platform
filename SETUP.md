@@ -17,9 +17,12 @@ npm run build
 php artisan serve          # http://127.0.0.1:8000
 ```
 
-`migrate:fresh` rebuilds every table and loads demo data, including a demo
-client mid-way through a build. Re-run it whenever a new version adds
-migrations.
+`migrate:fresh` rebuilds every table and loads demo data: 12 plans, 13
+inquiries spread over six months across every pipeline stage, five real
+completed projects, and a demo client (Ruwan Fernando) mid-way through a build
+with real site photos, one verified payment and one receipt awaiting review.
+Re-run it whenever a new version adds migrations, and before every demo —
+the demo data is dated relative to the day you seed it.
 
 ## Test accounts (development only — delete before going live)
 
@@ -44,13 +47,22 @@ never committed.
 - If a send fails, the action still completes and the error is written to
   `storage/logs/laravel.log`.
 
+## Visual design
+
+Blueprint/drafting theme in the client's brand colours. Depth is added with
+pure CSS (no 3D library): extruded headings, cards that tilt toward the pointer
+(`resources/js/tilt.js`), stacked drawing-sheet frames, raised buttons, and an
+isometric floor-plan model in the homepage hero built from stacked SVG layers.
+All motion switches off for visitors who request reduced motion.
+
 ## Automated tests
 
 ```bash
 php artisan test
 ```
 
-34 feature tests, run against an in-memory database, covering access control
+34 feature tests, run against an in-memory database (no build or network
+needed), covering access control
 (clients cannot see each other's projects or receipts, staff cannot verify
 payments), the receipt workflow, admin security and the public site.
 

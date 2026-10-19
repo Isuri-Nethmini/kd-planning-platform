@@ -42,7 +42,7 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <a href="/inquire" class="inline-flex items-center rounded-sm bg-ink text-paper text-sm font-medium px-4 py-2 hover:bg-ink/90 transition-colors">
+                <a href="/inquire" class="btn-3d inline-flex items-center rounded-sm bg-ink text-paper text-sm font-medium px-4 py-2 hover:bg-ink/90">
                     Get an Estimate
                 </a>
                 <button type="button" class="md:hidden p-2 -mr-2 text-ink" @click="open = !open"
@@ -90,7 +90,7 @@
             <div>
                 <p class="uppercase tracking-wider text-xs text-draft mb-3">Contact</p>
                 <ul class="space-y-2 text-paper/75">
-                    <li>kdplanning@gmail.com</li>
+                    <li><a href="mailto:kdplanningdesign@gmail.com" class="hover:text-paper transition-colors">kdplanningdesign@gmail.com</a></li>
                     <li>+94 71 726 1930</li>
                     <li>Minuwangoda, Sri Lanka</li>
                 </ul>

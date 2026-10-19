@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="flex flex-wrap items-center justify-between gap-4 mb-2">
-    <h1 class="font-display text-2xl font-semibold text-ink">Clients</h1>
+    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Clients</h1>
     <a href="/admin/clients/create" class="bg-ink text-paper text-sm font-medium px-4 py-2 rounded-sm hover:bg-ink/90 transition-colors">+ New client</a>
 </div>
 <p class="text-sm text-ink/70 mb-6">

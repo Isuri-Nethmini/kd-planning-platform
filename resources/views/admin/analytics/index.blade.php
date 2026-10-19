@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="mb-8">
-    <h1 class="font-display text-2xl font-semibold text-ink">Analytics &amp; Reports</h1>
+    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Analytics &amp; Reports</h1>
     <p class="text-ink/70 text-sm mt-1">How the catalogue is performing and where inquiries are coming from.</p>
 </div>
 
@@ -18,7 +18,7 @@
         ['Converted Sales',  number_format($summary['won'])],
         ['Inquiry → Sale',   $summary['inquiry_to_sale'].'%'],
     ] as [$label, $value])
-        <div class="bg-white border border-ink/10 rounded-sm p-5">
+        <div class="panel-3d bg-white border border-ink/10 rounded-sm p-5">
             <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-2">{{ $label }}</p>
             <p class="font-display text-2xl font-bold text-ink">{{ $value }}</p>
         </div>
@@ -27,12 +27,12 @@
 
 {{-- Pipeline value --}}
 <div class="grid sm:grid-cols-2 gap-4 mb-10">
-    <div class="bg-white border border-ink/10 rounded-sm p-5">
+    <div class="panel-3d bg-white border border-ink/10 rounded-sm p-5">
         <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-2">Total Quoted Value</p>
         <p class="font-display text-2xl font-bold text-draft">Rs. {{ number_format($summary['quoted_value']) }}</p>
         <p class="text-xs text-ink/70 mt-1">Across every inquiry with an estimate recorded.</p>
     </div>
-    <div class="bg-white border border-ink/10 rounded-sm p-5">
+    <div class="panel-3d bg-white border border-ink/10 rounded-sm p-5">
         <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-2">Converted Value</p>
         <p class="font-display text-2xl font-bold text-moss">Rs. {{ number_format($summary['won_value']) }}</p>
         <p class="text-xs text-ink/70 mt-1">Estimates on inquiries marked as converted.</p>

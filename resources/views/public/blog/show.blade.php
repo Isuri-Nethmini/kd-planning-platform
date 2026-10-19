@@ -17,7 +17,7 @@
         {{ $post->published_at?->format('d F Y') }}
     </p>
 
-    <h1 class="font-display text-3xl md:text-4xl font-semibold text-ink leading-tight mb-8">
+    <h1 class="title-3d font-display text-3xl md:text-4xl font-semibold text-ink leading-tight mb-8">
         {{ $post->title }}
     </h1>
 

@@ -6,7 +6,7 @@
 
 <div class="flex items-center justify-between mb-8">
     <div>
-        <h1 class="font-display text-2xl font-semibold text-ink">Dashboard</h1>
+        <h1 class="title-3d font-display text-2xl font-semibold text-ink">Dashboard</h1>
         <p class="text-ink/70 text-sm mt-1">Welcome back, {{ session('admin_name') }}</p>
     </div>
     <a href="/admin/plans/create" class="inline-flex items-center gap-2 bg-ink text-paper text-sm font-medium px-4 py-2 rounded-sm hover:bg-ink/90 transition-colors">
@@ -24,7 +24,7 @@
         ['This Week',        $stats['this_week'],        'draft'],
         ['Converted',        $stats['converted'],        'moss'],
     ] as [$label, $value, $color])
-        <div class="bg-white border border-ink/10 rounded-sm p-5">
+        <div class="panel-3d bg-white border border-ink/10 rounded-sm p-5">
             <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-2">{{ $label }}</p>
             <p class="font-display text-3xl font-bold text-{{ $color }}">{{ $value }}</p>
         </div>

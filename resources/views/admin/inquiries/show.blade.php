@@ -7,7 +7,7 @@
 <div class="flex items-center gap-3 mb-8">
     <a href="/admin/inquiries" class="text-sm text-ink/70 hover:text-draft">← Inquiries</a>
     <span class="text-ink/70">/</span>
-    <h1 class="font-display text-2xl font-semibold text-ink">{{ $inquiry->name }}</h1>
+    <h1 class="title-3d font-display text-2xl font-semibold text-ink">{{ $inquiry->name }}</h1>
     <span class="font-mono text-xs uppercase px-2 py-1 rounded-sm {{ $inquiry->status_class }}">
         {{ $inquiry->status_label }}
     </span>

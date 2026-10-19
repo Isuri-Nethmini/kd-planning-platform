@@ -6,7 +6,7 @@
 <div class="flex flex-wrap items-center gap-3 mb-2">
     <a href="/admin/clients/{{ $project->customer->id }}" class="text-sm text-ink/70 hover:text-draft">← {{ $project->customer->name }}</a>
     <span class="text-ink/30">/</span>
-    <h1 class="font-display text-2xl font-semibold text-ink">{{ $project->title }}</h1>
+    <h1 class="title-3d font-display text-2xl font-semibold text-ink">{{ $project->title }}</h1>
 </div>
 <div class="flex items-center gap-3 mb-6">
     <div class="w-48 h-2 bg-ink/10 rounded-sm overflow-hidden"><div class="h-full bg-draft" style="width: {{ $project->progress }}%"></div></div>

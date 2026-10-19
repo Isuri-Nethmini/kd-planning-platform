@@ -14,7 +14,7 @@
     $heroVideo = file_exists(public_path('media/hero.mp4')) ? asset('media/hero.mp4') : null;
 @endphp
 
-<section class="bp-grid bg-ink text-paper relative overflow-hidden">
+<section class="bp-grid bg-ink text-paper relative overflow-hidden" data-tilt-area>
     @if($heroVideo)
         {{--
             Muted, looping background video. The poster frame shows first and
@@ -36,14 +36,14 @@
     <div class="max-w-6xl mx-auto px-5 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center relative z-10">
         <div>
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-4">KD Planning &amp; Design — Minuwangoda</p>
-            <h1 class="font-display text-4xl md:text-5xl font-semibold leading-[1.1] mb-6">
+            <h1 class="font-display text-4xl md:text-5xl font-semibold leading-[1.1] mb-6 title-3d-dark">
                 Find the house plan<br>you'll actually build.
             </h1>
             <p class="text-paper/75 text-lg leading-relaxed mb-8 max-w-md">
                 Browse {{ $totalPlans }} ready-made designs with full specifications — no login, no waiting on a phone call.
             </p>
             <div class="flex flex-wrap gap-4">
-                <a href="/plans" class="inline-flex items-center rounded-sm bg-draft text-ink font-medium px-6 py-3 hover:bg-draft/90 transition-colors">
+                <a href="/plans" class="btn-3d inline-flex items-center rounded-sm bg-draft text-ink font-medium px-6 py-3 hover:bg-draft/90">
                     Browse Plans
                 </a>
                 <a href="/inquire" class="inline-flex items-center rounded-sm border border-paper/30 text-paper font-medium px-6 py-3 hover:bg-paper/10 transition-colors">
@@ -52,27 +52,42 @@
             </div>
         </div>
 
-        <div class="relative hidden sm:block">
-            <svg viewBox="0 0 320 240" class="w-full max-w-md mx-auto text-draft" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="40" y="30" width="200" height="140" />
-                <line x1="140" y1="30" x2="140" y2="68" />
-                <line x1="140" y1="100" x2="140" y2="170" />
-                <line x1="140" y1="100" x2="240" y2="100" />
-                <path d="M140 68 A32 32 0 0 1 172 100" stroke-dasharray="2 3" stroke-width="1.5" opacity="0.6" />
-                <line x1="65" y1="26" x2="65" y2="34" stroke-width="1.5" opacity="0.7" />
-                <line x1="85" y1="26" x2="85" y2="34" stroke-width="1.5" opacity="0.7" />
-                <line x1="175" y1="26" x2="175" y2="34" stroke-width="1.5" opacity="0.7" />
-                <line x1="195" y1="26" x2="195" y2="34" stroke-width="1.5" opacity="0.7" />
-                <line x1="40" y1="198" x2="240" y2="198" stroke-width="1.5" opacity="0.7" />
-                <line x1="40" y1="192" x2="40" y2="204" stroke-width="1.5" opacity="0.7" />
-                <line x1="240" y1="192" x2="240" y2="204" stroke-width="1.5" opacity="0.7" />
-                <text x="140" y="218" text-anchor="middle" font-family="monospace" font-size="11" fill="currentColor" stroke="none" opacity="0.7">SCALE 1:100</text>
-                <g transform="translate(272,40)" opacity="0.6">
-                    <line x1="0" y1="14" x2="0" y2="-14" stroke-width="1.5" />
-                    <path d="M0 -14 L-4 -6 L4 -6 Z" fill="currentColor" stroke="none" />
-                    <text x="0" y="-18" text-anchor="middle" font-family="monospace" font-size="10" fill="currentColor" stroke="none">N</text>
-                </g>
-            </svg>
+        {{--
+            Isometric model of a floor plan. The same wall drawing is stacked
+            twelve times, each layer raised a little further (--z), so at this
+            angle the stack reads as solid walls on a floor slab. Pure CSS —
+            see .iso-* in app.css. Decorative, so hidden from screen readers.
+        --}}
+        <div class="relative hidden sm:block" aria-hidden="true">
+            <div class="iso-stage">
+                <div class="iso-model" data-tilt="10">
+                    <div class="iso-floor bp-grid"></div>
+
+                    {{-- Floor annotations: door swing, dimension ticks --}}
+                    <svg class="iso-layer" style="--z: 0px; opacity: .55" viewBox="0 0 300 210" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M150 62 A42 42 0 0 1 192 104" stroke-dasharray="3 4" />
+                        <path d="M62 120 A38 38 0 0 1 100 158" stroke-dasharray="3 4" />
+                        <line x1="10" y1="200" x2="290" y2="200" stroke-dasharray="1 6" />
+                    </svg>
+
+                    @for($i = 1; $i <= 12; $i++)
+                        <svg class="iso-layer {{ $i === 12 ? 'is-top' : '' }}"
+                             style="--z: {{ $i * 3 }}px; opacity: {{ $i === 12 ? 1 : 0.22 + $i * 0.045 }}"
+                             viewBox="0 0 300 210" fill="none" stroke="currentColor"
+                             stroke-width="{{ $i === 12 ? 3 : 4 }}" stroke-linecap="square">
+                        <rect x="10" y="10" width="280" height="190" />
+                        <line x1="150" y1="10" x2="150" y2="62" />
+                        <line x1="150" y1="104" x2="150" y2="200" />
+                        <line x1="150" y1="104" x2="290" y2="104" />
+                        <line x1="10" y1="120" x2="62" y2="120" />
+                        <line x1="100" y1="120" x2="150" y2="120" />
+                        </svg>
+                    @endfor
+                </div>
+            </div>
+            <p class="text-center font-mono text-xs uppercase tracking-[0.2em] text-draft/80 -mt-6">
+                Plan model · Scale 1:100
+            </p>
         </div>
     </div>
 </section>
@@ -95,14 +110,14 @@
     <div class="flex items-end justify-between mb-10">
         <div>
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-2">Featured Designs</p>
-            <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink">Popular plans this month</h2>
+            <h2 class="title-3d font-display text-2xl md:text-3xl font-semibold text-ink">Popular plans this month</h2>
         </div>
         <a href="/plans" class="text-sm font-medium text-draft hover:underline hidden md:inline">View all plans →</a>
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach ($featuredPlans as $plan)
-            <article class="group bg-white border border-ink/10 rounded-sm overflow-hidden hover:shadow-lg hover:shadow-ink/5 transition-shadow">
+            <article data-tilt class="card-3d group bg-white border border-ink/10 rounded-sm overflow-hidden">
                 <div class="relative aspect-[4/3] overflow-hidden bg-ink/5">
                     <x-image-frame
                         :src="$plan->primaryImage?->url"
@@ -131,7 +146,7 @@
 <section id="testimonials" class="bg-moss/10 py-20">
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-moss mb-2 text-center">What clients say</p>
-        <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink text-center mb-12">Built on trust, not just blueprints</h2>
+        <h2 class="title-3d font-display text-2xl md:text-3xl font-semibold text-ink text-center mb-12">Built on trust, not just blueprints</h2>
 
         <div class="grid md:grid-cols-3 gap-8">
             @foreach ($testimonials as $t)
@@ -151,7 +166,7 @@
     <div class="flex items-end justify-between mb-10">
         <div>
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-2">From the Blog</p>
-            <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink">Tips before you build</h2>
+            <h2 class="title-3d font-display text-2xl md:text-3xl font-semibold text-ink">Tips before you build</h2>
         </div>
     </div>
     <div class="grid md:grid-cols-3 gap-8">
@@ -169,7 +184,7 @@
 {{-- ───────────────────────── CTA BANNER ───────────────────────── --}}
 <section class="bg-ink text-paper">
     <div class="max-w-4xl mx-auto px-5 py-16 text-center">
-        <h2 class="font-display text-2xl md:text-3xl font-semibold mb-4">Ready to start building?</h2>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold mb-4 title-3d-dark">Ready to start building?</h2>
         <p class="text-paper/75 mb-8 max-w-lg mx-auto">Send us your land details and the design you like, and we'll prepare a construction estimate — no obligation.</p>
         <a href="/inquire" class="inline-flex items-center rounded-sm bg-draft text-ink font-medium px-8 py-3 hover:bg-draft/90 transition-colors">
             Submit an Inquiry

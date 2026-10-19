@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="mb-8">
-    <h1 class="font-display text-2xl font-semibold text-ink">
+    <h1 class="title-3d font-display text-2xl font-semibold text-ink">
         {{ $forced ? 'Set your password' : 'Change password' }}
     </h1>
 </div>

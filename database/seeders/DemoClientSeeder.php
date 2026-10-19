@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\AdminUser;
 use App\Models\Customer;
+use App\Models\Inquiry;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -26,6 +27,9 @@ class DemoClientSeeder extends Seeder
             'phone'                => '+94 77 123 4567',
             'password'             => 'password123',
             'must_change_password' => false,   // so the demo goes straight in
+            // The inquiry this client came from, so the sales pipeline and the
+            // client portal show one continuous story.
+            'inquiry_id'           => Inquiry::where('name', 'Ruwan Fernando')->value('id'),
         ]);
 
         $project = $customer->projects()->create([
@@ -54,9 +58,12 @@ class DemoClientSeeder extends Seeder
             'note' => 'Ground-floor walls complete. First-floor slab is scheduled for next week.',
         ]);
 
-        // Site photos go on the private disk, exactly as real uploads would.
-        $this->photo($stages['Foundation'], 'charitha-dawamottawa.jpg', 'Foundation trench and footing');
-        $this->photo($stages['Structure and walls'], 'malik-adiambalama.jpg', 'Design reference for the finished elevation');
+        // Real construction photos from KD Planning's own sites, stored on the
+        // private disk exactly as an admin upload would be.
+        $this->photo($stages['Site preparation'], 'site-preparation.jpg', 'Boundary and footing lines marked');
+        $this->photo($stages['Foundation'], 'foundation-trench.jpg', 'Excavating the foundation trench');
+        $this->photo($stages['Foundation'], 'foundation-rebar.jpg', 'Reinforcement laid before the concrete pour');
+        $this->photo($stages['Structure and walls'], 'walls.jpg', 'Ground-floor brickwork in progress');
 
         $advance    = $project->instalments()->create(['label' => 'Advance',    'amount' => 2500000, 'due_date' => now()->subMonths(3), 'sort_order' => 1]);
         $foundation = $project->instalments()->create(['label' => 'Foundation', 'amount' => 2000000, 'due_date' => now()->subWeeks(2), 'sort_order' => 2]);
@@ -69,12 +76,12 @@ class DemoClientSeeder extends Seeder
 
     private function photo($stage, string $mediaFile, string $caption): void
     {
-        $source = public_path("media/projects/{$mediaFile}");
+        $source = database_path("seeders/demo-photos/{$mediaFile}");
         if (! File::exists($source)) {
             return;
         }
 
-        $path = "progress/project-{$stage->client_project_id}/demo-{$stage->id}.jpg";
+        $path = "progress/project-{$stage->client_project_id}/" . pathinfo($mediaFile, PATHINFO_FILENAME) . '.jpg';
         Storage::disk('local')->put($path, File::get($source));
 
         $stage->photos()->create(['file_path' => $path, 'caption' => $caption]);
@@ -85,7 +92,7 @@ class DemoClientSeeder extends Seeder
         $path = "receipts/project-{$instalment->client_project_id}/demo-{$instalment->id}.png";
         Storage::disk('local')->put($path, $this->placeholderReceipt());
 
-        $instalment->receipts()->create([
+        $receipt = $instalment->receipts()->create([
             'file_path'     => $path,
             'original_name' => $name,
             'amount_paid'   => $amount,
@@ -93,8 +100,11 @@ class DemoClientSeeder extends Seeder
             'reference'     => $reference,
             'status'        => $status,
             'reviewed_by'   => $status === 'pending' ? null : AdminUser::where('role', 'primary')->value('id'),
-            'reviewed_at'   => $status === 'pending' ? null : now()->subMonths(3)->addDays(2),
+            'reviewed_at'   => $status === 'pending' ? null : $paidOn->copy()->addDays(2),
         ]);
+
+        // Uploaded the day the client paid, so the receipt list reads in order.
+        $receipt->forceFill(['created_at' => $paidOn, 'updated_at' => $paidOn])->saveQuietly();
     }
 
     /** A small valid PNG, so the demo needs no image library. */

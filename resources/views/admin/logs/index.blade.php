@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="mb-2">
-    <h1 class="font-display text-2xl font-semibold text-ink">Security Log</h1>
+    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Security Log</h1>
     <p class="text-ink/70 text-sm mt-1">
         Every sign-in attempt, lockout, blocked page and account change — in one place.
     </p>
@@ -19,7 +19,7 @@
         ['Failed (last 24h)',   $stats['failed_24h'], 'text-clay'],
         ['Access denied',       $stats['denied'],     'text-draft'],
     ] as [$label, $value, $colour])
-        <div class="bg-white border border-ink/15 rounded-sm p-4">
+        <div class="panel-3d bg-white border border-ink/15 rounded-sm p-4">
             <p class="font-mono text-xs uppercase tracking-wider text-ink/70 mb-1">{{ $label }}</p>
             <p class="font-display text-2xl font-bold {{ $colour }}">{{ number_format($value) }}</p>
         </div>

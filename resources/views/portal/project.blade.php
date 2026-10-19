@@ -9,21 +9,21 @@
     <div class="flex flex-wrap items-start justify-between gap-4 mb-5">
         <div>
             <p class="font-mono text-xs uppercase tracking-[0.18em] text-clay mb-1">{{ $project->status_label }}</p>
-            <h1 class="font-display text-2xl md:text-3xl font-semibold text-ink">{{ $project->title }}</h1>
+            <h1 class="title-3d font-display text-2xl md:text-3xl font-semibold text-ink">{{ $project->title }}</h1>
             <p class="text-ink/75 mt-1">
                 {{ $project->site_location }}
                 @if($project->housePlan) · Based on <a href="/plans/{{ $project->housePlan->id }}" class="text-draft hover:underline">{{ $project->housePlan->name }}</a> @endif
             </p>
         </div>
         <div class="text-right">
-            <p class="font-display text-4xl font-bold text-draft">{{ $project->progress }}%</p>
+            <p class="title-3d font-display text-4xl font-bold text-draft">{{ $project->progress }}%</p>
             <p class="font-mono text-xs uppercase tracking-wider text-ink/70">complete</p>
         </div>
     </div>
 
-    <div class="h-3 bg-ink/10 rounded-sm overflow-hidden mb-5" role="progressbar"
+    <div class="progress-3d h-3 rounded-sm overflow-hidden mb-5" role="progressbar"
          aria-valuenow="{{ $project->progress }}" aria-valuemin="0" aria-valuemax="100">
-        <div class="h-full bg-draft" style="width: {{ $project->progress }}%"></div>
+        <span style="width: {{ $project->progress }}%"></span>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">

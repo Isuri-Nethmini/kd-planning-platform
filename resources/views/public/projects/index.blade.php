@@ -8,7 +8,7 @@
 <div class="bg-ink text-paper py-12">
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-2">Our Work</p>
-        <h1 class="font-display text-3xl md:text-4xl font-semibold">Completed Projects</h1>
+        <h1 class="font-display text-3xl md:text-4xl font-semibold title-3d-dark">Completed Projects</h1>
         <p class="text-paper/75 mt-3 max-w-xl leading-relaxed">
             Homes we've designed and delivered for families across the Western Province.
         </p>
@@ -24,7 +24,7 @@
     @else
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($projects as $project)
-                <article class="group bg-white border border-ink/10 rounded-sm overflow-hidden hover:shadow-lg hover:shadow-ink/5 transition-shadow">
+                <article data-tilt class="card-3d group bg-white border border-ink/10 rounded-sm overflow-hidden">
                     <div class="aspect-[4/3] overflow-hidden bg-ink/5">
                         <x-image-frame
                             :src="$project->primaryImage?->url"
@@ -79,7 +79,7 @@
     @endif
 
     <div class="mt-16 bg-ink text-paper rounded-sm p-10 text-center">
-        <h2 class="font-display text-xl md:text-2xl font-semibold mb-3">Want a home like these?</h2>
+        <h2 class="font-display text-xl md:text-2xl font-semibold mb-3 title-3d-dark">Want a home like these?</h2>
         <p class="text-paper/75 mb-6 max-w-lg mx-auto">
             We can adapt any design we've already built — change the room layout, the size or the finishes
             to suit your land and budget. Tell us which one caught your eye.

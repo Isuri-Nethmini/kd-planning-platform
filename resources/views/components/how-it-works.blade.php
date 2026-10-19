@@ -42,7 +42,7 @@
     <div class="max-w-6xl mx-auto px-5">
         <div class="mb-10 {{ $compact ? '' : 'text-center' }}">
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-2">How It Works</p>
-            <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink">
+            <h2 class="title-3d font-display text-2xl md:text-3xl font-semibold text-ink">
                 From browsing to building
             </h2>
             <p class="text-ink/70 mt-3 max-w-2xl {{ $compact ? '' : 'mx-auto' }} leading-relaxed">
@@ -53,7 +53,7 @@
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($steps as $step)
-                <div class="relative bg-white border border-ink/10 rounded-sm p-6">
+                <div data-tilt class="card-3d relative bg-white border border-ink/10 rounded-sm p-6">
                     <span class="font-mono text-xs tracking-widest text-draft">{{ $step['n'] }}</span>
                     <h3 class="font-display font-semibold text-ink mt-3 mb-2">{{ $step['title'] }}</h3>
                     <p class="text-sm text-ink/70 leading-relaxed">{{ $step['body'] }}</p>

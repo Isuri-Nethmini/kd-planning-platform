@@ -29,7 +29,7 @@ class HousePlanSeeder extends Seeder
                 'name' => 'Colonial Heritage Residence',
                 'description' => 'Inspired by traditional Sri Lankan colonial architecture, featuring wide verandas, pitched roofs, and timber detailing.',
                 'price' => 3200000, 'floors' => 2, 'bedrooms' => 4, 'bathrooms' => 3,
-                'floor_area' => 2900, 'style' => 'Colonial', 'is_featured' => false,
+                'floor_area' => 2900, 'style' => 'Colonial', 'is_featured' => true,
                 'categories' => ['double-storey', 'colonial'],
             ],
             [

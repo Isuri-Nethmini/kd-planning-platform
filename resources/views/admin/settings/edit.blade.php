@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="mb-8">
-    <h1 class="font-display text-2xl font-semibold text-ink">Settings</h1>
+    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Settings</h1>
     <p class="text-ink/70 text-sm mt-1">Contact details used across the public site.</p>
 </div>
 
@@ -32,7 +32,7 @@
         <div>
             <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Notification Email *</label>
             <input type="email" name="notification_email" value="{{ old('notification_email', $settings['notification_email']) }}"
-                placeholder="kdplanning@gmail.com"
+                placeholder="kdplanningdesign@gmail.com"
                 class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
             <p class="text-xs text-ink/70 mt-2">Every new inquiry submitted on the site is emailed here.</p>
         </div>

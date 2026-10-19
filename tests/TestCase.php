@@ -16,6 +16,11 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        // Tests check behaviour, not compiled CSS. Without this, every test
+        // that renders a page fails unless `npm run build` was run first —
+        // so a fresh checkout would show failures that aren't real.
+        $this->withoutVite();
+
         // The password policy checks Have I Been Pwned over the network. Tests
         // must never depend on an outside service, so answer it locally:
         // an empty response means "not found in any breach".

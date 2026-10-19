@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-md mx-auto px-5 py-16">
     <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-2">Client Portal</p>
-    <h1 class="font-display text-3xl font-semibold text-ink mb-3">Sign in</h1>
+    <h1 class="title-3d font-display text-3xl font-semibold text-ink mb-3">Sign in</h1>
     <p class="text-ink/75 text-sm mb-8 leading-relaxed">
         Follow your home's construction progress and upload payment receipts.
         Accounts are created by KD Planning &amp; Design for confirmed clients —
@@ -34,7 +34,7 @@
             <input type="password" name="password" autocomplete="current-password" required
                 class="w-full border border-ink/25 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft">
         </div>
-        <button class="w-full bg-ink text-paper font-medium py-3 rounded-sm hover:bg-ink/90 transition-colors">Sign in</button>
+        <button class="btn-3d w-full bg-ink text-paper font-medium py-3 rounded-sm hover:bg-ink/90">Sign in</button>
     </form>
 
     <p class="text-xs text-ink/70 mt-6">

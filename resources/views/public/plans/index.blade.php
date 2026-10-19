@@ -7,7 +7,7 @@
 <div class="bg-ink text-paper py-12">
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-2">All Designs</p>
-        <h1 class="font-display text-3xl md:text-4xl font-semibold">Browse House Plans</h1>
+        <h1 class="font-display text-3xl md:text-4xl font-semibold title-3d-dark">Browse House Plans</h1>
     </div>
 </div>
 
@@ -103,7 +103,7 @@
             @else
                 <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
                     @foreach ($plans as $plan)
-                        <article class="group bg-white border border-ink/10 rounded-sm overflow-hidden hover:shadow-lg hover:shadow-ink/5 transition-shadow">
+                        <article data-tilt class="card-3d group bg-white border border-ink/10 rounded-sm overflow-hidden">
                             <div class="relative aspect-[4/3] overflow-hidden bg-ink/5">
                                 <x-image-frame
                                     :src="$plan->primaryImage?->url"

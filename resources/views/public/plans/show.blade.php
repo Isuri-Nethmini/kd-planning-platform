@@ -21,7 +21,7 @@
         <div class="lg:col-span-2" x-data="{ active: 0 }">
 
             {{-- Main image --}}
-            <div class="aspect-[4/3] overflow-hidden rounded-sm bg-ink/5 mb-3">
+            <div class="frame-3d rounded-sm mb-7 mr-4"><div class="aspect-[4/3] overflow-hidden rounded-sm bg-ink/5">
                 @if($housePlan->images->isEmpty())
                     <x-image-frame
                         :src="null"
@@ -38,7 +38,7 @@
                         >
                     @endforeach
                 @endif
-            </div>
+            </div></div>
 
             {{-- Thumbnails --}}
             @if($housePlan->images->count() > 1)
@@ -71,7 +71,7 @@
                 {{ $housePlan->view_count }} views
             </p>
 
-            <h1 class="font-display text-2xl font-semibold text-ink leading-snug">
+            <h1 class="title-3d font-display text-2xl font-semibold text-ink leading-snug">
                 {{ $housePlan->name }}
             </h1>
 
@@ -118,7 +118,7 @@
             <div class="space-y-3 pt-2">
                 <a
                     href="/inquire?plan={{ $housePlan->id }}&name={{ urlencode($housePlan->name) }}"
-                    class="block w-full text-center bg-ink text-paper font-medium py-3 rounded-sm hover:bg-ink/90 transition-colors"
+                    class="btn-3d block w-full text-center bg-ink text-paper font-medium py-3 rounded-sm hover:bg-ink/90"
                 >
                     Request a Construction Estimate
                 </a>
@@ -153,7 +153,7 @@
             <h2 class="font-display text-xl font-semibold text-ink mb-6">Similar Plans</h2>
             <div class="grid sm:grid-cols-3 gap-6">
                 @foreach($related as $plan)
-                    <a href="/plans/{{ $plan->id }}" class="group block bg-white border border-ink/10 rounded-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <a href="/plans/{{ $plan->id }}" data-tilt class="card-3d group block bg-white border border-ink/10 rounded-sm overflow-hidden hover:shadow-md transition-shadow">
                         <div class="aspect-[4/3] overflow-hidden">
                             <x-image-frame :src="$plan->primaryImage?->url" :alt="$plan->name" />
                         </div>
