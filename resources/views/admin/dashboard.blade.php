@@ -72,15 +72,17 @@
     <div>
         <h2 class="font-display font-semibold text-ink mb-4">Most Viewed Plans</h2>
         <div class="bg-white border border-ink/10 rounded-sm overflow-hidden">
-            @foreach($mostViewed as $i => $plan)
+            @forelse($mostViewed as $i => $plan)
                 <div class="flex items-center gap-3 px-4 py-3 border-b border-ink/5 last:border-0">
                     <span class="font-mono text-xs text-ink/70 w-4">{{ $i + 1 }}</span>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium text-ink truncate">{{ $plan->name }}</p>
-                        <p class="font-mono text-xs text-ink/70">{{ number_format($plan->view_count) }} views</p>
+                        <p class="font-mono text-xs text-ink/70">{{ number_format($plan->view_count) }} {{ Str::plural('view', $plan->view_count) }}</p>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="px-4 py-8 text-center text-ink/70 text-sm">No plan views yet.</div>
+            @endforelse
         </div>
     </div>
     @endif

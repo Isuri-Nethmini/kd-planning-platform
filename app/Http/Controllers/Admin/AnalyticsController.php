@@ -55,7 +55,7 @@ class AnalyticsController extends Controller
         $peakMonth = max(1, $months->max('count'));
 
         // ── Leaderboards ──────────────────────────────────────────
-        $topViewed = HousePlan::orderByDesc('view_count')->take(10)->get();
+        $topViewed = HousePlan::where('view_count', '>', 0)->orderByDesc('view_count')->take(10)->get();
 
         // has() rather than having(): HAVING without GROUP BY is a MySQL
         // extension that SQLite rejects, and the test suite runs on SQLite.

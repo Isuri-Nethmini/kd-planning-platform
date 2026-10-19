@@ -67,8 +67,10 @@
 
             <p class="font-mono text-xs text-ink/70 uppercase tracking-widest">
                 PLAN NO. {{ str_pad($housePlan->id, 4, '0', STR_PAD_LEFT) }}
-                &nbsp;·&nbsp;
-                {{ $housePlan->view_count }} views
+                @if($housePlan->view_count > 0)
+                    &nbsp;·&nbsp;
+                    {{ number_format($housePlan->view_count) }} {{ Str::plural('view', $housePlan->view_count) }}
+                @endif
             </p>
 
             <h1 class="title-3d font-display text-2xl font-semibold text-ink leading-snug">

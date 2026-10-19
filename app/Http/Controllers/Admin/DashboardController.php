@@ -31,7 +31,10 @@ class DashboardController extends Controller
         $mostViewed = collect();
 
         if (session('admin_role') === 'primary') {
+            // Only plans that have actually been viewed: a ranking of zeros
+            // would list every plan and tell the owner nothing.
             $mostViewed = HousePlan::active()
+                ->where('view_count', '>', 0)
                 ->orderByDesc('view_count')
                 ->take(5)
                 ->get();

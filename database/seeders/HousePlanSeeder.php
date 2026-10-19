@@ -103,7 +103,7 @@ class HousePlanSeeder extends Seeder
 
             $plan = HousePlan::create([
                 ...$data,
-                'view_count' => fake()->numberBetween(5, 300),
+                'view_count' => 0,   // counts start at zero and grow from real visits
                 'is_active' => true,
             ]);
 

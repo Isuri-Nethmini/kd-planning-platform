@@ -70,7 +70,7 @@
                     <span class="font-mono text-xs text-draft">{{ number_format($plan->view_count) }}</span>
                 </div>
             @empty
-                <div class="px-4 py-8 text-center text-ink/70 text-sm">No data yet.</div>
+                <div class="px-4 py-8 text-center text-ink/70 text-sm">No plan views yet.</div>
             @endforelse
         </div>
     </div>
