@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="flex items-center justify-between mb-8">
-    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Testimonials</h1>
+    <h1 class="font-display text-2xl font-semibold text-ink">Testimonials</h1>
     <a href="/admin/testimonials/create" class="inline-flex items-center gap-2 bg-ink text-paper text-sm font-medium px-4 py-2 rounded-sm hover:bg-ink/90 transition-colors">
         + Add Testimonial
     </a>

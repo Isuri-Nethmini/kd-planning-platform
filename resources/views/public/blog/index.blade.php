@@ -8,7 +8,7 @@
 <div class="bg-ink text-paper py-12">
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-2">Advice & News</p>
-        <h1 class="font-display text-3xl md:text-4xl font-semibold title-3d-dark">Blog</h1>
+        <h1 class="font-display text-3xl md:text-4xl font-semibold">Blog</h1>
     </div>
 </div>
 

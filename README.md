@@ -16,7 +16,7 @@ A professional web-based platform for **KD Planning & Design**, a house plan and
 | Field | Details |
 |---|---|
 | **Name** | Rajakaruna Mudiyanselage Isuri Nethmini |
-| **Registration No** | _New ID pending — to be added when issued_ |
+| **Registration No** | UOG0723006 |
 | **Email** | isuri.uog07@edu.lnbti.lk |
 | **Institution** | LNBTI — Japanese IT University |
 

@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="mb-2">
-    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Reports</h1>
+    <h1 class="font-display text-2xl font-semibold text-ink">Reports</h1>
     <p class="text-ink/70 text-sm mt-1">
         Download your data as CSV. Files open directly in Excel.
     </p>

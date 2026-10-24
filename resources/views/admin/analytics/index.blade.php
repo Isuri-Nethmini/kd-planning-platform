@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="mb-8">
-    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Analytics &amp; Reports</h1>
+    <h1 class="font-display text-2xl font-semibold text-ink">Analytics &amp; Reports</h1>
     <p class="text-ink/70 text-sm mt-1">How the catalogue is performing and where inquiries are coming from.</p>
 </div>
 

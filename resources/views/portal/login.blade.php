@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-md mx-auto px-5 py-16">
     <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-2">Client Portal</p>
-    <h1 class="title-3d font-display text-3xl font-semibold text-ink mb-3">Sign in</h1>
+    <h1 class="font-display text-3xl font-semibold text-ink mb-3">Sign in</h1>
     <p class="text-ink/75 text-sm mb-8 leading-relaxed">
         Follow your home's construction progress and upload payment receipts.
         Accounts are created by KD Planning &amp; Design for confirmed clients —

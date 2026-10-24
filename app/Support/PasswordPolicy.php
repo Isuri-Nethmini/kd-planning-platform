@@ -8,9 +8,7 @@ use Illuminate\Validation\Rules\Password;
 /**
  * One password policy for every account type.
  *
- * Kept in one place so admin and (later) customer accounts can never drift
- * apart. Raised after the interim review, where the panel asked for stronger
- * admin security.
+ * Kept in one place so admin and customer accounts can never drift apart.
  */
 class PasswordPolicy
 {

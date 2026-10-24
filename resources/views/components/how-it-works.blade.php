@@ -42,7 +42,7 @@
     <div class="max-w-6xl mx-auto px-5">
         <div class="mb-10 {{ $compact ? '' : 'text-center' }}">
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-2">How It Works</p>
-            <h2 class="title-3d font-display text-2xl md:text-3xl font-semibold text-ink">
+            <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink">
                 From browsing to building
             </h2>
             <p class="text-ink/70 mt-3 max-w-2xl {{ $compact ? '' : 'mx-auto' }} leading-relaxed">

@@ -73,7 +73,7 @@
                 @endif
             </p>
 
-            <h1 class="title-3d font-display text-2xl font-semibold text-ink leading-snug">
+            <h1 class="font-display text-2xl font-semibold text-ink leading-snug">
                 {{ $housePlan->name }}
             </h1>
 
@@ -102,8 +102,8 @@
             </div>
 
             {{--
-                The panel flagged this at the last review: if a price is shown,
-                why ask for a quote? Because they are two different numbers.
+                If a price is shown, why ask for a quote? Because they are two
+                different numbers.
                 The price above buys the drawings; the estimate is for building
                 the house, which depends on the land, materials and finishes.
                 Spelling that out removes the contradiction.
@@ -126,10 +126,9 @@
                 </a>
                 <a
                     @php
-                        // The panel asked that the WhatsApp message carry the plan
-                        // itself. The message now includes the plan reference, the
-                        // headline specification and a direct URL, so the office can
-                        // open exactly the right plan straight from the chat.
+                        // The WhatsApp message carries the plan itself: the plan
+                        // reference, the headline specification and a direct URL,
+                        // so the office can open exactly the right plan from the chat.
                         $waNumber  = preg_replace('/\D/', '', \App\Models\SystemSetting::get('whatsapp_number', '+94717261930'));
                         $planRef   = 'PLAN-' . str_pad($housePlan->id, 4, '0', STR_PAD_LEFT);
                         $waMessage = "Hi, I'm interested in this house plan.\n\n"

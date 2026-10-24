@@ -36,11 +36,11 @@
     <div class="max-w-6xl mx-auto px-5 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center relative z-10">
         <div>
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-4">KD Planning &amp; Design — Minuwangoda</p>
-            <h1 class="font-display text-4xl md:text-5xl font-semibold leading-[1.1] mb-6 title-3d-dark">
+            <h1 class="font-display text-4xl md:text-5xl font-semibold leading-[1.1] mb-6">
                 Find the house plan<br>you'll actually build.
             </h1>
             <p class="text-paper/75 text-lg leading-relaxed mb-8 max-w-md">
-                Browse {{ $totalPlans }} ready-made designs with full specifications — no login, no waiting on a phone call.
+                Browse {{ $totalPlans > 0 ? $totalPlans.' ' : '' }}ready-made designs with full specifications — no login, no waiting on a phone call.
             </p>
             <div class="flex flex-wrap gap-4">
                 <a href="/plans" class="btn-3d inline-flex items-center rounded-sm bg-draft text-ink font-medium px-6 py-3 hover:bg-draft/90">
@@ -95,8 +95,10 @@
 {{-- ───────────────────────── TRUST STRIP ───────────────────────── --}}
 <section class="border-b border-ink/10 bg-paper">
     <div class="max-w-6xl mx-auto px-5 py-5 flex flex-wrap gap-x-10 gap-y-2 justify-center text-sm font-mono text-ink/70">
-        <span>{{ $totalPlans }} PLANS LISTED</span>
-        <span class="text-clay/50">·</span>
+        @if($totalPlans > 0)
+            <span>{{ $totalPlans }} PLANS LISTED</span>
+            <span class="text-clay/50">·</span>
+        @endif
         <span>NEW PLANS WEEKLY</span>
         <span class="text-clay/50">·</span>
         <span>NO LOGIN TO INQUIRE</span>
@@ -106,11 +108,13 @@
 </section>
 
 {{-- ───────────────────────── FEATURED PLANS ───────────────────────── --}}
+{{-- Each section below is skipped while it has nothing to show (e.g. a new site before content is added). --}}
+@if($featuredPlans->isNotEmpty())
 <section class="max-w-6xl mx-auto px-5 py-20">
     <div class="flex items-end justify-between mb-10">
         <div>
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-2">Featured Designs</p>
-            <h2 class="title-3d font-display text-2xl md:text-3xl font-semibold text-ink">Popular plans this month</h2>
+            <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink">Popular plans this month</h2>
         </div>
         <a href="/plans" class="text-sm font-medium text-draft hover:underline hidden md:inline">View all plans →</a>
     </div>
@@ -138,15 +142,17 @@
         @endforeach
     </div>
 </section>
+@endif
 
 {{-- ───────────────────────── HOW IT WORKS ───────────────────────── --}}
 <x-how-it-works />
 
 {{-- ───────────────────────── TESTIMONIALS ───────────────────────── --}}
+@if($testimonials->isNotEmpty())
 <section id="testimonials" class="bg-moss/10 py-20">
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-moss mb-2 text-center">What clients say</p>
-        <h2 class="title-3d font-display text-2xl md:text-3xl font-semibold text-ink text-center mb-12">Built on trust, not just blueprints</h2>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink text-center mb-12">Built on trust, not just blueprints</h2>
 
         <div class="grid md:grid-cols-3 gap-8">
             @foreach ($testimonials as $t)
@@ -160,13 +166,15 @@
         </div>
     </div>
 </section>
+@endif
 
 {{-- ───────────────────────── BLOG TEASER ───────────────────────── --}}
+@if($blogPosts->isNotEmpty())
 <section class="max-w-6xl mx-auto px-5 py-20">
     <div class="flex items-end justify-between mb-10">
         <div>
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-2">From the Blog</p>
-            <h2 class="title-3d font-display text-2xl md:text-3xl font-semibold text-ink">Tips before you build</h2>
+            <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink">Tips before you build</h2>
         </div>
     </div>
     <div class="grid md:grid-cols-3 gap-8">
@@ -180,11 +188,12 @@
         @endforeach
     </div>
 </section>
+@endif
 
 {{-- ───────────────────────── CTA BANNER ───────────────────────── --}}
 <section class="bg-ink text-paper">
     <div class="max-w-4xl mx-auto px-5 py-16 text-center">
-        <h2 class="font-display text-2xl md:text-3xl font-semibold mb-4 title-3d-dark">Ready to start building?</h2>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold mb-4">Ready to start building?</h2>
         <p class="text-paper/75 mb-8 max-w-lg mx-auto">Send us your land details and the design you like, and we'll prepare a construction estimate — no obligation.</p>
         <a href="/inquire" class="inline-flex items-center rounded-sm bg-draft text-ink font-medium px-8 py-3 hover:bg-draft/90 transition-colors">
             Submit an Inquiry

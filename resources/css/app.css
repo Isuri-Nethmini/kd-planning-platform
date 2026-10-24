@@ -21,12 +21,11 @@
   [x-cloak] { display: none !important; }
 
   /*
-    Accessibility baseline, added after the interim review.
+    Accessibility baseline.
 
-    The panel flagged that text was hard to read. Auditing it against
-    WCAG 2.1 AA confirmed the problem was real rather than a projector
-    artefact: secondary labels sat at roughly 2.3:1 to 3.0:1 against the
-    paper background, where AA requires 4.5:1 for body text. All text
+    An audit against WCAG 2.1 AA found that secondary labels sat at roughly
+    2.3:1 to 3.0:1 against the paper background, where AA requires 4.5:1
+    for body text. All text
     utilities were raised to a minimum of 70% opacity (5.31:1), and
     arbitrary font sizes below 12px were removed.
   */
@@ -97,40 +96,14 @@
    Depth and dimension — final polish, October 2026.
 
    Real 3D models were withdrawn from scope (the client cannot export web-ready
-   3D), so depth is suggested with CSS instead: extruded headings, layered
-   shadows, cards that tilt toward the pointer, stacked drawing-sheet frames
-   and an isometric floor plan in the hero. Everything is pure CSS transforms
+   3D), so depth is suggested with CSS instead: layered shadows, cards that tilt
+   toward the pointer, stacked drawing-sheet frames and an isometric floor plan in the hero. Everything is pure CSS transforms
    — no 3D library, nothing extra to download.
 
    All motion is switched off for visitors who ask their system for reduced
    motion (see the media query at the end).
    ════════════════════════════════════════════════════════════════════════ */
 @layer components {
-
-  /* ── Extruded headings ─────────────────────────────────────────────────
-     Stacked 1px shadows in progressively darker paper tones read as the
-     edge of a raised letter, finished with one soft drop shadow. Kept to
-     4px so the text itself stays crisp and fully legible. */
-  .title-3d {
-    /* em units, so the extrusion scales with the heading: about 3px on a
-       30px title, less on smaller ones. A cool slate edge reads as depth
-       against the warm paper background; beige disappeared into it. */
-    text-shadow:
-      0.025em 0.025em 0 #cdd5dd,
-      0.05em  0.05em  0 #bcc6d0,
-      0.075em 0.075em 0 #aab5c1,
-      0.1em   0.12em  0.12em rgba(28, 39, 51, 0.14);
-  }
-
-  /* The same idea on the dark blueprint sections, extruded in drafting blue */
-  .title-3d-dark {
-    text-shadow:
-      0.02em 0.02em 0 #2f5a80,
-      0.04em 0.04em 0 #2a5175,
-      0.06em 0.06em 0 #24476a,
-      0.08em 0.08em 0 #1f3e5e,
-      0.1em  0.18em 0.3em rgba(0, 0, 0, 0.45);
-  }
 
   /* ── Cards that lift and tilt toward the pointer ───────────────────────
      --rx / --ry are set by resources/js/app.js from the pointer position.

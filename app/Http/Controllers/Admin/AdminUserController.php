@@ -153,9 +153,9 @@ class AdminUserController extends Controller
     /**
      * Emails a temporary password.
      *
-     * The panel asked that staff credentials be delivered by email. Sending a
-     * plain password is only acceptable because it is temporary: it works
-     * once, and stops working the moment the holder sets their own.
+     * Staff credentials are delivered by email. Sending a plain password is
+     * only acceptable because it is temporary: it works once, and stops
+     * working the moment the holder sets their own.
      *
      * Returns false rather than throwing, so a mail failure never loses the
      * account that was just created.

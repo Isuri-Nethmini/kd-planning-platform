@@ -27,6 +27,23 @@ class Inquiry extends Model
     /** Stages that count as a completed sale. */
     public const WON = ['converted'];
 
+    /** Choices for the general inquiry form. Edit the labels here to change them everywhere. */
+    public const BUDGETS = [
+        'under_5m' => 'Under Rs. 5 million',
+        '5m_10m'   => 'Rs. 5 – 10 million',
+        '10m_20m'  => 'Rs. 10 – 20 million',
+        'over_20m' => 'Over Rs. 20 million',
+        'not_sure' => 'Not sure yet',
+    ];
+
+    public const LAND_SIZES = [
+        'under_10' => 'Under 10 perches',
+        '10_20'    => '10 – 20 perches',
+        '20_40'    => '20 – 40 perches',
+        'over_40'  => 'Over 40 perches',
+        'not_sure' => 'Not sure yet',
+    ];
+
     protected $fillable = [
         'name',
         'email',
@@ -34,6 +51,11 @@ class Inquiry extends Model
         'house_plan_id',
         'completed_project_id',
         'message',
+        'budget',
+        'bedrooms',
+        'bathrooms',
+        'floors',
+        'land_size',
         'status',
         'admin_notes',
         'quoted_amount',
@@ -77,6 +99,21 @@ class Inquiry extends Model
         }
 
         return 'General inquiry';
+    }
+
+    /**
+     * The requirements the buyer filled in, as label => value, skipping blanks.
+     * Used by the admin page, the notification email and the CSV report.
+     */
+    public function getRequirementsAttribute(): array
+    {
+        return array_filter([
+            'Budget'    => self::BUDGETS[$this->budget] ?? null,
+            'Bedrooms'  => $this->bedrooms ? ($this->bedrooms >= 6 ? '6 or more' : (string) $this->bedrooms) : null,
+            'Bathrooms' => $this->bathrooms ? ($this->bathrooms >= 5 ? '5 or more' : (string) $this->bathrooms) : null,
+            'Floors'    => $this->floors ? ($this->floors >= 3 ? '3 or more' : (string) $this->floors) : null,
+            'Land size' => self::LAND_SIZES[$this->land_size] ?? null,
+        ]);
     }
 
     public function getStatusLabelAttribute(): string

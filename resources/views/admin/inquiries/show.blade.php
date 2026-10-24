@@ -7,7 +7,7 @@
 <div class="flex items-center gap-3 mb-8">
     <a href="/admin/inquiries" class="text-sm text-ink/70 hover:text-draft">← Inquiries</a>
     <span class="text-ink/70">/</span>
-    <h1 class="title-3d font-display text-2xl font-semibold text-ink">{{ $inquiry->name }}</h1>
+    <h1 class="font-display text-2xl font-semibold text-ink">{{ $inquiry->name }}</h1>
     <span class="font-mono text-xs uppercase px-2 py-1 rounded-sm {{ $inquiry->status_class }}">
         {{ $inquiry->status_label }}
     </span>
@@ -21,6 +21,20 @@
             <h2 class="font-display font-semibold text-ink mb-4">Message</h2>
             <p class="text-ink/80 leading-relaxed whitespace-pre-line">{{ $inquiry->message }}</p>
         </div>
+
+        @if($inquiry->requirements)
+            <div class="bg-white border border-ink/10 rounded-sm p-6">
+                <h2 class="font-display font-semibold text-ink mb-4">Requirements</h2>
+                <dl class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    @foreach($inquiry->requirements as $label => $value)
+                        <div>
+                            <dt class="font-mono text-xs uppercase tracking-wider text-ink/70">{{ $label }}</dt>
+                            <dd class="text-ink font-medium mt-1">{{ $value }}</dd>
+                        </div>
+                    @endforeach
+                </dl>
+            </div>
+        @endif
 
         @if($inquiry->completedProject)
             <div class="bg-white border border-ink/10 rounded-sm p-6">

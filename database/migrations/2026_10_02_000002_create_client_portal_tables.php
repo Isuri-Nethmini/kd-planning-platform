@@ -9,8 +9,8 @@ return new class extends Migration
     /**
      * The client portal.
      *
-     * Requested at the interim review and agreed by the client, reversing the
-     * original SRS requirement of no customer accounts. Customers are confirmed
+     * Added at the client's request, reversing the original requirement of no
+     * customer accounts. Customers are confirmed
      * clients, never public sign-ups: an admin creates each account, usually
      * from an inquiry that reached "Converted" in the sales pipeline.
      */

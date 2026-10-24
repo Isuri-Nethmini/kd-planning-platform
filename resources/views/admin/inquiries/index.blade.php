@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Inquiries</h1>
+    <h1 class="font-display text-2xl font-semibold text-ink">Inquiries</h1>
     <form method="GET" action="/admin/inquiries" class="flex gap-2">
         <input type="hidden" name="status" value="{{ request('status', 'all') }}">
         <input type="text" name="q" value="{{ request('q') }}" placeholder="Name, email or phone…"

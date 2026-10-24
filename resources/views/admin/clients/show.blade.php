@@ -6,7 +6,7 @@
 <div class="flex items-center gap-3 mb-6">
     <a href="/admin/clients" class="text-sm text-ink/70 hover:text-draft">← Clients</a>
     <span class="text-ink/30">/</span>
-    <h1 class="title-3d font-display text-2xl font-semibold text-ink">{{ $client->name }}</h1>
+    <h1 class="font-display text-2xl font-semibold text-ink">{{ $client->name }}</h1>
 </div>
 
 @if($errors->any())

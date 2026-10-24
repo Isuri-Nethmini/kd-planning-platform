@@ -7,7 +7,7 @@
 <div class="bg-ink text-paper py-12">
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-2">All Designs</p>
-        <h1 class="font-display text-3xl md:text-4xl font-semibold title-3d-dark">Browse House Plans</h1>
+        <h1 class="font-display text-3xl md:text-4xl font-semibold">Browse House Plans</h1>
     </div>
 </div>
 
@@ -97,8 +97,14 @@
             @if($plans->isEmpty())
                 <div class="text-center py-24 text-ink/70">
                     <p class="text-4xl mb-4">🏠</p>
-                    <p class="font-display text-lg">No plans match your filters.</p>
-                    <a href="/plans" class="text-sm text-draft hover:underline mt-2 inline-block">Clear and try again</a>
+                    @if(collect(['q', 'category', 'bedrooms', 'floors'])->contains(fn ($key) => request()->filled($key)))
+                        <p class="font-display text-lg">No plans match your filters.</p>
+                        <a href="/plans" class="text-sm text-draft hover:underline mt-2 inline-block">Clear and try again</a>
+                    @else
+                        {{-- Catalogue is empty, e.g. a new site before plans are uploaded --}}
+                        <p class="font-display text-lg">New designs are being added. Please check back soon.</p>
+                        <a href="/inquire" class="text-sm text-draft hover:underline mt-2 inline-block">Or tell us what you need and we'll suggest a design</a>
+                    @endif
                 </div>
             @else
                 <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">

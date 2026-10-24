@@ -3,7 +3,7 @@
 @section('title', 'Payments')
 
 @section('content')
-<h1 class="title-3d font-display text-2xl font-semibold text-ink mb-1">Payments</h1>
+<h1 class="font-display text-2xl font-semibold text-ink mb-1">Payments</h1>
 <p class="text-sm text-ink/70 mb-6">Receipts uploaded by clients for offline bank transfers. Check each one against your bank statement before verifying.</p>
 
 @if($errors->any())

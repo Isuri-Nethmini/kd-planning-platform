@@ -10,6 +10,7 @@ use App\Models\SystemSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class InquiryController extends Controller
@@ -38,9 +39,20 @@ class InquiryController extends Controller
             'house_plan_id'        => 'nullable|exists:house_plans,id',
             'completed_project_id' => 'nullable|exists:completed_projects,id',
             'message'       => 'required|string|max:2000',
+            // Optional requirements (general inquiries)
+            'budget'    => ['nullable', Rule::in(array_keys(Inquiry::BUDGETS))],
+            'bedrooms'  => 'nullable|integer|between:1,6',
+            'bathrooms' => 'nullable|integer|between:1,5',
+            'floors'    => 'nullable|integer|between:1,3',
+            'land_size' => ['nullable', Rule::in(array_keys(Inquiry::LAND_SIZES))],
         ]);
 
         $inquiry = Inquiry::create($validated);
+
+        // Requirements as plain lines for the email, e.g. "Budget: Rs. 5 – 10 million"
+        $requirements = collect($inquiry->requirements)
+            ->map(fn($value, $label) => "{$label}: {$value}")
+            ->implode("\n");
 
         // Email notification to admin
         $notificationEmail = SystemSetting::get('notification_email', 'kdplanning@gmail.com');
@@ -52,6 +64,7 @@ class InquiryController extends Controller
                 . "Email: {$inquiry->email}\n"
                 . "Phone: {$inquiry->phone}\n"
                 . "Regarding: {$inquiry->subject_label}\n\n"
+                . ($requirements ? "Requirements:\n{$requirements}\n\n" : '')
                 . "Message:\n{$inquiry->message}",
                 fn($mail) => $mail
                     ->to($notificationEmail)

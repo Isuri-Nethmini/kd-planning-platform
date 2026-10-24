@@ -7,7 +7,7 @@
 <div class="bg-ink text-paper py-12">
     <div class="max-w-6xl mx-auto px-5">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-draft mb-2">Get in Touch</p>
-        <h1 class="font-display text-3xl md:text-4xl font-semibold title-3d-dark">Request a Construction Estimate</h1>
+        <h1 class="font-display text-3xl md:text-4xl font-semibold">Request a Construction Estimate</h1>
         <p class="text-paper/75 mt-3 max-w-xl leading-relaxed text-sm">
             Plan prices cover the drawings. Tell us about your land and finishes and we'll estimate the build cost.
         </p>
@@ -87,15 +87,71 @@
             @error('email')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
         </div>
 
+        {{-- Requirements: only for general inquiries. A chosen plan already has its own specs. --}}
         @if(!$plan)
-            <div>
-                <label class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Plan of Interest (optional)</label>
-                <input
-                    type="text" name="plan_name" value="{{ old('plan_name') }}"
-                    class="w-full border border-ink/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-draft"
-                    placeholder="Plan name or leave blank for general inquiry"
-                >
-            </div>
+            @php $select = 'w-full border border-ink/20 rounded-sm px-4 py-3 text-sm bg-white focus:outline-none focus:border-draft'; @endphp
+            <fieldset class="border border-ink/15 rounded-sm p-5">
+                <legend class="font-mono text-xs uppercase tracking-wider text-ink/70 px-2">Your requirements (optional)</legend>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="budget" class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Budget</label>
+                        <select id="budget" name="budget" class="{{ $select }}">
+                            <option value="">Select…</option>
+                            @foreach(\App\Models\Inquiry::BUDGETS as $value => $label)
+                                <option value="{{ $value }}" @selected(old('budget') === $value)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                        @error('budget')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label for="land_size" class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Land size</label>
+                        <select id="land_size" name="land_size" class="{{ $select }}">
+                            <option value="">Select…</option>
+                            @foreach(\App\Models\Inquiry::LAND_SIZES as $value => $label)
+                                <option value="{{ $value }}" @selected(old('land_size') === $value)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                        @error('land_size')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label for="bedrooms" class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Bedrooms</label>
+                        <select id="bedrooms" name="bedrooms" class="{{ $select }}">
+                            <option value="">Select…</option>
+                            @foreach([1, 2, 3, 4, 5] as $n)
+                                <option value="{{ $n }}" @selected(old('bedrooms') == $n)>{{ $n }}</option>
+                            @endforeach
+                            <option value="6" @selected(old('bedrooms') == 6)>6 or more</option>
+                        </select>
+                        @error('bedrooms')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label for="bathrooms" class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Bathrooms</label>
+                        <select id="bathrooms" name="bathrooms" class="{{ $select }}">
+                            <option value="">Select…</option>
+                            @foreach([1, 2, 3, 4] as $n)
+                                <option value="{{ $n }}" @selected(old('bathrooms') == $n)>{{ $n }}</option>
+                            @endforeach
+                            <option value="5" @selected(old('bathrooms') == 5)>5 or more</option>
+                        </select>
+                        @error('bathrooms')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label for="floors" class="font-mono text-xs uppercase tracking-wider text-ink/70 block mb-1">Floors</label>
+                        <select id="floors" name="floors" class="{{ $select }}">
+                            <option value="">Select…</option>
+                            <option value="1" @selected(old('floors') == 1)>Single storey</option>
+                            <option value="2" @selected(old('floors') == 2)>Two storey</option>
+                            <option value="3" @selected(old('floors') == 3)>Three or more</option>
+                        </select>
+                        @error('floors')<p class="text-clay text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+                </div>
+            </fieldset>
         @endif
 
         <div>

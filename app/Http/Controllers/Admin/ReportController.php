@@ -38,7 +38,7 @@ class ReportController extends Controller
         return $this->stream($filename, function ($out) use ($rows) {
             fputcsv($out, [
                 'Reference', 'Date received', 'Name', 'Email', 'Phone',
-                'Regarding', 'Status', 'Quoted amount (Rs.)', 'First responded', 'Notes',
+                'Regarding', 'Requirements', 'Status', 'Quoted amount (Rs.)', 'First responded', 'Notes',
             ]);
 
             foreach ($rows as $r) {
@@ -49,6 +49,7 @@ class ReportController extends Controller
                     $r->email,
                     $r->phone,
                     $r->subject_label,
+                    collect($r->requirements)->map(fn($v, $k) => "{$k}: {$v}")->implode('; '),
                     $r->status_label,
                     $r->quoted_amount ? number_format((float) $r->quoted_amount, 2, '.', '') : '',
                     $r->responded_at?->format('Y-m-d H:i') ?? '',

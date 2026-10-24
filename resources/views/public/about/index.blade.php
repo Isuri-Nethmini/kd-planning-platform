@@ -69,7 +69,7 @@
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-clay mb-6">Leadership</p>
         <div class="sm:flex items-start gap-8">
             <div class="flex-1">
-                <h2 class="font-display text-2xl font-semibold text-ink title-3d">Dhanushka C. Soysa</h2>
+                <h2 class="font-display text-2xl font-semibold text-ink">Dhanushka C. Soysa</h2>
                 <p class="text-draft font-medium mb-4">Civil Engineer &middot; Director</p>
                 <ul class="space-y-1.5 text-sm text-ink/70">
                     <li>BEng (Hons) Civil Engineering with Structural</li>
@@ -93,7 +93,7 @@
 
 <section class="bg-ink text-paper">
     <div class="max-w-3xl mx-auto px-5 py-16 text-center">
-        <h2 class="font-display text-2xl font-semibold mb-3 title-3d-dark">
+        <h2 class="font-display text-2xl font-semibold mb-3">
             Call us today
         </h2>
         <p class="text-paper/75 mb-8 max-w-xl mx-auto leading-relaxed">

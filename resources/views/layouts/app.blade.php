@@ -20,6 +20,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-paper text-charcoal font-body">
+@php $hasTestimonials = \App\Models\Testimonial::where('is_active', true)->exists(); @endphp
 
     {{-- x-data drives the mobile menu. Below the md breakpoint the desktop
          nav is hidden, so without this, phone visitors had no navigation. --}}
@@ -37,7 +38,7 @@
                 <a href="/completed-projects" class="hover:text-draft transition-colors">Completed Work</a>
                 <a href="/about" class="hover:text-draft transition-colors">About</a>
                 <a href="/blog" class="hover:text-draft transition-colors">Blog</a>
-                <a href="/#testimonials" class="hover:text-draft transition-colors">Testimonials</a>
+                @if($hasTestimonials)<a href="/#testimonials" class="hover:text-draft transition-colors">Testimonials</a>@endif
                 <a href="/portal" class="hover:text-draft transition-colors">Client Login</a>
             </nav>
 
@@ -61,7 +62,7 @@
                 <a href="/completed-projects" class="py-2.5 border-b border-ink/10">Completed Work</a>
                 <a href="/about" class="py-2.5 border-b border-ink/10">About</a>
                 <a href="/blog" class="py-2.5 border-b border-ink/10">Blog</a>
-                <a href="/#testimonials" class="py-2.5 border-b border-ink/10" @click="open = false">Testimonials</a>
+                @if($hasTestimonials)<a href="/#testimonials" class="py-2.5 border-b border-ink/10" @click="open = false">Testimonials</a>@endif
                 <a href="/portal" class="py-2.5">Client Login</a>
             </div>
         </nav>

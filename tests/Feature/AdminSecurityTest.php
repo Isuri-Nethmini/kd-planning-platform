@@ -7,7 +7,7 @@ use App\Models\LoginLog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/** Admin-side protections added after the interim review. */
+/** Admin-side security protections. */
 class AdminSecurityTest extends TestCase
 {
     use RefreshDatabase;

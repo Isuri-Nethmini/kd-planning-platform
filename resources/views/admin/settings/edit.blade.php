@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="mb-8">
-    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Settings</h1>
+    <h1 class="font-display text-2xl font-semibold text-ink">Settings</h1>
     <p class="text-ink/70 text-sm mt-1">Contact details used across the public site.</p>
 </div>
 

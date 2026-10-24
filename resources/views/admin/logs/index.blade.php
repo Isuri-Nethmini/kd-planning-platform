@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="mb-2">
-    <h1 class="title-3d font-display text-2xl font-semibold text-ink">Security Log</h1>
+    <h1 class="font-display text-2xl font-semibold text-ink">Security Log</h1>
     <p class="text-ink/70 text-sm mt-1">
         Every sign-in attempt, lockout, blocked page and account change — in one place.
     </p>

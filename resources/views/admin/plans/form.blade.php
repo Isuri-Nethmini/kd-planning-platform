@@ -7,7 +7,7 @@
 <div class="flex items-center gap-3 mb-8">
     <a href="/admin/plans" class="text-sm text-ink/70 hover:text-draft">← Plans</a>
     <span class="text-ink/70">/</span>
-    <h1 class="title-3d font-display text-2xl font-semibold text-ink">
+    <h1 class="font-display text-2xl font-semibold text-ink">
         {{ isset($plan) ? 'Edit: '.$plan->name : 'Add New Plan' }}
     </h1>
 </div>
